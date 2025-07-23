@@ -342,8 +342,8 @@ export default function Home() {
                     <Code className="h-5 w-5 text-purple-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Cloud Code</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Monitor and debug your cloud functions with detailed logs and execution history</p>
+                    <h4 className="font-semibold mb-1">API Console</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Test queries and execute code directly in the dashboard with an interactive console</p>
                   </div>
                 </div>
                 
