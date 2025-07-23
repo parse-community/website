@@ -27,7 +27,8 @@ import {
   Check,
   Smartphone,
   Code,
-  Box
+  Box,
+  HammerIcon
 } from "lucide-react";
 import { 
   SiApple,
@@ -182,17 +183,19 @@ export default function Home() {
       <section className="pt-32 pb-16 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <TypingHero className="text-5xl md:text-7xl font-bold my-12 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent" />
+            <TypingHero className="text-5xl md:text-7xl font-bold my-16 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent" />
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
               Parse Platform provides a complete backend solution for mobile and web applications. Deploy anywhere, scale infinitely, own your data.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Button size="lg" className="text-lg" asChild>
-                <a href="#get-started">Start Building</a>
+                <a href="#get-started">
+                  Start Building <HammerIcon className="ml-2 h-4 w-4" />
+                </a>
               </Button>
               <Button variant="outline" size="lg" className="text-lg" asChild>
-                <a href="https://docs.parseplatform.org/" target="_blank" rel="noopener noreferrer">
-                  View Documentation <ExternalLink className="ml-2 h-4 w-4" />
+                <a href="#docs">
+                  View Documentation <Book className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </div>
@@ -481,7 +484,7 @@ export default function Home() {
 
             {/* Heading */}
             <div className="mt-16">
-              <h3 className="text-3xl font-bold text-white text-center mb-8">Save and Find Objects</h3>
+              <h3 className="text-2xl font-bold text-white text-center mb-8">Save and Find Objects</h3>
             </div>
 
             {/* Code Example */}
