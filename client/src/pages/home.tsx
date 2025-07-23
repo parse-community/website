@@ -185,7 +185,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             <TypingHero className="text-5xl md:text-7xl font-bold my-16 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent" />
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-              Parse Platform provides a complete backend solution for mobile and web applications. Deploy anywhere, scale infinitely, own your data.
+              Parse Platform is your complete backend solution for mobile and web applications.<br />Deploy anywhere, scale infinitely, own your data.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Button size="lg" className="text-lg" asChild>
