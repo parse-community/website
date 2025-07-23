@@ -26,7 +26,8 @@ import {
   GitFork,
   Check,
   Smartphone,
-  Code
+  Code,
+  Box
 } from "lucide-react";
 import { 
   SiApple,
@@ -416,8 +417,6 @@ export default function Home() {
               </Card>
             </div>
           </div>
-          
-          
         </div>
       </section>
 
@@ -482,7 +481,7 @@ export default function Home() {
 
             {/* Heading */}
             <div className="mt-16">
-              <h3 className="text-3xl font-bold text-white text-center mb-8">Save and Find Objects using the REST API</h3>
+              <h3 className="text-3xl font-bold text-white text-center mb-8">Save and Find Objects</h3>
             </div>
 
             {/* Code Example */}
@@ -545,14 +544,14 @@ export default function Home() {
 
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
-                  <i className="fas fa-mobile-alt text-green-500 text-xl"></i>
+                <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors">
+                  <Code className="h-6 w-6 text-purple-500" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Client SDK Guides</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">Platform-specific integration guides for all supported SDKs</p>
+                <h3 className="text-xl font-semibold mb-4">API Reference</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">REST API documentation for Parse Server</p>
                 <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="https://docs.parseplatform.org/" target="_blank" rel="noopener noreferrer">
-                    Browse SDKs <ExternalLink className="ml-2 h-4 w-4" />
+                  <a href="https://docs.parseplatform.org/rest/guide/" target="_blank" rel="noopener noreferrer">
+                    View API Docs <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
               </CardContent>
@@ -560,14 +559,14 @@ export default function Home() {
 
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors">
-                  <i className="fas fa-code text-purple-500 text-xl"></i>
+                <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
+                  <Box className="h-6 w-6 text-green-500" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">API Reference</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">Complete REST and GraphQL API documentation</p>
+                <h3 className="text-xl font-semibold mb-4">Client SDK Guides</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Platform-specific integration guides for all supported SDKs</p>
                 <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="https://docs.parseplatform.org/rest/guide/" target="_blank" rel="noopener noreferrer">
-                    View API Docs <ExternalLink className="ml-2 h-4 w-4" />
+                  <a href="https://docs.parseplatform.org/" target="_blank" rel="noopener noreferrer">
+                    Browse SDKs <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
               </CardContent>
