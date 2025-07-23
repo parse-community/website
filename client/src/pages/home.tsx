@@ -483,8 +483,8 @@ export default function Home() {
             </Card>
 
             {/* Heading */}
-            <div className="mt-16">
-              <h3 className="text-2xl font-bold text-white text-center mb-8">Save and Find Objects</h3>
+            <div className="text-center text-white mb-8 mt-16">
+              <p className="text-xl opacity-90">Save and find objects using the REST API</p>
             </div>
 
             {/* Code Example */}
