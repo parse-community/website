@@ -95,14 +95,79 @@ export default function Home() {
   ];
 
   const sdks = [
-    { name: "Parse Server", icon: Server, stars: githubStats?.parseServer.stars || 20806, color: "from-blue-500 to-blue-600" },
-    { name: "iOS / Objective-C", icon: SiApple, stars: githubStats?.parseIOSSDK.stars || 2809, color: "from-gray-600 to-gray-700" },
-    { name: "Android", icon: SiAndroid, stars: githubStats?.parseAndroidSDK.stars || 1879, color: "from-green-500 to-green-600" },
-    { name: "JavaScript", icon: SiJavascript, stars: githubStats?.parseJsSDK.stars || 1317, color: "from-yellow-500 to-yellow-600" },
-    { name: "PHP", icon: SiPhp, stars: 811, color: "from-purple-500 to-purple-600" },
-    { name: "Flutter", icon: SiFlutter, stars: 575, color: "from-blue-400 to-blue-500" },
-    { name: ".NET", icon: SiDotnet, stars: 323, color: "from-indigo-500 to-indigo-600" },
-    { name: "Swift", icon: SiSwift, stars: 302, color: "from-orange-500 to-orange-600" }
+    { 
+      name: "Parse Server", 
+      icon: Server, 
+      stars: githubStats?.parseServer.stars || 20806, 
+      color: "from-blue-500 to-blue-600",
+      githubUrl: "https://github.com/parse-community/parse-server",
+      docsUrl: "https://docs.parseplatform.org/parse-server/guide/",
+      cloudCodeUrl: "https://docs.parseplatform.org/cloudcode/guide/",
+      schemasUrl: "https://docs.parseplatform.org/defined-schema/guide/"
+    },
+    { 
+      name: "iOS / Objective-C", 
+      icon: SiApple, 
+      stars: githubStats?.parseIOSSDK.stars || 2809, 
+      color: "from-gray-600 to-gray-700",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-iOS-OSX",
+      docsUrl: "https://docs.parseplatform.org/ios/guide/",
+      apiUrl: "https://parseplatform.org/Parse-SDK-iOS-OSX/api/"
+    },
+    { 
+      name: "Android", 
+      icon: SiAndroid, 
+      stars: githubStats?.parseAndroidSDK.stars || 1879, 
+      color: "from-green-500 to-green-600",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-Android",
+      docsUrl: "https://docs.parseplatform.org/android/guide/",
+      apiUrl: "https://parseplatform.org/Parse-SDK-Android/api/"
+    },
+    { 
+      name: "JavaScript", 
+      icon: SiJavascript, 
+      stars: githubStats?.parseJsSDK.stars || 1317, 
+      color: "from-yellow-500 to-yellow-600",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-JS",
+      docsUrl: "https://docs.parseplatform.org/js/guide/",
+      apiUrl: "https://parseplatform.org/Parse-SDK-JS/api/"
+    },
+    { 
+      name: "PHP", 
+      icon: SiPhp, 
+      stars: 811, 
+      color: "from-purple-500 to-purple-600",
+      githubUrl: "https://github.com/parse-community/parse-php-sdk",
+      docsUrl: "https://docs.parseplatform.org/php/guide/",
+      apiUrl: "https://parseplatform.org/parse-php-sdk/api/"
+    },
+    { 
+      name: "Flutter", 
+      icon: SiFlutter, 
+      stars: 575, 
+      color: "from-blue-400 to-blue-500",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-Flutter",
+      docsUrl: "https://docs.parseplatform.org/flutter/guide/",
+      apiUrl: "https://pub.dev/documentation/parse_server_sdk_flutter/latest/"
+    },
+    { 
+      name: ".NET", 
+      icon: SiDotnet, 
+      stars: 323, 
+      color: "from-indigo-500 to-indigo-600",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-dotNET",
+      docsUrl: "https://docs.parseplatform.org/dotnet/guide/",
+      apiUrl: "https://parseplatform.org/Parse-SDK-dotNET/api/"
+    },
+    { 
+      name: "Swift", 
+      icon: SiSwift, 
+      stars: 302, 
+      color: "from-orange-500 to-orange-600",
+      githubUrl: "https://github.com/parse-community/Parse-Swift",
+      docsUrl: "https://docs.parseplatform.org/swift/guide/",
+      apiUrl: "https://parseplatform.org/Parse-Swift/release/documentation/parseswift/"
+    }
   ];
 
   const totalStars = githubStats ? 
@@ -297,9 +362,62 @@ export default function Home() {
                     <sdk.icon className="h-6 w-6 mr-3 flex-shrink-0" />
                     <h3 className="font-semibold text-sm">{sdk.name}</h3>
                   </div>
-                  <div className="flex items-center text-sm opacity-90">
+                  <div className="flex items-center text-sm opacity-90 mb-4">
                     <Star className="h-3 w-3 mr-1" />
                     <span>{sdk.stars.toLocaleString()}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <a 
+                      href={sdk.githubUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      title="View on GitHub"
+                    >
+                      <Github className="h-4 w-4" />
+                    </a>
+                    <a 
+                      href={sdk.docsUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      title="View Documentation"
+                    >
+                      <Book className="h-4 w-4" />
+                    </a>
+                    {sdk.apiUrl && (
+                      <a 
+                        href={sdk.apiUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                        title="API Reference"
+                      >
+                        <Code className="h-4 w-4" />
+                      </a>
+                    )}
+                    {sdk.cloudCodeUrl && (
+                      <a 
+                        href={sdk.cloudCodeUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                        title="Cloud Code Guide"
+                      >
+                        <Cloud className="h-4 w-4" />
+                      </a>
+                    )}
+                    {sdk.schemasUrl && (
+                      <a 
+                        href={sdk.schemasUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                        title="Defined Schemas Guide"
+                      >
+                        <Database className="h-4 w-4" />
+                      </a>
+                    )}
                   </div>
                 </CardContent>
               </Card>
