@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface TypingHeroProps {
   className?: string;
@@ -74,8 +74,8 @@ export function TypingHero({ className = "" }: TypingHeroProps) {
           // Clear text and move to next words
           setProductText("");
           setPurposeText("");
-          setCurrentProduct((prev) => (prev + 1) % products.length);
-          setCurrentPurpose((prev) => (prev + 1) % purposes.length);
+          setCurrentProduct(Math.floor(Math.random() * products.length));
+          setCurrentPurpose(Math.floor(Math.random() * purposes.length));
           setIsTypingProduct(true);
         }, 3000);
       }
