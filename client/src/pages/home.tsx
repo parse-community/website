@@ -179,7 +179,7 @@ export default function Home() {
       <section className="pt-32 pb-16 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <TypingHero className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent" />
+            <TypingHero className="text-5xl md:text-7xl font-bold my-12 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent" />
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
               Parse Platform provides a complete backend solution for mobile and web applications. Deploy anywhere, scale infinitely, own your data.
             </p>
