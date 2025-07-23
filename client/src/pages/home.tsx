@@ -523,7 +523,7 @@ export default function Home() {
                       curl -X GET \{'\n'}
                       {'  '}-H "X-Parse-Application-Id: myAppId" \{'\n'}
                       {'  '}-G \{'\n'}
-                      {'  '}--data-urlencode 'where={`{"guests":{"$gte":2}}`}' \{'\n'}
+                      {'  '}--data-urlencode 'where={{"guests":{{"$gte":2}}}}' \{'\n'}
                       {'  '}http://localhost:1337/parse/classes/Booking
                     </code>
                   </pre>
