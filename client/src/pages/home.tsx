@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { TypingHero } from "@/components/typing-hero";
 import { useTheme } from "@/hooks/use-theme";
 import { fetchGitHubStats } from "@/lib/github-api";
+import { calculateTotalForks, calculateTotalStars } from "@/lib/github-utils";
 import parseLogoPath from "@assets/parse-logo-transparent-blue-round_1753267131582.png";
 import {
   Book,
@@ -16,6 +17,7 @@ import {
   Database,
   Github,
   HammerIcon,
+  Heart,
   Menu,
   MessageCircle,
   Moon,
@@ -199,15 +201,8 @@ export default function Home() {
     }
   ];
 
-  const totalStars = githubStats ? 
-    githubStats.parseServer.stars + githubStats.parseDashboard.stars + 
-    githubStats.parseJsSDK.stars + githubStats.parseIOSSDK.stars + 
-    githubStats.parseAndroidSDK.stars : 30000;
-
-  const totalForks = githubStats ?
-    githubStats.parseServer.forks + githubStats.parseDashboard.forks +
-    githubStats.parseJsSDK.forks + githubStats.parseIOSSDK.forks +
-    githubStats.parseAndroidSDK.forks : 8000;
+  const totalStars = calculateTotalStars(githubStats, 30000);
+  const totalForks = calculateTotalForks(githubStats, 8000);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
@@ -227,6 +222,10 @@ export default function Home() {
                 <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
+                <Link href="/donations" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
+                  <Heart className="h-4 w-4" />
+                  <span>Donations</span>
+                </Link>
                 <Link href="/security" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
                   <ShieldCheck className="h-4 w-4" />
                   <span>Security</span>
@@ -266,6 +265,7 @@ export default function Home() {
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
+                <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Donations</Link>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
                 <Button asChild className="w-fit">
                   <a href="#get-started">Get Started</a>
