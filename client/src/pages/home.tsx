@@ -128,8 +128,8 @@ export default function Home() {
               </div>
               <div className="hidden md:flex space-x-6">
                 <a href="#features" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
-                <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
+                <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
