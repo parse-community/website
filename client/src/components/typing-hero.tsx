@@ -6,24 +6,27 @@ interface TypingHeroProps {
 
 export function TypingHero({ className = "" }: TypingHeroProps) {
   const products = [
-    "mobile app",
-    "web app",
-    "chat app",
-    "dashboard",
-    "API backend",
-    "admin panel",
-    "SaaS tool",
-    "booking system",
-    "marketplace",
-    "data platform"
+    "a mobile app",
+    "a dashboard",
+    "an admin panel",
+    "a rapid prototype",
+    "a landing page",
+    "a API backend",
+    "a blockchain app",
   ];
 
   const purposes = [
     "startup",
-    "product launch",
+    "sales team",
+    "internal tool",
+    "client project",
+    "demo day",
     "hobby project",
+    "sales pitch",
+    "product launch",
+    "marketing team",
     "university project",
-    "rapid prototype"
+    "hackathon",
   ];
 
   const [currentProduct, setCurrentProduct] = useState(0);
@@ -90,7 +93,7 @@ export function TypingHero({ className = "" }: TypingHeroProps) {
   return (
     <h1 className={className}>
       <div>
-        Build a{" "}
+        Build{" "}
         <span className="text-primary">
           {productText}
           {isTypingProduct && <span className="animate-pulse">|</span>}
