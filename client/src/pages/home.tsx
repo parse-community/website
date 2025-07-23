@@ -312,7 +312,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-8">
             <div>
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <div className="flex items-start space-x-3">
