@@ -420,37 +420,7 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center group hover:shadow-lg transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500/20 transition-colors">
-                  <Code className="h-8 w-8 text-blue-500" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">Development Ready</h3>
-                <p className="text-gray-600 dark:text-gray-300">Perfect for development environments to inspect data, debug queries, and test your application logic in real-time.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center group hover:shadow-lg transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-green-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-green-500/20 transition-colors">
-                  <Users className="h-8 w-8 text-green-500" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">Production Management</h3>
-                <p className="text-gray-600 dark:text-gray-300">Provide controlled access to non-technical team members for content management and user support tasks.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center group hover:shadow-lg transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500/20 transition-colors">
-                  <Shield className="h-8 w-8 text-purple-500" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">Secure Access</h3>
-                <p className="text-gray-600 dark:text-gray-300">Role-based permissions and secure authentication ensure your data remains protected while enabling team collaboration.</p>
-              </CardContent>
-            </Card>
-          </div>
+          
         </div>
       </section>
 
