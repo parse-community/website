@@ -660,7 +660,7 @@ export default function Home() {
               <ul className="space-y-2 text-gray-400">
                 <li><a href="https://docs.parseplatform.org/" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">Documentation</a></li>
                 <li><a href="https://community.parseplatform.org/" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">Community</a></li>
-                <li><a href="https://stackoverflow.com/tags/parse-platform" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">Stack Overflow</a></li>
+                <li><a href="https://discord.gg/3BbTCJtZ5j" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">Discord</a></li>
                 <li><a href="https://github.com/parse-community" className="hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a></li>
               </ul>
             </div>
