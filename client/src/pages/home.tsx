@@ -365,11 +365,6 @@ export default function Home() {
                     Get Parse Dashboard
                   </a>
                 </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <a href="https://docs.parseplatform.org/parse-dashboard/guide/" target="_blank" rel="noopener noreferrer">
-                    View Documentation <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
               </div>
             </div>
             
