@@ -680,12 +680,14 @@ export default function Home() {
                     <span className="text-gray-400"># Create a new Booking object</span>{'\n'}
                     curl -X POST \{'\n'}
                     {'  '}-H "X-Parse-Application-Id: myAppId" \{'\n'}
+                    {'  '}-H "X-Parse-Master-Key: myMasterKey" \{'\n'}
                     {'  '}-H "Content-Type: application/json" \{'\n'}
                     {'  '}-d '{"{\"room\":101,\"guests\":2,\"nights\":4}"}' {'\\'}{'\n'}
                     {'  '}http://localhost:1337/parse/classes/Booking{'\n\n'}
                     <span className="text-gray-400"># Get all bookings of room 101</span>{'\n'}
                     curl -X GET \{'\n'}
                     {'  '}-H "X-Parse-Application-Id: myAppId" \{'\n'}
+                    {'  '}-H "X-Parse-Master-Key: myMasterKey" \{'\n'}
                     {'  '}-G \{'\n'}
                     {'  '}--data-urlencode {'\'where={\"room\":{\"$eq\":101}}\''} {'\\'}{'\n'}
                     {'  '}http://localhost:1337/parse/classes/Booking
