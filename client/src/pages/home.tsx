@@ -1,48 +1,45 @@
-import { useQuery } from "@tanstack/react-query";
+import { AnimatedCounter } from "@/components/animated-counter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { AnimatedCounter } from "@/components/animated-counter";
+import { useQuery } from "@tanstack/react-query";
 
 import { TypingHero } from "@/components/typing-hero";
 import { useTheme } from "@/hooks/use-theme";
 import { fetchGitHubStats } from "@/lib/github-api";
-import { 
-  Database, 
-  Shield, 
-  Plug, 
-  Zap, 
-  Cloud, 
-  Server,
-  Github,
-  ExternalLink,
+import parseLogoPath from "@assets/parse-logo-transparent-blue-round_1753267131582.png";
+import {
   Book,
-  Users,
-  MessageCircle,
-  Menu,
-  X,
-  Moon,
-  Sun,
-  Star,
-  GitFork,
-  Check,
-  Smartphone,
-  Code,
   Box,
-  HammerIcon
+  Check,
+  Cloud,
+  Code,
+  Database,
+  Github,
+  HammerIcon,
+  Menu,
+  MessageCircle,
+  Moon,
+  Plug,
+  Server,
+  Shield,
+  Smartphone,
+  Sun,
+  Users,
+  X,
+  Zap
 } from "lucide-react";
-import { 
-  SiApple,
+import { useState } from "react";
+import {
   SiAndroid,
+  SiApple,
+  SiDiscord,
+  SiDotnet,
+  SiFlutter,
   SiJavascript,
   SiPhp,
-  SiFlutter,
-  SiDotnet,
-  SiSwift,
-  SiDiscord
+  SiSwift
 } from "react-icons/si";
-import { useState } from "react";
 import { Link } from "wouter";
-import parseLogoPath from "@assets/parse-logo-transparent-blue-round_1753267131582.png";
 
 export default function Home() {
   const { theme, toggleTheme } = useTheme();
@@ -95,16 +92,6 @@ export default function Home() {
   ];
 
   const sdks = [
-    { 
-      name: "Parse Server", 
-      icon: Server, 
-      stars: githubStats?.parseServer.stars || 20806, 
-      color: "from-blue-500 to-blue-600",
-      githubUrl: "https://github.com/parse-community/parse-server",
-      docsUrl: "https://docs.parseplatform.org/parse-server/guide/",
-      cloudCodeUrl: "https://docs.parseplatform.org/cloudcode/guide/",
-      schemasUrl: "https://docs.parseplatform.org/defined-schema/guide/"
-    },
     { 
       name: "iOS / Objective-C", 
       icon: SiApple, 
@@ -170,6 +157,47 @@ export default function Home() {
     }
   ];
 
+  const serverApis = [
+    { 
+      name: "Parse Server", 
+      icon: Server, 
+      stars: githubStats?.parseServer.stars || 20806, 
+      color: "from-blue-500 to-blue-600",
+      githubUrl: "https://github.com/parse-community/parse-server",
+      docsUrl: "https://docs.parseplatform.org/parse-server/guide/",
+      cloudCodeUrl: "https://docs.parseplatform.org/cloudcode/guide/",
+      schemasUrl: "https://docs.parseplatform.org/defined-schema/guide/",
+      description: "The core backend server that provides all Parse Platform functionality"
+    },
+    { 
+      name: "Cloud Code", 
+      icon: Cloud, 
+      stars: null, 
+      color: "from-purple-500 to-purple-600",
+      docsUrl: "https://docs.parseplatform.org/cloudcode/guide/",
+      apiUrl: "https://docs.parseplatform.org/cloudcode/guide/",
+      description: "Server-side JavaScript functions for custom business logic"
+    },
+    { 
+      name: "REST API", 
+      icon: Code, 
+      stars: null, 
+      color: "from-green-500 to-green-600",
+      docsUrl: "https://docs.parseplatform.org/rest/guide/",
+      apiUrl: "https://docs.parseplatform.org/rest/guide/",
+      description: "RESTful HTTP API for all Parse Platform operations"
+    },
+    { 
+      name: "GraphQL API", 
+      icon: Database, 
+      stars: null, 
+      color: "from-pink-500 to-pink-600",
+      docsUrl: "https://docs.parseplatform.org/graphql/guide/",
+      apiUrl: "https://docs.parseplatform.org/graphql/guide/",
+      description: "Modern GraphQL API with queries, mutations, and subscriptions"
+    }
+  ];
+
   const totalStars = githubStats ? 
     githubStats.parseServer.stars + githubStats.parseDashboard.stars + 
     githubStats.parseJsSDK.stars + githubStats.parseIOSSDK.stars + 
@@ -193,12 +221,12 @@ export default function Home() {
               </div>
               <div className="hidden md:flex space-x-6">
                 <a href="#features" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
+                <a href="#server-apis" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Server & APIs</a>
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
-                <a href="https://github.com/parse-community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -229,12 +257,12 @@ export default function Home() {
             <div className="md:hidden border-t border-gray-200 dark:border-gray-700 py-4">
               <div className="flex flex-col space-y-4">
                 <a href="#features" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
+                <a href="#server-apis" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Server & APIs</a>
                 <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
-                <a href="https://github.com/parse-community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <Button asChild className="w-fit">
                   <a href="#get-started">Get Started</a>
                 </Button>
@@ -346,8 +374,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Server and APIs Section */}
+      <section id="server-apis" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Server and APIs</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">Core backend services and APIs for your applications</p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {serverApis.map((api, index) => (
+              <Card key={index} className={`bg-gradient-to-br ${api.color} text-white hover:shadow-lg transition-all duration-300 group`}>
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <api.icon className="h-6 w-6 mr-3 flex-shrink-0" />
+                    <h3 className="font-semibold text-sm">{api.name}</h3>
+                  </div>
+                  <p className="text-xs opacity-90 mb-4">{api.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {api.githubUrl && (
+                      <a 
+                        href={api.githubUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                        title="View on GitHub"
+                      >
+                        <Github className="h-4 w-4" />
+                      </a>
+                    )}
+                    <a 
+                      href={api.docsUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      title="View Documentation"
+                    >
+                      <Book className="h-4 w-4" />
+                    </a>
+                    {api.schemasUrl && (
+                      <a 
+                        href={api.schemasUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                        title="Defined Schemas Guide"
+                      >
+                        <Database className="h-4 w-4" />
+                      </a>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SDKs Section */}
-      <section id="sdks" className="py-20">
+      <section id="sdks" className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Multi-Platform SDKs</h2>
@@ -361,10 +446,6 @@ export default function Home() {
                   <div className="flex items-center mb-4">
                     <sdk.icon className="h-6 w-6 mr-3 flex-shrink-0" />
                     <h3 className="font-semibold text-sm">{sdk.name}</h3>
-                  </div>
-                  <div className="flex items-center text-sm opacity-90 mb-4">
-                    <Star className="h-3 w-3 mr-1" />
-                    <span>{sdk.stars.toLocaleString()}</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <a 
@@ -394,28 +475,6 @@ export default function Home() {
                         title="API Reference"
                       >
                         <Code className="h-4 w-4" />
-                      </a>
-                    )}
-                    {sdk.cloudCodeUrl && (
-                      <a 
-                        href={sdk.cloudCodeUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
-                        title="Cloud Code Guide"
-                      >
-                        <Cloud className="h-4 w-4" />
-                      </a>
-                    )}
-                    {sdk.schemasUrl && (
-                      <a 
-                        href={sdk.schemasUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
-                        title="Defined Schemas Guide"
-                      >
-                        <Database className="h-4 w-4" />
                       </a>
                     )}
                   </div>
@@ -656,8 +715,8 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-4">Parse Server Guide</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Complete guide for deploying and configuring Parse Server</p>
                 <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="https://docs.parseplatform.org/parse-server/guide/" target="_blank" rel="noopener noreferrer">
-                    Read Documentation <ExternalLink className="ml-2 h-4 w-4" />
+                  <a href="#server-apis">
+                    Read Documentation
                   </a>
                 </Button>
               </CardContent>
@@ -668,12 +727,10 @@ export default function Home() {
                 <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors">
                   <Code className="h-6 w-6 text-purple-500" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">API Reference</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">REST API documentation for Parse Server</p>
-                <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="https://docs.parseplatform.org/rest/guide/" target="_blank" rel="noopener noreferrer">
-                    View API Docs <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
+                <h3 className="text-xl font-semibold mb-4">Postman Template</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Ready-to-use Postman collection for Parse Server REST API testing</p>
+                <Button variant="link" className="p-0 h-auto text-gray-400" disabled>
+                  Coming Soon
                 </Button>
               </CardContent>
             </Card>
@@ -686,8 +743,8 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-4">Client SDK Guides</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Platform-specific integration guides for all supported SDKs</p>
                 <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="https://docs.parseplatform.org/" target="_blank" rel="noopener noreferrer">
-                    Browse SDKs <ExternalLink className="ml-2 h-4 w-4" />
+                  <a href="#sdks">
+                    Browse SDKs
                   </a>
                 </Button>
               </CardContent>
