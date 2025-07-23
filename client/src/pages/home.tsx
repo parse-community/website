@@ -479,6 +479,57 @@ export default function Home() {
                 </pre>
               </CardContent>
             </Card>
+
+            {/* Make Requests Section */}
+            <div className="mt-16">
+              <h3 className="text-3xl font-bold text-white text-center mb-8">Make requests</h3>
+              
+              <Card className="bg-gray-900 text-green-400 mb-6">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <span className="text-gray-400 text-sm">create.sh</span>
+                  </div>
+                  <pre className="text-sm overflow-x-auto">
+                    <code>
+                      <span className="text-gray-400"># Create a new Booking object</span>{'\n'}
+                      curl -X POST \{'\n'}
+                      {'  '}-H "X-Parse-Application-Id: myAppId" \{'\n'}
+                      {'  '}-H "Content-Type: application/json" \{'\n'}
+                      {'  '}-d '{{"city":"London","nights":4,"room":101,"guests":2}}' \{'\n'}
+                      {'  '}http://localhost:1337/parse/classes/Booking
+                    </code>
+                  </pre>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-gray-900 text-green-400">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <span className="text-gray-400 text-sm">query.sh</span>
+                  </div>
+                  <pre className="text-sm overflow-x-auto">
+                    <code>
+                      <span className="text-gray-400"># Get all bookings with at least 2 guests</span>{'\n'}
+                      curl -X GET \{'\n'}
+                      {'  '}-H "X-Parse-Application-Id: myAppId" \{'\n'}
+                      {'  '}-G \{'\n'}
+                      {'  '}--data-urlencode 'where={{"guests":{{"$gte":2}}}}' \{'\n'}
+                      {'  '}http://localhost:1337/parse/classes/Booking
+                    </code>
+                  </pre>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
