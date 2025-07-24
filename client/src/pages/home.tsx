@@ -251,7 +251,7 @@ export default function Home() {
                 {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
               <Button asChild className="hidden md:inline-flex">
-                <a href="#get-started">Get Started</a>
+                <a href="#get-started">Start Building</a>
               </Button>
             </div>
           </div>
@@ -286,14 +286,14 @@ export default function Home() {
               Parse Platform is your complete backend solution for mobile and web applications.<br />Deploy anywhere, scale infinitely, own your data.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button size="lg" className="text-lg" asChild>
+              <Button size="lg" className="text-lg h-12" asChild>
                 <a href="#get-started">
                   Start Building <HammerIcon className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button variant="outline" size="lg" className="text-lg" asChild>
+              <Button variant="outline" size="lg" className="text-lg h-12 py-6" asChild>
                 <a href="#docs">
-                  View Documentation <Book className="ml-2 h-4 w-4" />
+                  Documentation <Book className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </div>
@@ -391,41 +391,41 @@ export default function Home() {
             {serverApis.map((api, index) => (
               <Card key={index} className={`bg-gradient-to-br ${api.color} text-white hover:shadow-lg transition-all duration-300 group`}>
                 <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-6">
                     <api.icon className="h-6 w-6 mr-3 flex-shrink-0" />
                     <h3 className="font-semibold text-sm">{api.name}</h3>
                   </div>
-                  <p className="text-xs opacity-90 mb-4">{api.description}</p>
-                  <div className="flex flex-wrap gap-2">
+                  <p className="text-xs opacity-90 mb-6">{api.description}</p>
+                  <div className="flex flex-col gap-3">
                     {api.githubUrl && (
                       <a 
                         href={api.githubUrl} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
-                        title="View on GitHub"
+                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
                       >
-                        <Github className="h-4 w-4" />
+                        <Github className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span className="text-xs">Source Code</span>
                       </a>
                     )}
                     <a 
                       href={api.docsUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
-                      title="View Documentation"
+                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
                     >
-                      <Book className="h-4 w-4" />
+                      <Book className="h-4 w-4 mr-2 flex-shrink-0" />
+                      <span className="text-xs">Documentation</span>
                     </a>
                     {api.schemasUrl && (
                       <a 
                         href={api.schemasUrl} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
-                        title="Defined Schemas Guide"
+                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
                       >
-                        <Database className="h-4 w-4" />
+                        <Database className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span className="text-xs">Schema Guide</span>
                       </a>
                     )}
                   </div>
@@ -448,38 +448,38 @@ export default function Home() {
             {sdks.map((sdk, index) => (
               <Card key={index} className={`bg-gradient-to-br ${sdk.color} text-white hover:shadow-lg transition-all duration-300 group`}>
                 <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-6">
                     <sdk.icon className="h-6 w-6 mr-3 flex-shrink-0" />
                     <h3 className="font-semibold text-sm">{sdk.name}</h3>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-col gap-3">
                     <a 
                       href={sdk.githubUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
-                      title="View on GitHub"
+                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
                     >
-                      <Github className="h-4 w-4" />
+                      <Github className="h-4 w-4 mr-2 flex-shrink-0" />
+                      <span className="text-xs">Source Code</span>
                     </a>
                     <a 
                       href={sdk.docsUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
-                      title="View Documentation"
+                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
                     >
-                      <Book className="h-4 w-4" />
+                      <Book className="h-4 w-4 mr-2 flex-shrink-0" />
+                      <span className="text-xs">Documentation</span>
                     </a>
                     {sdk.apiUrl && (
                       <a 
                         href={sdk.apiUrl} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
-                        title="API Reference"
+                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
                       >
-                        <Code className="h-4 w-4" />
+                        <Code className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span className="text-xs">API Reference</span>
                       </a>
                     )}
                   </div>
@@ -666,7 +666,7 @@ export default function Home() {
 
             {/* Heading */}
             <div className="text-center text-white mb-8 mt-16">
-              <p className="text-xl opacity-90">Save and find your first object using the REST API</p>
+              <p className="text-xl opacity-90">Then save and find your first object using Parse Server's <a href="#server-apis" className="text-blue-300 hover:text-blue-200 underline transition-colors">REST API</a></p>
             </div>
 
             {/* Code Example */}
