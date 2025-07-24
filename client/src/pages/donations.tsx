@@ -64,7 +64,7 @@ export default function Donations() {
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
               <Heart className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">Donations</span>
+              <span className="text-xl font-bold">Donation</span>
             </Link>
             <Button variant="outline" asChild>
               <Link href="/">← Back to Home</Link>
@@ -320,7 +320,7 @@ export default function Donations() {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-6">
               <Heart className="w-8 h-8" />
-              <span className="text-xl font-bold">Donations</span>
+              <span className="text-xl font-bold">Donation</span>
             </div>
             <p className="text-gray-400 mb-8">
               Thank you for supporting the Parse Platform community and keeping our project sustainable

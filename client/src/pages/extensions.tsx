@@ -318,7 +318,7 @@ export default function Extensions() {
                   Home
                 </Link>
                 <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors py-2">
-                  Donations
+                  Donation
                 </Link>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors py-2">
                   Security
