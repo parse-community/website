@@ -15,6 +15,7 @@ import {
   Check,
   Cloud,
   Code,
+  Cpu,
   Database,
   Github,
   HammerIcon,
@@ -76,7 +77,7 @@ export default function Home() {
       icon: Plug,
       title: "APIs & Integration",
       description: "REST and GraphQL APIs with multi-platform SDKs for seamless integration across all major platforms.",
-      highlights: ["REST & GraphQL APIs", "8+ Platform SDKs", "Custom queries & mutations"]
+      highlights: ["REST & GraphQL APIs", "Multi-Platform SDKs", "Custom queries & mutations"]
     },
     {
       icon: Zap,
@@ -100,7 +101,7 @@ export default function Home() {
 
   const sdks = [
     { 
-      name: "iOS / Objective-C", 
+      name: "Apple", 
       icon: SiApple, 
       stars: githubStats?.parseIOSSDK.stars || 2809, 
       color: "text-gray-700",
@@ -170,6 +171,15 @@ export default function Home() {
       githubUrl: "https://github.com/parse-community/Parse-Swift",
       docsUrl: "https://docs.parseplatform.org/swift/guide/",
       apiUrl: "https://parseplatform.org/Parse-Swift/release/documentation/parseswift/"
+    },
+    { 
+      name: "Arduino", 
+      icon: Cpu, 
+      stars: 109, 
+      color: "text-teal-500",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-Arduino",
+      docsUrl: "https://docs.parseplatform.org/arduino/guide/",
+      apiUrl: "http://parseplatform.org/Parse-SDK-Arduino/api/"
     }
   ];
 
@@ -351,7 +361,7 @@ export default function Home() {
               <Card className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md border border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6 text-center">
                   <div className="text-3xl font-bold text-primary mb-2">
-                    <AnimatedCounter target={8} />
+                    <AnimatedCounter target={9} />
                   </div>
                   <div className="text-gray-600 dark:text-gray-400 text-sm">SDK Platforms</div>
                 </CardContent>
@@ -483,7 +493,7 @@ export default function Home() {
                     <h3 className="text-xl font-semibold">{sdk.name}</h3>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    {sdk.name === "iOS / Objective-C" && "Native iOS SDK with full Parse Platform functionality"}
+                    {sdk.name === "Apple" && "Native iOS SDK with full Parse Platform functionality"}
                     {sdk.name === "Android" && "Native Android SDK for Parse Platform integration"}
                     {sdk.name === "JavaScript" && "Universal JavaScript SDK for web and Node.js"}
                     {sdk.name === "PHP" && "Server-side PHP SDK for Parse Platform"}
@@ -491,6 +501,7 @@ export default function Home() {
                     {sdk.name === "Dart" && "Pure Dart SDK for server and command-line applications"}
                     {sdk.name === ".NET" && "Cross-platform .NET SDK for Parse Platform"}
                     {sdk.name === "Swift" && "Modern Swift SDK with async/await support"}
+                    {sdk.name === "Arduino" && "IoT SDK for Arduino microcontrollers and ESP32/ESP8266"}
                   </p>
                   <div className="flex flex-col gap-2">
                     <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
