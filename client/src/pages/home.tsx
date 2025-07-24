@@ -21,6 +21,7 @@ import {
   Menu,
   MessageCircle,
   Moon,
+  OrbitIcon,
   Plug,
   Server,
   Shield,
@@ -665,7 +666,7 @@ export default function Home() {
 
             {/* Heading */}
             <div className="text-center text-white mb-8 mt-16">
-              <p className="text-xl opacity-90">Save and find objects using the REST API</p>
+              <p className="text-xl opacity-90">Save and find your first object using the REST API</p>
             </div>
 
             {/* Code Example */}
@@ -731,7 +732,7 @@ export default function Home() {
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors">
-                  <Code className="h-6 w-6 text-purple-500" />
+                  <OrbitIcon className="h-6 w-6 text-purple-500" />
                 </div>
                 <h3 className="text-xl font-semibold mb-4">Postman Template</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Ready-to-use Postman collection for Parse Server REST API testing</p>
