@@ -103,7 +103,7 @@ export default function Donations() {
       </section>
 
       {/* Impact Stats */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
+      <section className="py-20 bg-gray-100 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Impact</h2>
@@ -180,7 +180,7 @@ export default function Donations() {
       </section>
 
       {/* Donation Section */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
+      <section className="py-20 bg-gray-100 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <Button size="lg" className="text-2xl px-14 py-6 h-auto" asChild>
@@ -256,7 +256,7 @@ export default function Donations() {
       </section>
 
       {/* Alternative Ways to Help */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
+      <section className="py-20 bg-gray-100 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Other Ways to Help</h2>
