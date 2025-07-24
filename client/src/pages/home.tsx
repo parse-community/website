@@ -13,7 +13,6 @@ import {
   Book,
   Box,
   Check,
-  ChevronsLeftRightEllipsisIcon,
   Cloud,
   Code,
   Database,
@@ -197,7 +196,7 @@ export default function Home() {
     },
     { 
       name: "REST API", 
-      icon: ChevronsLeftRightEllipsisIcon, 
+      icon: Plug, 
       stars: null, 
       color: "text-green-500",
       docsUrl: "https://docs.parseplatform.org/rest/guide/",
@@ -206,7 +205,7 @@ export default function Home() {
     },
     { 
       name: "GraphQL API", 
-      icon: ChevronsLeftRightEllipsisIcon, 
+      icon: Plug, 
       stars: null, 
       color: "text-pink-500",
       docsUrl: "https://docs.parseplatform.org/graphql/guide/",
