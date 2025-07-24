@@ -7,7 +7,7 @@ import { TypingHero } from "@/components/typing-hero";
 import { useTheme } from "@/hooks/use-theme";
 import { fetchGitHubStats } from "@/lib/github-api";
 import { calculateTotalForks, calculateTotalStars } from "@/lib/github-utils";
-import parseLogoPath from "@assets/parse-logo-transparent-blue-round_1753267131582.png";
+import parseLogoPath from "@assets/parse-logo-vector.svg";
 import {
   Book,
   Box,
@@ -212,7 +212,7 @@ export default function Home() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">
-                <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8" />
+                <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8 text-primary" style={{filter: 'brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(201deg) brightness(102%) contrast(103%)'}} />
                 <span className="text-xl font-bold">Parse Platform</span>
               </div>
               <div className="hidden md:flex space-x-6">
@@ -822,7 +822,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-3 mb-6">
-                <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8" />
+                <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8" style={{filter: 'brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(201deg) brightness(102%) contrast(103%)'}} />
                 <span className="text-xl font-bold">Parse Platform</span>
               </div>
               <p className="text-gray-400">The open source Backend-as-a-Service platform for building modern applications.</p>
