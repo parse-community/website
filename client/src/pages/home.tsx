@@ -76,7 +76,7 @@ export default function Home() {
       icon: Plug,
       title: "APIs & Integration",
       description: "REST and GraphQL APIs with multi-platform SDKs for seamless integration across all major platforms.",
-      highlights: ["REST & GraphQL APIs", "12+ Platform SDKs", "Custom queries & mutations"]
+      highlights: ["REST & GraphQL APIs", "8+ Platform SDKs", "Custom queries & mutations"]
     },
     {
       icon: Zap,
@@ -347,7 +347,7 @@ export default function Home() {
               <Card className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md border border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6 text-center">
                   <div className="text-3xl font-bold text-primary mb-2">
-                    <AnimatedCounter target={12} />
+                    <AnimatedCounter target={8} />
                   </div>
                   <div className="text-gray-600 dark:text-gray-400 text-sm">SDK Platforms</div>
                 </CardContent>
