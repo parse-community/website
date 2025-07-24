@@ -240,6 +240,9 @@ export default function Donations() {
                     <span className="font-bold text-blue-800 dark:text-blue-200">1%</span>
                   </div>
                 </div>
+                <p className="text-xs text-blue-500 dark:text-blue-600 mt-4">
+                  Historic expense statistics as of July 24, 2025.
+                </p>
                 <Button variant="outline" className="w-full mt-6 border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-800" asChild>
                   <a href="https://opencollective.com/parse-server" target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-4 w-4" />
