@@ -297,7 +297,10 @@ export default function Home() {
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
-                <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
+                <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors flex items-center space-x-1">
+                  <ShieldCheck className="h-4 w-4 text-yellow-500" />
+                  <span>Security</span>
+                </Link>
                 <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors flex items-center space-x-1">
                   <Heart className="h-4 w-4 text-red-500" />
                   <span>Donation</span>
