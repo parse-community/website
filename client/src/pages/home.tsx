@@ -45,7 +45,8 @@ import {
   SiFlutter,
   SiJavascript,
   SiPhp,
-  SiSwift
+  SiSwift,
+  SiX
 } from "react-icons/si";
 import { Link } from "wouter";
 
@@ -818,25 +819,7 @@ export default function Home() {
             <p className="text-xl text-gray-600 dark:text-gray-300">Connect with developers worldwide using Parse Platform</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 [&>*:nth-child(4)]:lg:col-start-2">
-            <Card className="group hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <SiDiscord className="h-8 w-8 text-indigo-500 mr-3 flex-shrink-0" />
-                  <div className="flex items-center space-x-2">
-                    <h3 className="text-xl font-semibold">Discord</h3>
-                    <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>
-                  </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">Join our Discord server for real-time chat and community support</p>
-                <Button className="bg-indigo-500 hover:bg-indigo-600 w-full" asChild>
-                  <a href="https://discord.gg/3BbTCJtZ5j" target="_blank" rel="noopener noreferrer">
-                    Join Discord
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
@@ -847,6 +830,21 @@ export default function Home() {
                 <Button className="bg-blue-500 hover:bg-blue-600 w-full" asChild>
                   <a href="https://community.parseplatform.org/" target="_blank" rel="noopener noreferrer">
                     Join Forum
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="flex items-center mb-6">
+                  <MessageCircle className="h-8 w-8 text-green-500 mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">Chat</h3>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Connect with the community on our Slack workspace for instant communication</p>
+                <Button className="bg-green-500 hover:bg-green-600 w-full" asChild>
+                  <a href="http://chat.parseplatform.org" target="_blank" rel="noopener noreferrer">
+                    Join Slack
                   </a>
                 </Button>
               </CardContent>
@@ -867,6 +865,24 @@ export default function Home() {
               </CardContent>
             </Card>
 
+            <Card className="group hover:shadow-xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="flex items-center mb-6">
+                  <SiDiscord className="h-8 w-8 text-indigo-500 mr-3 flex-shrink-0" />
+                  <div className="flex items-center space-x-2">
+                    <h3 className="text-xl font-semibold">Discord</h3>
+                    <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Join our Discord server for real-time chat and community support</p>
+                <Button className="bg-indigo-500 hover:bg-indigo-600 w-full" asChild>
+                  <a href="https://discord.gg/3BbTCJtZ5j" target="_blank" rel="noopener noreferrer">
+                    Join Discord
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+
              <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
@@ -877,6 +893,21 @@ export default function Home() {
                 <Button variant="secondary" className="w-full" asChild>
                   <a href="https://github.com/parse-community" target="_blank" rel="noopener noreferrer">
                     View Repositories
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="flex items-center mb-6">
+                  <SiX className="h-8 w-8 text-gray-900 dark:text-white mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">Follow us on X</h3>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Stay updated with the latest Parse Platform news and announcements</p>
+                <Button className="bg-gray-900 hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 w-full" asChild>
+                  <a href="https://x.com/parseplatform" target="_blank" rel="noopener noreferrer">
+                    Follow @parseplatform
                   </a>
                 </Button>
               </CardContent>
