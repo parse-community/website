@@ -36,7 +36,6 @@ export default function Donations() {
       title: "Supporter",
       amount: "$5 - $25",
       description: "Help us cover basic infrastructure costs",
-      benefits: ["Community support", "Bug fixes priority"],
       color: "bg-green-500/10 text-green-600 dark:text-green-400 border-green-200 dark:border-green-800",
       icon: Coffee
     },
@@ -44,7 +43,6 @@ export default function Donations() {
       title: "Contributor", 
       amount: "$25 - $100",
       description: "Support feature development and maintenance",
-      benefits: ["Priority issue support", "Feature request consideration", "Recognition in releases"],
       color: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800",
       icon: Code
     },
@@ -52,7 +50,6 @@ export default function Donations() {
       title: "Sponsor",
       amount: "$100 - $500",
       description: "Major support for security and stability improvements",
-      benefits: ["Direct communication channel", "Influence on roadmap", "Company logo in README"],
       color: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800",
       icon: Star
     },
@@ -60,7 +57,6 @@ export default function Donations() {
       title: "Enterprise",
       amount: "$500+",
       description: "Strategic partnership for enterprise needs",
-      benefits: ["Dedicated support", "Custom feature development", "Priority security fixes"],
       color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800",
       icon: Shield
     }
@@ -208,7 +204,7 @@ export default function Donations() {
                 </div>
                 <h3 className="text-2xl font-semibold mb-4">Security Audits</h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Professional security audits and our bug bounty program ensure Parse Server remains secure for all users.
+                  Security audits and our bug bounty program ensure Parse Server remains secure for all users.
                 </p>
               </CardContent>
             </Card>
@@ -240,17 +236,6 @@ export default function Donations() {
                     </div>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-6">{tier.description}</p>
-                  <div className="space-y-2">
-                    <h4 className="font-semibold">Benefits:</h4>
-                    <ul className="space-y-1">
-                      {tier.benefits.map((benefit, i) => (
-                        <li key={i} className="text-sm text-gray-600 dark:text-gray-300 flex items-center">
-                          <Heart className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
-                          {benefit}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -279,15 +264,15 @@ export default function Donations() {
               <ul className="space-y-4 text-gray-600 dark:text-gray-300">
                 <li className="flex items-start">
                   <Heart className="h-5 w-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                  <span>All expenses are publicly visible and approved by the community</span>
+                  <span>All expenses are publicly visible</span>
                 </li>
                 <li className="flex items-start">
                   <Heart className="h-5 w-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                  <span>Quarterly reports detail how funds are allocated</span>
+                  <span>Reports detail how funds are allocated</span>
                 </li>
                 <li className="flex items-start">
                   <Heart className="h-5 w-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                  <span>Zero administrative overhead - 100% goes to the project</span>
+                  <span>Ulta-low administrative overhead - 99% of funds go to the project</span>
                 </li>
               </ul>
             </div>
@@ -299,19 +284,19 @@ export default function Donations() {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
                     <span className="text-blue-700 dark:text-blue-300">Development & Maintenance</span>
-                    <span className="font-bold text-blue-800 dark:text-blue-200">60%</span>
+                    <span className="font-bold text-blue-800 dark:text-blue-200">78%</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-700 dark:text-blue-300">Financial Fees</span>
+                    <span className="font-bold text-blue-800 dark:text-blue-200">16%</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-blue-700 dark:text-blue-300">Infrastructure & Hosting</span>
-                    <span className="font-bold text-blue-800 dark:text-blue-200">25%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-blue-700 dark:text-blue-300">Security & Audits</span>
-                    <span className="font-bold text-blue-800 dark:text-blue-200">10%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-blue-700 dark:text-blue-300">Community & Events</span>
                     <span className="font-bold text-blue-800 dark:text-blue-200">5%</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-700 dark:text-blue-300">Administration</span>
+                    <span className="font-bold text-blue-800 dark:text-blue-200">1%</span>
                   </div>
                 </div>
                 <Button variant="outline" className="w-full mt-6 border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-800" asChild>
