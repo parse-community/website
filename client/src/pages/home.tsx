@@ -823,7 +823,10 @@ export default function Home() {
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
                   <SiDiscord className="h-8 w-8 text-indigo-500 mr-3 flex-shrink-0" />
-                  <h3 className="text-xl font-semibold">Discord</h3>
+                  <div className="flex items-center space-x-2">
+                    <h3 className="text-xl font-semibold">Discord</h3>
+                    <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">NEW</span>
+                  </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Join our Discord server for real-time chat and community support</p>
                 <Button className="bg-indigo-500 hover:bg-indigo-600 w-full" asChild>
