@@ -9,6 +9,7 @@ import { fetchGitHubStats } from "@/lib/github-api";
 import { calculateTotalForks, calculateTotalStars } from "@/lib/github-utils";
 import parseLogoPath from "@assets/parse-logo-vector.svg";
 import {
+  Blocks,
   Book,
   Box,
   Check,
@@ -18,6 +19,7 @@ import {
   Github,
   HammerIcon,
   Heart,
+  List,
   Menu,
   MessageCircle,
   Moon,
@@ -74,7 +76,7 @@ export default function Home() {
       icon: Plug,
       title: "APIs & Integration",
       description: "REST and GraphQL APIs with multi-platform SDKs for seamless integration across all major platforms.",
-      highlights: ["REST & GraphQL APIs", "12+ Platform SDKs", "Custom queries & mutations"]
+      highlights: ["REST & GraphQL APIs", "8+ Platform SDKs", "Custom queries & mutations"]
     },
     {
       icon: Zap,
@@ -101,7 +103,7 @@ export default function Home() {
       name: "iOS / Objective-C", 
       icon: SiApple, 
       stars: githubStats?.parseIOSSDK.stars || 2809, 
-      color: "from-gray-600 to-gray-700",
+      color: "text-gray-700",
       githubUrl: "https://github.com/parse-community/Parse-SDK-iOS-OSX",
       docsUrl: "https://docs.parseplatform.org/ios/guide/",
       apiUrl: "https://parseplatform.org/Parse-SDK-iOS-OSX/api/"
@@ -110,7 +112,7 @@ export default function Home() {
       name: "Android", 
       icon: SiAndroid, 
       stars: githubStats?.parseAndroidSDK.stars || 1879, 
-      color: "from-green-500 to-green-600",
+      color: "text-green-500",
       githubUrl: "https://github.com/parse-community/Parse-SDK-Android",
       docsUrl: "https://docs.parseplatform.org/android/guide/",
       apiUrl: "https://parseplatform.org/Parse-SDK-Android/api/"
@@ -119,7 +121,7 @@ export default function Home() {
       name: "JavaScript", 
       icon: SiJavascript, 
       stars: githubStats?.parseJsSDK.stars || 1317, 
-      color: "from-yellow-500 to-yellow-600",
+      color: "text-yellow-500",
       githubUrl: "https://github.com/parse-community/Parse-SDK-JS",
       docsUrl: "https://docs.parseplatform.org/js/guide/",
       apiUrl: "https://parseplatform.org/Parse-SDK-JS/api/"
@@ -128,7 +130,7 @@ export default function Home() {
       name: "PHP", 
       icon: SiPhp, 
       stars: 811, 
-      color: "from-purple-500 to-purple-600",
+      color: "text-purple-500",
       githubUrl: "https://github.com/parse-community/parse-php-sdk",
       docsUrl: "https://docs.parseplatform.org/php/guide/",
       apiUrl: "https://parseplatform.org/parse-php-sdk/api/"
@@ -137,7 +139,7 @@ export default function Home() {
       name: "Flutter", 
       icon: SiFlutter, 
       stars: 575, 
-      color: "from-blue-400 to-blue-500",
+      color: "text-blue-400",
       githubUrl: "https://github.com/parse-community/Parse-SDK-Flutter/tree/master/packages/flutter",
       docsUrl: "https://docs.parseplatform.org/flutter/guide/",
       apiUrl: "https://pub.dev/documentation/parse_server_sdk_flutter/latest/"
@@ -146,7 +148,7 @@ export default function Home() {
       name: "Dart", 
       icon: SiDart, 
       stars: 575, 
-      color: "from-cyan-400 to-cyan-500",
+      color: "text-cyan-400",
       githubUrl: "https://github.com/parse-community/Parse-SDK-Flutter/tree/master/packages/dart",
       docsUrl: "https://docs.parseplatform.org/dart/guide/",
       apiUrl: "https://pub.dev/documentation/parse_server_sdk_flutter/latest/"
@@ -155,7 +157,7 @@ export default function Home() {
       name: ".NET", 
       icon: SiDotnet, 
       stars: 323, 
-      color: "from-indigo-500 to-indigo-600",
+      color: "text-indigo-500",
       githubUrl: "https://github.com/parse-community/Parse-SDK-dotNET",
       docsUrl: "https://docs.parseplatform.org/dotnet/guide/",
       apiUrl: "https://parseplatform.org/Parse-SDK-dotNET/api/"
@@ -164,7 +166,7 @@ export default function Home() {
       name: "Swift", 
       icon: SiSwift, 
       stars: 302, 
-      color: "from-orange-500 to-orange-600",
+      color: "text-orange-500",
       githubUrl: "https://github.com/parse-community/Parse-Swift",
       docsUrl: "https://docs.parseplatform.org/swift/guide/",
       apiUrl: "https://parseplatform.org/Parse-Swift/release/documentation/parseswift/"
@@ -176,39 +178,47 @@ export default function Home() {
       name: "Parse Server", 
       icon: Server, 
       stars: githubStats?.parseServer.stars || 20806, 
-      color: "from-blue-500 to-blue-600",
+      color: "text-blue-500",
       githubUrl: "https://github.com/parse-community/parse-server",
       docsUrl: "https://docs.parseplatform.org/parse-server/guide/",
       cloudCodeUrl: "https://docs.parseplatform.org/cloudcode/guide/",
       schemasUrl: "https://docs.parseplatform.org/defined-schema/guide/",
-      description: "The core backend server that provides all Parse Platform functionality"
+      description: "The main backend server powering all Parse Platform features."
     },
     { 
       name: "Cloud Code", 
       icon: Cloud, 
       stars: null, 
-      color: "from-purple-500 to-purple-600",
+      color: "text-purple-500",
       docsUrl: "https://docs.parseplatform.org/cloudcode/guide/",
       apiUrl: "https://docs.parseplatform.org/cloudcode/guide/",
-      description: "Server-side JavaScript functions for custom business logic"
+      description: "Custom server-side JavaScript functions for advanced business logic."
     },
     { 
       name: "REST API", 
       icon: Code, 
       stars: null, 
-      color: "from-green-500 to-green-600",
+      color: "text-green-500",
       docsUrl: "https://docs.parseplatform.org/rest/guide/",
       apiUrl: "https://docs.parseplatform.org/rest/guide/",
-      description: "RESTful HTTP API for all Parse Platform operations"
+      description: "A RESTful HTTP API for interacting with all Parse Platform services."
     },
     { 
       name: "GraphQL API", 
       icon: Database, 
       stars: null, 
-      color: "from-pink-500 to-pink-600",
+      color: "text-pink-500",
       docsUrl: "https://docs.parseplatform.org/graphql/guide/",
       apiUrl: "https://docs.parseplatform.org/graphql/guide/",
-      description: "Modern GraphQL API with queries, mutations, and subscriptions"
+      description: "A modern GraphQL API supporting queries, mutations, and subscriptions."
+    },
+    { 
+      name: "Extensions", 
+      icon: Blocks, 
+      stars: null, 
+      color: "text-orange-500",
+      extensionsUrl: "/extensions",
+      description: "Enhance Parse Server with official and community-built extensions."
     }
   ];
 
@@ -233,13 +243,13 @@ export default function Home() {
                 <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
-                <Link href="/donations" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
-                  <Heart className="h-4 w-4" />
-                  <span>Donation</span>
-                </Link>
                 <Link href="/security" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
-                  <ShieldCheck className="h-4 w-4" />
+                  <ShieldCheck className="h-4 w-4 text-yellow-500" />
                   <span>Security</span>
+                </Link>
+                <Link href="/donations" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
+                  <Heart className="h-4 w-4 text-red-500" />
+                  <span>Donation</span>
                 </Link>
               </div>
             </div>
@@ -276,8 +286,11 @@ export default function Home() {
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
-                <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Donation</Link>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
+                <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors flex items-center space-x-1">
+                  <Heart className="h-4 w-4 text-red-500" />
+                  <span>Donation</span>
+                </Link>
                 <Button asChild className="w-fit">
                   <a href="#get-started">Start Building</a>
                 </Button>
@@ -337,7 +350,7 @@ export default function Home() {
               <Card className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md border border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6 text-center">
                   <div className="text-3xl font-bold text-primary mb-2">
-                    <AnimatedCounter target={12} />
+                    <AnimatedCounter target={8} />
                   </div>
                   <div className="text-gray-600 dark:text-gray-400 text-sm">SDK Platforms</div>
                 </CardContent>
@@ -356,7 +369,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-gray-50 dark:bg-gray-800">
+      <section id="features" className="py-20 bg-gray-100 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Powerful Features</h2>
@@ -390,53 +403,55 @@ export default function Home() {
       </section>
 
       {/* Parse Server and APIs Section */}
-      <section id="server-apis" className="py-20">
+      <section id="server-apis" className="py-20 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Parse Server</h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">Core backend services and APIs for your applications</p>
           </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          {/* Component Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {serverApis.map((api, index) => (
-              <Card key={index} className={`bg-gradient-to-br ${api.color} text-white hover:shadow-lg transition-all duration-300 group`}>
-                <CardContent className="p-6">
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-8">
                   <div className="flex items-center mb-6">
-                    <api.icon className="h-6 w-6 mr-3 flex-shrink-0" />
-                    <h3 className="font-semibold text-sm">{api.name}</h3>
+                    <api.icon className={`h-8 w-8 ${api.color} mr-3 flex-shrink-0`} />
+                    <h3 className="text-xl font-semibold">{api.name}</h3>
                   </div>
-                  <p className="text-xs opacity-90 mb-6">{api.description}</p>
-                  <div className="flex flex-col gap-3">
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">{api.description}</p>
+                  <div className="flex flex-col gap-2">
                     {api.githubUrl && (
-                      <a 
-                        href={api.githubUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
-                      >
-                        <Github className="h-4 w-4 mr-2 flex-shrink-0" />
-                        <span className="text-xs">Source Code</span>
-                      </a>
+                      <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                        <a href={api.githubUrl} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-4 w-4 mr-2" />
+                          Source Code
+                        </a>
+                      </Button>
                     )}
-                    <a 
-                      href={api.docsUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
-                    >
-                      <Book className="h-4 w-4 mr-2 flex-shrink-0" />
-                      <span className="text-xs">Documentation</span>
-                    </a>
+                    {api.docsUrl && (
+                      <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                        <a href={api.docsUrl} target="_blank" rel="noopener noreferrer">
+                          <Book className="h-4 w-4 mr-2" />
+                          Documentation
+                        </a>
+                      </Button>
+                    )}
                     {api.schemasUrl && (
-                      <a 
-                        href={api.schemasUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
-                      >
-                        <Database className="h-4 w-4 mr-2 flex-shrink-0" />
-                        <span className="text-xs">Schema Guide</span>
-                      </a>
+                      <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                        <a href={api.schemasUrl} target="_blank" rel="noopener noreferrer">
+                          <Database className="h-4 w-4 mr-2" />
+                          Schema Guide
+                        </a>
+                      </Button>
+                    )}
+                    {api.extensionsUrl && (
+                      <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                        <Link href={api.extensionsUrl}>
+                          <List className="h-4 w-4 mr-2" />
+                          Explore Extensions
+                        </Link>
+                      </Button>
                     )}
                   </div>
                 </CardContent>
@@ -447,50 +462,51 @@ export default function Home() {
       </section>
 
       {/* SDKs Section */}
-      <section id="sdks" className="py-20 bg-gray-50 dark:bg-gray-800">
+      <section id="sdks" className="py-20 bg-gray-100 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Multi-Platform SDKs</h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">Build for every platform with our comprehensive SDK collection</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {sdks.map((sdk, index) => (
-              <Card key={index} className={`bg-gradient-to-br ${sdk.color} text-white hover:shadow-lg transition-all duration-300 group`}>
-                <CardContent className="p-6">
+              <Card key={index} className="group hover:shadow-xl transition-all duration-300">
+                <CardContent className="p-8">
                   <div className="flex items-center mb-6">
-                    <sdk.icon className="h-6 w-6 mr-3 flex-shrink-0" />
-                    <h3 className="font-semibold text-sm">{sdk.name}</h3>
+                    <sdk.icon className={`h-8 w-8 ${sdk.color} mr-3 flex-shrink-0`} />
+                    <h3 className="text-xl font-semibold">{sdk.name}</h3>
                   </div>
-                  <div className="flex flex-col gap-3">
-                    <a 
-                      href={sdk.githubUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
-                    >
-                      <Github className="h-4 w-4 mr-2 flex-shrink-0" />
-                      <span className="text-xs">Source Code</span>
-                    </a>
-                    <a 
-                      href={sdk.docsUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
-                    >
-                      <Book className="h-4 w-4 mr-2 flex-shrink-0" />
-                      <span className="text-xs">Documentation</span>
-                    </a>
-                    {sdk.apiUrl && (
-                      <a 
-                        href={sdk.apiUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
-                      >
-                        <Code className="h-4 w-4 mr-2 flex-shrink-0" />
-                        <span className="text-xs">API Reference</span>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">
+                    {sdk.name === "iOS / Objective-C" && "Native iOS SDK with full Parse Platform functionality"}
+                    {sdk.name === "Android" && "Native Android SDK for Parse Platform integration"}
+                    {sdk.name === "JavaScript" && "Universal JavaScript SDK for web and Node.js"}
+                    {sdk.name === "PHP" && "Server-side PHP SDK for Parse Platform"}
+                    {sdk.name === "Flutter" && "Cross-platform Flutter SDK for mobile development"}
+                    {sdk.name === "Dart" && "Pure Dart SDK for server and command-line applications"}
+                    {sdk.name === ".NET" && "Cross-platform .NET SDK for Parse Platform"}
+                    {sdk.name === "Swift" && "Modern Swift SDK with async/await support"}
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                      <a href={sdk.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Github className="h-4 w-4 mr-2" />
+                        Source Code
                       </a>
+                    </Button>
+                    <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                      <a href={sdk.docsUrl} target="_blank" rel="noopener noreferrer">
+                        <Book className="h-4 w-4 mr-2" />
+                        Documentation
+                      </a>
+                    </Button>
+                    {sdk.apiUrl && (
+                      <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                        <a href={sdk.apiUrl} target="_blank" rel="noopener noreferrer">
+                          <Code className="h-4 w-4 mr-2" />
+                          API Reference
+                        </a>
+                      </Button>
                     )}
                   </div>
                 </CardContent>
@@ -501,7 +517,7 @@ export default function Home() {
       </section>
 
       {/* Dashboard Section */}
-      <section id="dashboard" className="py-20">
+      <section id="dashboard" className="py-20 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Parse Dashboard</h2>
@@ -715,54 +731,60 @@ export default function Home() {
       </section>
 
       {/* Documentation Section */}
-      <section id="docs" className="py-20 bg-gray-50 dark:bg-gray-800">
+      <section id="docs" className="py-20 bg-gray-100 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Documentation & Resources</h2>
             <p className="text-xl text-gray-600 dark:text-gray-300">Comprehensive guides and references for every platform</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-colors">
-                  <Book className="h-6 w-6 text-blue-500" />
+                <div className="flex items-center mb-6">
+                  <Book className="h-8 w-8 text-blue-500 mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">Parse Server Guide</h3>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Parse Server Guide</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Complete guide for deploying and configuring Parse Server</p>
-                <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="#server-apis">
-                    Read Documentation
-                  </a>
-                </Button>
+                <div className="flex flex-col gap-2">
+                  <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                    <a href="#server-apis">
+                      Read Documentation
+                    </a>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors">
-                  <OrbitIcon className="h-6 w-6 text-purple-500" />
+                <div className="flex items-center mb-6">
+                  <OrbitIcon className="h-8 w-8 text-purple-500 mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">Postman Template</h3>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Postman Template</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Ready-to-use Postman collection for Parse Server REST API testing</p>
-                <Button variant="link" className="p-0 h-auto text-gray-400" disabled>
-                  Coming Soon
-                </Button>
+                <div className="flex flex-col gap-2">
+                  <Button variant="link" className="p-0 h-auto text-gray-400 justify-start" disabled>
+                    Coming Soon
+                  </Button>
+                </div>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition-colors">
-                  <Box className="h-6 w-6 text-green-500" />
+                <div className="flex items-center mb-6">
+                  <Box className="h-8 w-8 text-green-500 mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">Client SDK Guides</h3>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Client SDK Guides</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Platform-specific integration guides for all supported SDKs</p>
-                <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="#sdks">
-                    Browse SDKs
-                  </a>
-                </Button>
+                <div className="flex flex-col gap-2">
+                  <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                    <a href="#sdks">
+                      Browse SDKs
+                    </a>
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -770,7 +792,7 @@ export default function Home() {
       </section>
 
       {/* Community Section */}
-      <section id="community" className="py-20">
+      <section id="community" className="py-20 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Join Our Community</h2>
@@ -778,14 +800,14 @@ export default function Home() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 [&>*:nth-child(4)]:lg:col-start-2">
-            <Card className="group hover:shadow-xl transition-all duration-300 text-center">
+            <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-indigo-500/20 transition-colors">
-                  <SiDiscord className="h-8 w-8 text-indigo-500" />
+                <div className="flex items-center mb-6">
+                  <SiDiscord className="h-8 w-8 text-indigo-500 mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">Discord</h3>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Discord</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Join our Discord server for real-time chat and community support</p>
-                <Button className="bg-indigo-500 hover:bg-indigo-600" asChild>
+                <Button className="bg-indigo-500 hover:bg-indigo-600 w-full" asChild>
                   <a href="https://discord.gg/3BbTCJtZ5j" target="_blank" rel="noopener noreferrer">
                     Join Discord
                   </a>
@@ -793,14 +815,14 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 text-center">
+            <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500/20 transition-colors">
-                  <MessageCircle className="h-8 w-8 text-blue-500" />
+                <div className="flex items-center mb-6">
+                  <MessageCircle className="h-8 w-8 text-blue-500 mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">Community Forum</h3>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Community Forum</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Join discussions about Parse Platform and share your experiences</p>
-                <Button className="bg-blue-500 hover:bg-blue-600" asChild>
+                <Button className="bg-blue-500 hover:bg-blue-600 w-full" asChild>
                   <a href="https://community.parseplatform.org/" target="_blank" rel="noopener noreferrer">
                     Join Forum
                   </a>
@@ -808,29 +830,29 @@ export default function Home() {
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-xl transition-all duration-300 text-center">
+            <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500/20 transition-colors">
-                  <Users className="h-8 w-8 text-purple-500" />
+                <div className="flex items-center mb-6">
+                  <Users className="h-8 w-8 text-purple-500 mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">Community Highlights</h3>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">Community Highlights</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Discover amazing community projects and tools for Parse Platform</p>
-                <Button className="bg-purple-500 hover:bg-purple-600" asChild>
-                  <Link href="/community-highlights">
+                <Button className="bg-purple-500 hover:bg-purple-600 w-full" asChild>
+                  <Link href="/extensions#community-projects">
                     Explore Projects
                   </Link>
                 </Button>
               </CardContent>
             </Card>
 
-             <Card className="group hover:shadow-xl transition-all duration-300 text-center">
+             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
-                <div className="w-16 h-16 bg-gray-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-500/20 transition-colors">
-                  <Github className="h-8 w-8 text-gray-500 dark:text-gray-400" />
+                <div className="flex items-center mb-6">
+                  <Github className="h-8 w-8 text-gray-500 dark:text-gray-400 mr-3 flex-shrink-0" />
+                  <h3 className="text-xl font-semibold">GitHub</h3>
                 </div>
-                <h3 className="text-xl font-semibold mb-4">GitHub</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Contribute to Parse Platform and report issues on GitHub</p>
-                <Button variant="secondary" asChild>
+                <Button variant="secondary" className="w-full" asChild>
                   <a href="https://github.com/parse-community" target="_blank" rel="noopener noreferrer">
                     View Repositories
                   </a>

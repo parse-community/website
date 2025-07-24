@@ -63,8 +63,8 @@ export default function Donations() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <Heart className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">Donations</span>
+              <Heart className="h-8 w-8 text-red-500" />
+              <span className="text-xl font-bold">Donation</span>
             </Link>
             <Button variant="outline" asChild>
               <Link href="/">← Back to Home</Link>
@@ -77,8 +77,8 @@ export default function Donations() {
       <section className="pt-32 pb-16 bg-gradient-to-br from-pink-50 via-white to-red-50 dark:from-gray-900 dark:via-gray-900 dark:to-pink-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <Heart className="h-20 w-20 text-primary mx-auto mb-6" />
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-pink-600 bg-clip-text text-transparent">
+            <Heart className="h-20 w-20 text-red-500 mx-auto mb-6" />
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-red-400 bg-clip-text text-transparent">
               Support Parse
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
@@ -103,7 +103,7 @@ export default function Donations() {
       </section>
 
       {/* Impact Stats */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
+      <section className="py-20 bg-gray-100 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Our Impact</h2>
@@ -180,7 +180,7 @@ export default function Donations() {
       </section>
 
       {/* Donation Section */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
+      <section className="py-20 bg-gray-100 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <Button size="lg" className="text-2xl px-14 py-6 h-auto" asChild>
@@ -240,6 +240,9 @@ export default function Donations() {
                     <span className="font-bold text-blue-800 dark:text-blue-200">1%</span>
                   </div>
                 </div>
+                <p className="text-xs text-blue-500 dark:text-blue-600 mt-4">
+                  Historic expense statistics as of July 24, 2025.
+                </p>
                 <Button variant="outline" className="w-full mt-6 border-blue-300 hover:bg-blue-100 dark:border-blue-700 dark:hover:bg-blue-800" asChild>
                   <a href="https://opencollective.com/parse-server" target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="mr-2 h-4 w-4" />
@@ -253,7 +256,7 @@ export default function Donations() {
       </section>
 
       {/* Alternative Ways to Help */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
+      <section className="py-20 bg-gray-100 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Other Ways to Help</h2>
@@ -317,7 +320,7 @@ export default function Donations() {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-6">
               <Heart className="w-8 h-8" />
-              <span className="text-xl font-bold">Donations</span>
+              <span className="text-xl font-bold">Donation</span>
             </div>
             <p className="text-gray-400 mb-8">
               Thank you for supporting the Parse Platform community and keeping our project sustainable
