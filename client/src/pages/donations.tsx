@@ -63,7 +63,7 @@ export default function Donations() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <Heart className="h-8 w-8 text-primary" />
+              <Heart className="h-8 w-8 text-red-500" />
               <span className="text-xl font-bold">Donation</span>
             </Link>
             <Button variant="outline" asChild>
@@ -77,8 +77,8 @@ export default function Donations() {
       <section className="pt-32 pb-16 bg-gradient-to-br from-pink-50 via-white to-red-50 dark:from-gray-900 dark:via-gray-900 dark:to-pink-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <Heart className="h-20 w-20 text-primary mx-auto mb-6" />
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-pink-600 bg-clip-text text-transparent">
+            <Heart className="h-20 w-20 text-red-500 mx-auto mb-6" />
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-red-400 bg-clip-text text-transparent">
               Support Parse
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">

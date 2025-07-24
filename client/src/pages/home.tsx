@@ -243,13 +243,13 @@ export default function Home() {
                 <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
-                <Link href="/donations" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
-                  <Heart className="h-4 w-4" />
-                  <span>Donation</span>
-                </Link>
                 <Link href="/security" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
-                  <ShieldCheck className="h-4 w-4" />
+                  <ShieldCheck className="h-4 w-4 text-yellow-500" />
                   <span>Security</span>
+                </Link>
+                <Link href="/donations" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
+                  <Heart className="h-4 w-4 text-red-500" />
+                  <span>Donation</span>
                 </Link>
               </div>
             </div>
@@ -286,8 +286,11 @@ export default function Home() {
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
-                <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Donation</Link>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
+                <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors flex items-center space-x-1">
+                  <Heart className="h-4 w-4 text-red-500" />
+                  <span>Donation</span>
+                </Link>
                 <Button asChild className="w-fit">
                   <a href="#get-started">Start Building</a>
                 </Button>
