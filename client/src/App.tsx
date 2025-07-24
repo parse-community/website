@@ -2,6 +2,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import CommunityHighlights from "@/pages/community-highlights";
 import Donations from "@/pages/donations";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
@@ -18,6 +19,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/donations" component={Donations} />
         <Route path="/security" component={Security} />
+        <Route path="/community-highlights" component={CommunityHighlights} />
         <Route component={NotFound} />
       </Switch>
     </>

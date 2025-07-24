@@ -36,6 +36,7 @@ import { useState } from "react";
 import {
   SiAndroid,
   SiApple,
+  SiDart,
   SiDiscord,
   SiDotnet,
   SiFlutter,
@@ -137,8 +138,17 @@ export default function Home() {
       icon: SiFlutter, 
       stars: 575, 
       color: "from-blue-400 to-blue-500",
-      githubUrl: "https://github.com/parse-community/Parse-SDK-Flutter",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-Flutter/tree/master/packages/flutter",
       docsUrl: "https://docs.parseplatform.org/flutter/guide/",
+      apiUrl: "https://pub.dev/documentation/parse_server_sdk_flutter/latest/"
+    },
+    { 
+      name: "Dart", 
+      icon: SiDart, 
+      stars: 575, 
+      color: "from-cyan-400 to-cyan-500",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-Flutter/tree/master/packages/dart",
+      docsUrl: "https://docs.parseplatform.org/dart/guide/",
       apiUrl: "https://pub.dev/documentation/parse_server_sdk_flutter/latest/"
     },
     { 
@@ -225,7 +235,7 @@ export default function Home() {
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
                 <Link href="/donations" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
                   <Heart className="h-4 w-4" />
-                  <span>Donations</span>
+                  <span>Donation</span>
                 </Link>
                 <Link href="/security" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
                   <ShieldCheck className="h-4 w-4" />
@@ -266,10 +276,10 @@ export default function Home() {
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
-                <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Donations</Link>
+                <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Donation</Link>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
                 <Button asChild className="w-fit">
-                  <a href="#get-started">Get Started</a>
+                  <a href="#get-started">Start Building</a>
                 </Button>
               </div>
             </div>
@@ -402,7 +412,7 @@ export default function Home() {
                         href={api.githubUrl} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                        className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
                       >
                         <Github className="h-4 w-4 mr-2 flex-shrink-0" />
                         <span className="text-xs">Source Code</span>
@@ -412,7 +422,7 @@ export default function Home() {
                       href={api.docsUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
                     >
                       <Book className="h-4 w-4 mr-2 flex-shrink-0" />
                       <span className="text-xs">Documentation</span>
@@ -422,7 +432,7 @@ export default function Home() {
                         href={api.schemasUrl} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                        className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
                       >
                         <Database className="h-4 w-4 mr-2 flex-shrink-0" />
                         <span className="text-xs">Schema Guide</span>
@@ -457,7 +467,7 @@ export default function Home() {
                       href={sdk.githubUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
                     >
                       <Github className="h-4 w-4 mr-2 flex-shrink-0" />
                       <span className="text-xs">Source Code</span>
@@ -466,7 +476,7 @@ export default function Home() {
                       href={sdk.docsUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
                     >
                       <Book className="h-4 w-4 mr-2 flex-shrink-0" />
                       <span className="text-xs">Documentation</span>
@@ -476,7 +486,7 @@ export default function Home() {
                         href={sdk.apiUrl} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                        className="flex items-center p-2 bg-black/20 rounded-lg hover:bg-black/30 transition-colors group/link"
                       >
                         <Code className="h-4 w-4 mr-2 flex-shrink-0" />
                         <span className="text-xs">API Reference</span>
@@ -545,9 +555,8 @@ export default function Home() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" asChild>
+                <Button size="lg" className="mt-6" asChild>
                   <a href="https://github.com/parse-community/parse-dashboard" target="_blank" rel="noopener noreferrer">
-                    <Github className="mr-2 h-5 w-5" />
                     Get Parse Dashboard
                   </a>
                 </Button>
@@ -768,7 +777,7 @@ export default function Home() {
             <p className="text-xl text-gray-600 dark:text-gray-300">Connect with developers worldwide using Parse Platform</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 [&>*:nth-child(4)]:lg:col-start-2">
             <Card className="group hover:shadow-xl transition-all duration-300 text-center">
               <CardContent className="p-8">
                 <div className="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-indigo-500/20 transition-colors">
@@ -800,6 +809,21 @@ export default function Home() {
             </Card>
 
             <Card className="group hover:shadow-xl transition-all duration-300 text-center">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500/20 transition-colors">
+                  <Users className="h-8 w-8 text-purple-500" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">Community Highlights</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Discover amazing community projects and tools for Parse Platform</p>
+                <Button className="bg-purple-500 hover:bg-purple-600" asChild>
+                  <Link href="/community-highlights">
+                    Explore Projects
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+             <Card className="group hover:shadow-xl transition-all duration-300 text-center">
               <CardContent className="p-8">
                 <div className="w-16 h-16 bg-gray-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-500/20 transition-colors">
                   <Github className="h-8 w-8 text-gray-500 dark:text-gray-400" />
