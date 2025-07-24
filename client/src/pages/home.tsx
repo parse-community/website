@@ -217,7 +217,7 @@ export default function Home() {
       icon: Blocks, 
       stars: null, 
       color: "text-orange-500",
-      communityHighlightsUrl: "/community-highlights#extensions",
+      communityHighlightsUrl: "/community-highlights",
       description: "Enhance Parse Server with official and community-built extensions."
     }
   ];
