@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Shield, 
-  AlertTriangle, 
-  ExternalLink, 
-  DollarSign,
-  FileText,
-  Users,
+import {
+  AlertTriangle,
   Clock,
-  ShieldCheck
+  DollarSign,
+  ExternalLink,
+  FileText,
+  Shield,
+  ShieldCheck,
+  Users
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -76,13 +76,7 @@ export default function Security() {
               <Button size="lg" className="text-lg px-8 py-6" asChild>
                 <a href="https://github.com/parse-community/parse-server/security/advisories/new" target="_blank" rel="noopener noreferrer">
                   <AlertTriangle className="mr-2 h-5 w-5" />
-                  Report Vulnerability
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
-                <a href="https://report.parseplatform.org" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="mr-2 h-5 w-5" />
-                  Security Portal
+                  Report a Vulnerability
                 </a>
               </Button>
             </div>
@@ -265,9 +259,6 @@ export default function Security() {
               Committed to maintaining the highest security standards for the Parse Platform community
             </p>
             <div className="flex flex-wrap justify-center gap-6">
-              <a href="https://report.parseplatform.org" className="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
-                Security Portal
-              </a>
               <a href="mailto:security@parseplatform.org" className="text-gray-400 hover:text-white transition-colors">
                 Contact Security Team
               </a>

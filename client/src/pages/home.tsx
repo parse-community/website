@@ -777,7 +777,7 @@ export default function Home() {
             <p className="text-xl text-gray-600 dark:text-gray-300">Connect with developers worldwide using Parse Platform</p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 [&>*:nth-child(4)]:lg:col-start-2">
             <Card className="group hover:shadow-xl transition-all duration-300 text-center">
               <CardContent className="p-8">
                 <div className="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-indigo-500/20 transition-colors">
@@ -819,6 +819,21 @@ export default function Home() {
                   <a href="https://github.com/parse-community" target="_blank" rel="noopener noreferrer">
                     View Repositories
                   </a>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300 text-center">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500/20 transition-colors">
+                  <Users className="h-8 w-8 text-purple-500" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">Community Highlights</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Discover amazing community projects and tools for Parse Platform</p>
+                <Button className="bg-purple-500 hover:bg-purple-600" asChild>
+                  <Link href="/community-highlights">
+                    Explore Projects
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
