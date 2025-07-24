@@ -5,7 +5,7 @@ import {
   ExternalLink,
   Menu,
   Moon,
-  Package,
+  Blocks,
   Star,
   Sun,
   X
@@ -278,7 +278,7 @@ export default function CommunityHighlights() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-2">
-              <Package className="h-8 w-8 text-indigo-600" />
+              <Blocks className="h-8 w-8 text-indigo-600" />
               <span className="text-xl font-bold text-gray-900 dark:text-white">Extensions and Tools</span>
             </Link>
 
@@ -541,8 +541,8 @@ export default function CommunityHighlights() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex justify-center items-center space-x-2 mb-4">
-              <Package className="h-8 w-8 text-indigo-400" />
-              <span className="text-2xl font-bold">Parse Extensions and Tools</span>
+              <Blocks className="h-8 w-8 text-indigo-400" />
+              <span className="text-2xl font-bold">Extensions and Tools</span>
             </div>
             <p className="text-gray-400 mb-8">
               Building the future of backend development, together.

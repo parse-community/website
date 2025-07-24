@@ -9,6 +9,7 @@ import { fetchGitHubStats } from "@/lib/github-api";
 import { calculateTotalForks, calculateTotalStars } from "@/lib/github-utils";
 import parseLogoPath from "@assets/parse-logo-vector.svg";
 import {
+  Blocks,
   Book,
   Box,
   Check,
@@ -18,6 +19,7 @@ import {
   Github,
   HammerIcon,
   Heart,
+  List,
   Menu,
   MessageCircle,
   Moon,
@@ -212,7 +214,7 @@ export default function Home() {
     },
     { 
       name: "Extensions", 
-      icon: Plug, 
+      icon: Blocks, 
       stars: null, 
       color: "text-orange-500",
       communityHighlightsUrl: "/community-highlights#extensions",
@@ -443,7 +445,7 @@ export default function Home() {
                     {api.communityHighlightsUrl && (
                       <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
                         <Link href={api.communityHighlightsUrl}>
-                          <Users className="h-4 w-4 mr-2" />
+                          <List className="h-4 w-4 mr-2" />
                           Explore Extensions
                         </Link>
                       </Button>
