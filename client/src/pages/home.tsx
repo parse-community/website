@@ -26,7 +26,7 @@ import {
   OrbitIcon,
   Plug,
   Server,
-  Shield,
+  Settings,
   ShieldCheck,
   Smartphone,
   Sun,
@@ -67,7 +67,7 @@ export default function Home() {
       highlights: ["Real-time data synchronization", "GridFS default storage", "Multi-database support"]
     },
     {
-      icon: Shield,
+      icon: ShieldCheck,
       title: "Authentication & Security", 
       description: "Comprehensive user management with OAuth support, email verification, and flexible authentication options.",
       highlights: ["OAuth integration", "Email verification", "Custom authentication"]
@@ -535,41 +535,41 @@ export default function Home() {
             <div>
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-blue-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                    <Database className="h-5 w-5 text-blue-500" />
+                  <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                    <Database className="h-7 w-7 text-blue-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Data Browser</h4>
+                    <h4 className="font-semibold mt-1 mb-1">Data Browser</h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">Browse, edit, and query your application data with an intuitive table interface</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                    <Users className="h-5 w-5 text-green-500" />
+                  <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                    <Users className="h-7 w-7 text-green-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">User Management</h4>
+                    <h4 className="font-semibold mt-1 mb-1">User Management</h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">Manage user accounts, roles, and permissions directly from the dashboard</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                    <Code className="h-5 w-5 text-purple-500" />
+                  <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                    <Code className="h-7 w-7 text-purple-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">API Console</h4>
+                    <h4 className="font-semibold mt-1 mb-1">API Console</h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">Test queries and execute code directly in the dashboard with an interactive console</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-orange-500/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                    <Shield className="h-5 w-5 text-orange-500" />
+                  <div className="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                    <Settings className="h-7 w-7 text-orange-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Configuration</h4>
+                    <h4 className="font-semibold mt-1 mb-1">Configuration</h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">Configure app settings, push notifications, and security parameters</p>
                   </div>
                 </div>
