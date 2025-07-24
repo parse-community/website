@@ -41,6 +41,48 @@ export function calculateTotalForks(githubStats: GitHubStats | undefined, fallba
 }
 
 /**
+ * Calculate total contributors across main Parse Platform repositories
+ * @param githubStats - GitHub statistics data
+ * @param fallback - Fallback value when stats are not available (default: 1000)
+ * @returns Total number of unique contributors across repositories
+ */
+export function calculateTotalContributors(githubStats: GitHubStats | undefined, fallback: number = 1000): number {
+  if (!githubStats) {
+    console.log('No githubStats, returning fallback:', fallback);
+    return fallback;
+  }
+  
+  // Sum up all contributors from the repositories
+  // Note: This might count some contributors multiple times if they contribute to multiple repos
+  // But it gives a reasonable estimate of the total contributor base
+  const totalContributors = (
+    (githubStats.parseServer.contributors || 0) +
+    (githubStats.parseDashboard.contributors || 0) +
+    (githubStats.parseJsSDK.contributors || 0) +
+    (githubStats.parseIOSSDK.contributors || 0) +
+    (githubStats.parseAndroidSDK.contributors || 0)
+  );
+  
+  console.log('Individual contributors:', {
+    parseServer: githubStats.parseServer.contributors,
+    parseDashboard: githubStats.parseDashboard.contributors,
+    parseJsSDK: githubStats.parseJsSDK.contributors,
+    parseIOSSDK: githubStats.parseIOSSDK.contributors,
+    parseAndroidSDK: githubStats.parseAndroidSDK.contributors,
+    total: totalContributors
+  });
+  
+  // Apply a deduplication factor since some contributors likely work on multiple repos
+  // Conservative estimate: ~30% overlap across repositories
+  const deduplicationFactor = 0.7;
+  
+  const result = Math.round(totalContributors * deduplicationFactor);
+  console.log('Final contributors count:', result);
+  
+  return result;
+}
+
+/**
  * Estimate active developers based on available metrics
  * @param githubStats - GitHub statistics data  
  * @param fallback - Fallback value when stats are not available (default: 50000)

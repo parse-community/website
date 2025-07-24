@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { TypingHero } from "@/components/typing-hero";
 import { useTheme } from "@/hooks/use-theme";
 import { fetchGitHubStats } from "@/lib/github-api";
-import { calculateTotalForks, calculateTotalStars } from "@/lib/github-utils";
+import { calculateTotalContributors, calculateTotalForks, calculateTotalStars } from "@/lib/github-utils";
 import parseLogoPath from "@assets/parse-logo-vector.svg";
 import {
   Blocks,
@@ -53,7 +53,7 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const { data: githubStats, isLoading: statsLoading } = useQuery({
-    queryKey: ["/api/github/stats"],
+    queryKey: ["/api/github/stats", "v2"], // Added v2 to force cache refresh
     queryFn: fetchGitHubStats,
     staleTime: 5 * 60 * 1000, // 5 minutes
     refetchInterval: 10 * 60 * 1000, // 10 minutes
@@ -224,6 +224,7 @@ export default function Home() {
 
   const totalStars = calculateTotalStars(githubStats, 30000);
   const totalForks = calculateTotalForks(githubStats, 8000);
+  const totalContributors = calculateTotalContributors(githubStats, 1000);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
@@ -358,7 +359,11 @@ export default function Home() {
               <Card className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md border border-gray-200 dark:border-gray-700">
                 <CardContent className="p-6 text-center">
                   <div className="text-3xl font-bold text-primary mb-2">
-                    <AnimatedCounter target={1000} suffix="+" />
+                    {statsLoading ? (
+                      <div className="animate-pulse bg-gray-300 dark:bg-gray-600 h-8 w-16 mx-auto rounded" />
+                    ) : (
+                      <AnimatedCounter target={totalContributors} suffix="+" />
+                    )}
                   </div>
                   <div className="text-gray-600 dark:text-gray-400 text-sm">Contributors</div>
                 </CardContent>
