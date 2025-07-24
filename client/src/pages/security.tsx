@@ -50,7 +50,7 @@ export default function Security() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <ShieldCheck className="h-8 w-8 text-primary" />
+              <ShieldCheck className="h-8 w-8 text-yellow-500" />
               <span className="text-xl font-bold">Security</span>
             </Link>
             <Button variant="outline" asChild>
@@ -117,10 +117,10 @@ export default function Security() {
                 </div>
                 <h3 className="text-2xl font-semibold mb-4">Response Timeline</h3>
                 <div className="space-y-4 text-gray-600 dark:text-gray-300">
-                  <p>We are committed to responding promptly to security reports:</p>
+                  <p>We aim to respond promptly to security reports:</p>
                   <ul className="space-y-2 list-disc list-inside">
                     <li><strong>Initial Response:</strong> Within 7 days</li>
-                    <li><strong>Patch Development:</strong> Within 30 days when possible</li>
+                    <li><strong>Patch Development:</strong> Within 30 days, depending on complexity</li>
                     <li><strong>Public Disclosure:</strong> Coordinated with reporter</li>
                   </ul>
                 </div>
