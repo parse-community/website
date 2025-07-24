@@ -400,7 +400,7 @@ export default function Home() {
       </section>
 
       {/* Parse Server and APIs Section */}
-      <section id="server-apis" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <section id="server-apis" className="py-20 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Parse Server</h2>
@@ -514,7 +514,7 @@ export default function Home() {
       </section>
 
       {/* Dashboard Section */}
-      <section id="dashboard" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <section id="dashboard" className="py-20 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Parse Dashboard</h2>
@@ -789,7 +789,7 @@ export default function Home() {
       </section>
 
       {/* Community Section */}
-      <section id="community" className="py-20 bg-gray-50 dark:bg-gray-900">
+      <section id="community" className="py-20 bg-gray-100 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Join Our Community</h2>
