@@ -810,21 +810,6 @@ export default function Home() {
 
             <Card className="group hover:shadow-xl transition-all duration-300 text-center">
               <CardContent className="p-8">
-                <div className="w-16 h-16 bg-gray-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-500/20 transition-colors">
-                  <Github className="h-8 w-8 text-gray-500 dark:text-gray-400" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">GitHub</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">Contribute to Parse Platform and report issues on GitHub</p>
-                <Button variant="secondary" asChild>
-                  <a href="https://github.com/parse-community" target="_blank" rel="noopener noreferrer">
-                    View Repositories
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 text-center">
-              <CardContent className="p-8">
                 <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500/20 transition-colors">
                   <Users className="h-8 w-8 text-purple-500" />
                 </div>
@@ -834,6 +819,21 @@ export default function Home() {
                   <Link href="/community-highlights">
                     Explore Projects
                   </Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+             <Card className="group hover:shadow-xl transition-all duration-300 text-center">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-gray-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-500/20 transition-colors">
+                  <Github className="h-8 w-8 text-gray-500 dark:text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">GitHub</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Contribute to Parse Platform and report issues on GitHub</p>
+                <Button variant="secondary" asChild>
+                  <a href="https://github.com/parse-community" target="_blank" rel="noopener noreferrer">
+                    View Repositories
+                  </a>
                 </Button>
               </CardContent>
             </Card>
