@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface TypingHeroProps {
   className?: string;
@@ -52,6 +52,10 @@ export function TypingHero({ className = "" }: TypingHeroProps) {
     "text-rose-500",
   ];
 
+  // Calculate the longest possible text combinations
+  const longestProduct = products.reduce((a, b) => a.length > b.length ? a : b);
+  const longestPurpose = purposes.reduce((a, b) => a.length > b.length ? a : b);
+  
   const [currentProduct, setCurrentProduct] = useState(0);
   const [currentPurpose, setCurrentPurpose] = useState(0);
   const [productText, setProductText] = useState("");
@@ -60,6 +64,30 @@ export function TypingHero({ className = "" }: TypingHeroProps) {
   const [isTypingPurpose, setIsTypingPurpose] = useState(false);
   const [productColor, setProductColor] = useState(colors[Math.floor(Math.random() * colors.length)]);
   const [purposeColor, setPurposeColor] = useState(colors[Math.floor(Math.random() * colors.length)]);
+  const [fontSize, setFontSize] = useState("1em");
+  const placeholderRef = useRef<HTMLDivElement>(null);
+
+  // Calculate optimal font size based on longest text combinations
+  useEffect(() => {
+    if (!placeholderRef.current) return;
+
+    const element = placeholderRef.current;
+    const computedStyle = window.getComputedStyle(element);
+    const lineHeight = parseFloat(computedStyle.lineHeight);
+    const maxHeight = lineHeight * 2; // 2 lines maximum
+
+    // Start with base font size and scale down if needed
+    let currentSize = 1;
+    element.style.fontSize = `${currentSize}em`;
+
+    // Check if the longest text fits in 2 lines
+    while (element.scrollHeight > maxHeight && currentSize > 0.5) {
+      currentSize -= 0.02;
+      element.style.fontSize = `${currentSize}em`;
+    }
+
+    setFontSize(`${currentSize}em`);
+  }, []); // Only run once on mount
 
   useEffect(() => {
     const productTarget = products[currentProduct];
@@ -119,21 +147,45 @@ export function TypingHero({ className = "" }: TypingHeroProps) {
   }, [currentProduct, currentPurpose]);
 
   return (
-    <h1 className={className}>
-      <div>
-        Build{" "}
-        <span className={productColor}>
-          {productText}
-          {isTypingProduct && <span className="animate-pulse">|</span>}
-        </span>
+    <div className={`${className} relative`}>
+      {/* Invisible placeholder with longest possible text to calculate optimal font size */}
+      <div 
+        ref={placeholderRef}
+        className="invisible absolute top-0 left-0 w-full pointer-events-none leading-tight -z-10"
+        aria-hidden="true"
+      >
+        <div className="leading-tight">
+          Build {longestProduct}
+        </div>
+        <div className="leading-tight">
+          for your {longestPurpose}
+        </div>
       </div>
-      <div>
-        for your{" "}
-        <span className={purposeColor}>
-          {purposeText}
-          {isTypingPurpose && <span className="animate-pulse">|</span>}
-        </span>
-      </div>
-    </h1>
+      
+      {/* Actual visible content with pre-calculated font size */}
+      <h1 
+        className="relative leading-tight z-10"
+        style={{ fontSize }}
+      >
+        <div className="leading-tight">
+          <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+            Build{" "}
+          </span>
+          <span className={productColor}>
+            {productText}
+            {isTypingProduct && <span className="animate-pulse">|</span>}
+          </span>
+        </div>
+        <div className="leading-tight">
+          <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+            for your{" "}
+          </span>
+          <span className={purposeColor}>
+            {purposeText}
+            {isTypingPurpose && <span className="animate-pulse">|</span>}
+          </span>
+        </div>
+      </h1>
+    </div>
   );
 }
