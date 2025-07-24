@@ -5,8 +5,6 @@ import { calculateTotalStars, estimateActiveDevelopers } from "@/lib/github-util
 import { useQuery } from "@tanstack/react-query";
 import {
   Code,
-  Coffee,
-  DollarSign,
   ExternalLink,
   Heart,
   Server,
@@ -31,37 +29,6 @@ export default function Donations() {
   const totalStars = calculateTotalStars(githubStats);
   const activeDevelopers = estimateActiveDevelopers(githubStats);
   
-  const donationTiers = [
-    {
-      title: "Supporter",
-      amount: "$5 - $25",
-      description: "Help us cover basic infrastructure costs",
-      color: "bg-green-500/10 text-green-600 dark:text-green-400 border-green-200 dark:border-green-800",
-      icon: Coffee
-    },
-    {
-      title: "Contributor", 
-      amount: "$25 - $100",
-      description: "Support feature development and maintenance",
-      color: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800",
-      icon: Code
-    },
-    {
-      title: "Sponsor",
-      amount: "$100 - $500",
-      description: "Major support for security and stability improvements",
-      color: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800",
-      icon: Star
-    },
-    {
-      title: "Enterprise",
-      amount: "$500+",
-      description: "Strategic partnership for enterprise needs",
-      color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800",
-      icon: Shield
-    }
-  ];
-
   const impactStats = [
     {
       icon: Users,
@@ -212,40 +179,14 @@ export default function Donations() {
         </div>
       </section>
 
-      {/* Donation Tiers */}
+      {/* Donation Section */}
       <section className="py-20 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Support Tiers</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Choose a support level that works for you and help sustain Parse Platform
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {donationTiers.map((tier, index) => (
-              <Card key={index} className={`border-2 ${tier.color}`}>
-                <CardContent className="p-8">
-                  <div className="flex items-center mb-6">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mr-4 ${tier.color}`}>
-                      <tier.icon className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-semibold">{tier.title}</h3>
-                      <p className="text-lg font-bold">{tier.amount}</p>
-                    </div>
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">{tier.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Button size="lg" className="text-lg px-8 py-6" asChild>
-              <a href="https://opencollective.com/parse-server" target="_blank" rel="noopener noreferrer">
-                <DollarSign className="mr-2 h-5 w-5" />
-                Choose Your Support Level
+          <div className="text-center">
+            <Button size="lg" className="text-2xl px-14 py-6 h-auto" asChild>
+              <a href="https://opencollective.com/parse-server/contribute" target="_blank" rel="noopener noreferrer">
+                <Heart className="mr-3 h-8 w-8" />
+                Make a Donation
               </a>
             </Button>
           </div>
@@ -272,7 +213,7 @@ export default function Donations() {
                 </li>
                 <li className="flex items-start">
                   <Heart className="h-5 w-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                  <span>Ulta-low administrative overhead - 99% of funds go to the project</span>
+                  <span>Ultra-low administrative overhead, 99% of funds go to the project</span>
                 </li>
               </ul>
             </div>
@@ -287,7 +228,7 @@ export default function Donations() {
                     <span className="font-bold text-blue-800 dark:text-blue-200">78%</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-blue-700 dark:text-blue-300">Financial Fees</span>
+                    <span className="text-blue-700 dark:text-blue-300">Fiscal Host Fees</span>
                     <span className="font-bold text-blue-800 dark:text-blue-200">16%</span>
                   </div>
                   <div className="flex justify-between items-center">
