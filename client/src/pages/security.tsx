@@ -6,7 +6,6 @@ import {
   DollarSign,
   ExternalLink,
   FileText,
-  Shield,
   ShieldCheck,
   Users
 } from "lucide-react";
@@ -65,8 +64,8 @@ export default function Security() {
       <section className="pt-32 pb-16 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <ShieldCheck className="h-20 w-20 text-primary mx-auto mb-6" />
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+            <ShieldCheck className="h-20 w-20 text-yellow-500 mx-auto mb-6" />
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-yellow-300 bg-clip-text text-transparent">
               Security
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
@@ -214,7 +213,7 @@ export default function Security() {
             <Card>
               <CardContent className="p-8">
                 <div className="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-6">
-                  <Shield className="h-6 w-6 text-red-500" />
+                  <ShieldCheck className="h-6 w-6 text-red-500" />
                 </div>
                 <h3 className="text-2xl font-semibold mb-4">Out of Scope</h3>
                 <ul className="space-y-2 text-gray-600 dark:text-gray-300 list-disc list-inside">
@@ -252,7 +251,7 @@ export default function Security() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-6">
-              <Shield className="w-8 h-8" />
+              <ShieldCheck className="w-8 h-8" />
               <span className="text-xl font-bold">Security</span>
             </div>
             <p className="text-gray-400 mb-8">
