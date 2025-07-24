@@ -240,16 +240,25 @@ export default function CommunityHighlights() {
             >
               All Projects
             </Button>
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
-                className="mb-2"
-              >
-                {category}
-              </Button>
-            ))}
+            {categories.map((category) => {
+              const colors = getCategoryColors(category);
+              const isSelected = selectedCategory === category;
+              
+              return (
+                <Button
+                  key={category}
+                  variant="outline"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`mb-2 transition-all duration-200 focus:outline-none focus:ring-0 focus:border-current active:outline-none ${
+                    isSelected
+                      ? `${colors.bg} ${colors.darkBg} ${colors.text} ${colors.darkText} border-current opacity-100`
+                      : `${colors.bg} ${colors.darkBg} ${colors.text} ${colors.darkText} border-current opacity-60 hover:opacity-100`
+                  }`}
+                >
+                  {category}
+                </Button>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -263,7 +272,7 @@ export default function CommunityHighlights() {
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <CardTitle className="text-lg font-semibold mb-2 group-hover:text-indigo-600 transition-colors">
+                      <CardTitle className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
                         {project.title}
                       </CardTitle>
                       <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
