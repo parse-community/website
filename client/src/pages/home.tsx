@@ -181,7 +181,7 @@ export default function Home() {
       docsUrl: "https://docs.parseplatform.org/parse-server/guide/",
       cloudCodeUrl: "https://docs.parseplatform.org/cloudcode/guide/",
       schemasUrl: "https://docs.parseplatform.org/defined-schema/guide/",
-      description: "The core backend server that provides all Parse Platform functionality"
+      description: "The main backend server powering all Parse Platform features."
     },
     { 
       name: "Cloud Code", 
@@ -190,7 +190,7 @@ export default function Home() {
       color: "text-purple-500",
       docsUrl: "https://docs.parseplatform.org/cloudcode/guide/",
       apiUrl: "https://docs.parseplatform.org/cloudcode/guide/",
-      description: "Server-side JavaScript functions for custom business logic"
+      description: "Custom server-side JavaScript functions for advanced business logic."
     },
     { 
       name: "REST API", 
@@ -199,7 +199,7 @@ export default function Home() {
       color: "text-green-500",
       docsUrl: "https://docs.parseplatform.org/rest/guide/",
       apiUrl: "https://docs.parseplatform.org/rest/guide/",
-      description: "RESTful HTTP API for all Parse Platform operations"
+      description: "A RESTful HTTP API for interacting with all Parse Platform services."
     },
     { 
       name: "GraphQL API", 
@@ -208,7 +208,15 @@ export default function Home() {
       color: "text-pink-500",
       docsUrl: "https://docs.parseplatform.org/graphql/guide/",
       apiUrl: "https://docs.parseplatform.org/graphql/guide/",
-      description: "Modern GraphQL API with queries, mutations, and subscriptions"
+      description: "A modern GraphQL API supporting queries, mutations, and subscriptions."
+    },
+    { 
+      name: "Extensions", 
+      icon: Plug, 
+      stars: null, 
+      color: "text-orange-500",
+      communityHighlightsUrl: "/community-highlights#extensions",
+      description: "Enhance Parse Server with official and community-built extensions."
     }
   ];
 
@@ -416,18 +424,28 @@ export default function Home() {
                         </a>
                       </Button>
                     )}
-                    <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
-                      <a href={api.docsUrl} target="_blank" rel="noopener noreferrer">
-                        <Book className="h-4 w-4 mr-2" />
-                        Documentation
-                      </a>
-                    </Button>
+                    {api.docsUrl && (
+                      <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                        <a href={api.docsUrl} target="_blank" rel="noopener noreferrer">
+                          <Book className="h-4 w-4 mr-2" />
+                          Documentation
+                        </a>
+                      </Button>
+                    )}
                     {api.schemasUrl && (
                       <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
                         <a href={api.schemasUrl} target="_blank" rel="noopener noreferrer">
                           <Database className="h-4 w-4 mr-2" />
                           Schema Guide
                         </a>
+                      </Button>
+                    )}
+                    {api.communityHighlightsUrl && (
+                      <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                        <Link href={api.communityHighlightsUrl}>
+                          <Users className="h-4 w-4 mr-2" />
+                          Explore Extensions
+                        </Link>
                       </Button>
                     )}
                   </div>
