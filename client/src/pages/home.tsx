@@ -815,7 +815,7 @@ export default function Home() {
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Discover amazing community projects and tools for Parse Platform</p>
                 <Button className="bg-purple-500 hover:bg-purple-600 w-full" asChild>
-                  <Link href="/community-highlights">
+                  <Link href="/community-highlights#community-projects">
                     Explore Projects
                   </Link>
                 </Button>
