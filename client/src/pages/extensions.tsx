@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTheme } from "@/hooks/use-theme";
 import {
+  Blocks,
   ExternalLink,
   Menu,
   Moon,
-  Blocks,
   Star,
   Sun,
   X
@@ -121,6 +121,28 @@ const communityProjects: CommunityProject[] = [
 ];
 
 const officialProjects: OfficialProject[] = [
+  // Storage
+  {
+    title: "File System Storage Adapter",
+    description: "Extends Parse Server to store files in the local file system.",
+    githubUrl: "https://github.com/parse-community/parse-server-fs-adapter",
+    language: "JavaScript",
+    category: "Storage"
+  },
+  {
+    title: "Google Cloud Storage Adapter",
+    description: "Extends Parse Server to store files in Google Cloud Storage.",
+    githubUrl: "https://github.com/parse-community/parse-server-gcs-adapter",
+    language: "JavaScript",
+    category: "Storage"
+  },
+  {
+    title: "AWS S3 Storage Adapter",
+    description: "Extends Parse Server to store files in AWS S3 (Simple Storage Service).",
+    githubUrl: "https://github.com/parse-community/parse-server-s3-adapter",
+    language: "JavaScript",
+    category: "Storage"
+  },
   // Mail
   {
     title: "API Mail Adapter",
@@ -159,28 +181,6 @@ const officialProjects: OfficialProject[] = [
     githubUrl: "https://github.com/parse-community/parse-blockchain",
     language: "TypeScript",
     category: "SDKs"
-  },
-  // Storage
-  {
-    title: "File System Storage Adapter",
-    description: "Extends Parse Server to store files in the local file system.",
-    githubUrl: "https://github.com/parse-community/parse-server-fs-adapter",
-    language: "JavaScript",
-    category: "Storage"
-  },
-  {
-    title: "Google Cloud Storage Adapter",
-    description: "Extends Parse Server to store files in Google Cloud Storage.",
-    githubUrl: "https://github.com/parse-community/parse-server-gcs-adapter",
-    language: "JavaScript",
-    category: "Storage"
-  },
-  {
-    title: "AWS S3 Storage Adapter",
-    description: "Extends Parse Server to store files in AWS S3 (Simple Storage Service).",
-    githubUrl: "https://github.com/parse-community/parse-server-s3-adapter",
-    language: "JavaScript",
-    category: "Storage"
   },
   // Tools
   {
@@ -257,7 +257,7 @@ const getCategoryColors = (category: string) => {
   };
 };
 
-export default function CommunityHighlights() {
+export default function Extensions() {
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
