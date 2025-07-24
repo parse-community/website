@@ -2,6 +2,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Donations from "@/pages/donations";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
 import Security from "@/pages/security";
@@ -15,6 +16,7 @@ function Router() {
       <ScrollToTop />
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/donations" component={Donations} />
         <Route path="/security" component={Security} />
         <Route component={NotFound} />
       </Switch>

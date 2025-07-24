@@ -7,7 +7,8 @@ import {
   DollarSign,
   FileText,
   Users,
-  Clock
+  Clock,
+  ShieldCheck
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -50,7 +51,7 @@ export default function Security() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <Shield className="h-8 w-8 text-primary" />
+              <ShieldCheck className="h-8 w-8 text-primary" />
               <span className="text-xl font-bold">Parse Platform Security</span>
             </Link>
             <Button variant="outline" asChild>
@@ -64,7 +65,7 @@ export default function Security() {
       <section className="pt-32 pb-16 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-900 dark:to-blue-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <Shield className="h-20 w-20 text-primary mx-auto mb-6" />
+            <ShieldCheck className="h-20 w-20 text-primary mx-auto mb-6" />
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
               Security
             </h1>
@@ -109,9 +110,8 @@ export default function Security() {
                 <div className="space-y-4 text-gray-600 dark:text-gray-300">
                   <p>If you believe you have found a security vulnerability in Parse Server, please report it responsibly:</p>
                   <ul className="space-y-2 list-disc list-inside">
-                    <li>Use our <a href="https://report.parseplatform.org" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">security portal</a></li>
-                    <li>Email us at <a href="mailto:security@parseplatform.org" className="text-primary hover:underline">security@parseplatform.org</a></li>
                     <li>Create a private security advisory on <a href="https://github.com/parse-community/parse-server/security/advisories/new" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    <li>Or email us at <a href="mailto:security@parseplatform.org" className="text-primary hover:underline">security@parseplatform.org</a></li>
                   </ul>
                 </div>
               </CardContent>
@@ -127,7 +127,6 @@ export default function Security() {
                   <p>We are committed to responding promptly to security reports:</p>
                   <ul className="space-y-2 list-disc list-inside">
                     <li><strong>Initial Response:</strong> Within 7 days</li>
-                    <li><strong>Investigation:</strong> Thorough analysis and reproduction</li>
                     <li><strong>Patch Development:</strong> Within 30 days when possible</li>
                     <li><strong>Public Disclosure:</strong> Coordinated with reporter</li>
                   </ul>

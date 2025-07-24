@@ -1,48 +1,49 @@
-import { useQuery } from "@tanstack/react-query";
+import { AnimatedCounter } from "@/components/animated-counter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { AnimatedCounter } from "@/components/animated-counter";
+import { useQuery } from "@tanstack/react-query";
 
 import { TypingHero } from "@/components/typing-hero";
 import { useTheme } from "@/hooks/use-theme";
 import { fetchGitHubStats } from "@/lib/github-api";
-import { 
-  Database, 
-  Shield, 
-  Plug, 
-  Zap, 
-  Cloud, 
-  Server,
-  Github,
-  ExternalLink,
+import { calculateTotalForks, calculateTotalStars } from "@/lib/github-utils";
+import parseLogoPath from "@assets/parse-logo-vector.svg";
+import {
   Book,
-  Users,
-  MessageCircle,
-  Menu,
-  X,
-  Moon,
-  Sun,
-  Star,
-  GitFork,
-  Check,
-  Smartphone,
-  Code,
   Box,
-  HammerIcon
+  Check,
+  Cloud,
+  Code,
+  Database,
+  Github,
+  HammerIcon,
+  Heart,
+  Menu,
+  MessageCircle,
+  Moon,
+  OrbitIcon,
+  Plug,
+  Server,
+  Shield,
+  ShieldCheck,
+  Smartphone,
+  Sun,
+  Users,
+  X,
+  Zap
 } from "lucide-react";
-import { 
-  SiApple,
+import { useState } from "react";
+import {
   SiAndroid,
+  SiApple,
+  SiDiscord,
+  SiDotnet,
+  SiFlutter,
   SiJavascript,
   SiPhp,
-  SiFlutter,
-  SiDotnet,
-  SiSwift,
-  SiDiscord
+  SiSwift
 } from "react-icons/si";
-import { useState } from "react";
 import { Link } from "wouter";
-import parseLogoPath from "@assets/parse-logo-transparent-blue-round_1753267131582.png";
 
 export default function Home() {
   const { theme, toggleTheme } = useTheme();
@@ -95,25 +96,114 @@ export default function Home() {
   ];
 
   const sdks = [
-    { name: "Parse Server", icon: Server, stars: githubStats?.parseServer.stars || 20806, color: "from-blue-500 to-blue-600" },
-    { name: "iOS / Objective-C", icon: SiApple, stars: githubStats?.parseIOSSDK.stars || 2809, color: "from-gray-600 to-gray-700" },
-    { name: "Android", icon: SiAndroid, stars: githubStats?.parseAndroidSDK.stars || 1879, color: "from-green-500 to-green-600" },
-    { name: "JavaScript", icon: SiJavascript, stars: githubStats?.parseJsSDK.stars || 1317, color: "from-yellow-500 to-yellow-600" },
-    { name: "PHP", icon: SiPhp, stars: 811, color: "from-purple-500 to-purple-600" },
-    { name: "Flutter", icon: SiFlutter, stars: 575, color: "from-blue-400 to-blue-500" },
-    { name: ".NET", icon: SiDotnet, stars: 323, color: "from-indigo-500 to-indigo-600" },
-    { name: "Swift", icon: SiSwift, stars: 302, color: "from-orange-500 to-orange-600" }
+    { 
+      name: "iOS / Objective-C", 
+      icon: SiApple, 
+      stars: githubStats?.parseIOSSDK.stars || 2809, 
+      color: "from-gray-600 to-gray-700",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-iOS-OSX",
+      docsUrl: "https://docs.parseplatform.org/ios/guide/",
+      apiUrl: "https://parseplatform.org/Parse-SDK-iOS-OSX/api/"
+    },
+    { 
+      name: "Android", 
+      icon: SiAndroid, 
+      stars: githubStats?.parseAndroidSDK.stars || 1879, 
+      color: "from-green-500 to-green-600",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-Android",
+      docsUrl: "https://docs.parseplatform.org/android/guide/",
+      apiUrl: "https://parseplatform.org/Parse-SDK-Android/api/"
+    },
+    { 
+      name: "JavaScript", 
+      icon: SiJavascript, 
+      stars: githubStats?.parseJsSDK.stars || 1317, 
+      color: "from-yellow-500 to-yellow-600",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-JS",
+      docsUrl: "https://docs.parseplatform.org/js/guide/",
+      apiUrl: "https://parseplatform.org/Parse-SDK-JS/api/"
+    },
+    { 
+      name: "PHP", 
+      icon: SiPhp, 
+      stars: 811, 
+      color: "from-purple-500 to-purple-600",
+      githubUrl: "https://github.com/parse-community/parse-php-sdk",
+      docsUrl: "https://docs.parseplatform.org/php/guide/",
+      apiUrl: "https://parseplatform.org/parse-php-sdk/api/"
+    },
+    { 
+      name: "Flutter", 
+      icon: SiFlutter, 
+      stars: 575, 
+      color: "from-blue-400 to-blue-500",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-Flutter",
+      docsUrl: "https://docs.parseplatform.org/flutter/guide/",
+      apiUrl: "https://pub.dev/documentation/parse_server_sdk_flutter/latest/"
+    },
+    { 
+      name: ".NET", 
+      icon: SiDotnet, 
+      stars: 323, 
+      color: "from-indigo-500 to-indigo-600",
+      githubUrl: "https://github.com/parse-community/Parse-SDK-dotNET",
+      docsUrl: "https://docs.parseplatform.org/dotnet/guide/",
+      apiUrl: "https://parseplatform.org/Parse-SDK-dotNET/api/"
+    },
+    { 
+      name: "Swift", 
+      icon: SiSwift, 
+      stars: 302, 
+      color: "from-orange-500 to-orange-600",
+      githubUrl: "https://github.com/parse-community/Parse-Swift",
+      docsUrl: "https://docs.parseplatform.org/swift/guide/",
+      apiUrl: "https://parseplatform.org/Parse-Swift/release/documentation/parseswift/"
+    }
   ];
 
-  const totalStars = githubStats ? 
-    githubStats.parseServer.stars + githubStats.parseDashboard.stars + 
-    githubStats.parseJsSDK.stars + githubStats.parseIOSSDK.stars + 
-    githubStats.parseAndroidSDK.stars : 30000;
+  const serverApis = [
+    { 
+      name: "Parse Server", 
+      icon: Server, 
+      stars: githubStats?.parseServer.stars || 20806, 
+      color: "from-blue-500 to-blue-600",
+      githubUrl: "https://github.com/parse-community/parse-server",
+      docsUrl: "https://docs.parseplatform.org/parse-server/guide/",
+      cloudCodeUrl: "https://docs.parseplatform.org/cloudcode/guide/",
+      schemasUrl: "https://docs.parseplatform.org/defined-schema/guide/",
+      description: "The core backend server that provides all Parse Platform functionality"
+    },
+    { 
+      name: "Cloud Code", 
+      icon: Cloud, 
+      stars: null, 
+      color: "from-purple-500 to-purple-600",
+      docsUrl: "https://docs.parseplatform.org/cloudcode/guide/",
+      apiUrl: "https://docs.parseplatform.org/cloudcode/guide/",
+      description: "Server-side JavaScript functions for custom business logic"
+    },
+    { 
+      name: "REST API", 
+      icon: Code, 
+      stars: null, 
+      color: "from-green-500 to-green-600",
+      docsUrl: "https://docs.parseplatform.org/rest/guide/",
+      apiUrl: "https://docs.parseplatform.org/rest/guide/",
+      description: "RESTful HTTP API for all Parse Platform operations"
+    },
+    { 
+      name: "GraphQL API", 
+      icon: Database, 
+      stars: null, 
+      color: "from-pink-500 to-pink-600",
+      docsUrl: "https://docs.parseplatform.org/graphql/guide/",
+      apiUrl: "https://docs.parseplatform.org/graphql/guide/",
+      description: "Modern GraphQL API with queries, mutations, and subscriptions"
+    }
+  ];
 
-  const totalForks = githubStats ?
-    githubStats.parseServer.forks + githubStats.parseDashboard.forks +
-    githubStats.parseJsSDK.forks + githubStats.parseIOSSDK.forks +
-    githubStats.parseAndroidSDK.forks : 8000;
+  const totalStars = calculateTotalStars(githubStats, 30000);
+  const totalForks = calculateTotalForks(githubStats, 8000);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
@@ -123,17 +213,24 @@ export default function Home() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">
-                <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8" />
+                <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8 text-primary" style={{filter: 'brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(201deg) brightness(102%) contrast(103%)'}} />
                 <span className="text-xl font-bold">Parse Platform</span>
               </div>
               <div className="hidden md:flex space-x-6">
                 <a href="#features" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
+                <a href="#server-apis" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Server</a>
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
-                <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
-                <a href="https://github.com/parse-community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <Link href="/donations" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
+                  <Heart className="h-4 w-4" />
+                  <span>Donations</span>
+                </Link>
+                <Link href="/security" className="flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">
+                  <ShieldCheck className="h-4 w-4" />
+                  <span>Security</span>
+                </Link>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -154,7 +251,7 @@ export default function Home() {
                 {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
               <Button asChild className="hidden md:inline-flex">
-                <a href="#get-started">Get Started</a>
+                <a href="#get-started">Start Building</a>
               </Button>
             </div>
           </div>
@@ -164,12 +261,13 @@ export default function Home() {
             <div className="md:hidden border-t border-gray-200 dark:border-gray-700 py-4">
               <div className="flex flex-col space-y-4">
                 <a href="#features" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Features</a>
+                <a href="#server-apis" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Server</a>
                 <a href="#dashboard" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Dashboard</a>
                 <a href="#sdks" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">SDKs</a>
                 <a href="#docs" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Documentation</a>
                 <a href="#community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Community</a>
+                <Link href="/donations" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Donations</Link>
                 <Link href="/security" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Security</Link>
-                <a href="https://github.com/parse-community" className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <Button asChild className="w-fit">
                   <a href="#get-started">Get Started</a>
                 </Button>
@@ -185,17 +283,17 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             <TypingHero className="text-5xl md:text-7xl font-bold my-16 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent" />
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-              Parse Platform provides a complete backend solution for mobile and web applications. Deploy anywhere, scale infinitely, own your data.
+              Parse Platform is your complete backend solution for mobile and web applications.<br />Deploy anywhere, scale infinitely, own your data.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button size="lg" className="text-lg" asChild>
+              <Button size="lg" className="text-lg h-12" asChild>
                 <a href="#get-started">
                   Start Building <HammerIcon className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button variant="outline" size="lg" className="text-lg" asChild>
+              <Button variant="outline" size="lg" className="text-lg h-12 py-6" asChild>
                 <a href="#docs">
-                  View Documentation <Book className="ml-2 h-4 w-4" />
+                  Documentation <Book className="ml-2 h-4 w-4" />
                 </a>
               </Button>
             </div>
@@ -281,8 +379,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Parse Server and APIs Section */}
+      <section id="server-apis" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Parse Server</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">Core backend services and APIs for your applications</p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {serverApis.map((api, index) => (
+              <Card key={index} className={`bg-gradient-to-br ${api.color} text-white hover:shadow-lg transition-all duration-300 group`}>
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-6">
+                    <api.icon className="h-6 w-6 mr-3 flex-shrink-0" />
+                    <h3 className="font-semibold text-sm">{api.name}</h3>
+                  </div>
+                  <p className="text-xs opacity-90 mb-6">{api.description}</p>
+                  <div className="flex flex-col gap-3">
+                    {api.githubUrl && (
+                      <a 
+                        href={api.githubUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      >
+                        <Github className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span className="text-xs">Source Code</span>
+                      </a>
+                    )}
+                    <a 
+                      href={api.docsUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                    >
+                      <Book className="h-4 w-4 mr-2 flex-shrink-0" />
+                      <span className="text-xs">Documentation</span>
+                    </a>
+                    {api.schemasUrl && (
+                      <a 
+                        href={api.schemasUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      >
+                        <Database className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span className="text-xs">Schema Guide</span>
+                      </a>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SDKs Section */}
-      <section id="sdks" className="py-20">
+      <section id="sdks" className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Multi-Platform SDKs</h2>
@@ -293,13 +448,40 @@ export default function Home() {
             {sdks.map((sdk, index) => (
               <Card key={index} className={`bg-gradient-to-br ${sdk.color} text-white hover:shadow-lg transition-all duration-300 group`}>
                 <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-6">
                     <sdk.icon className="h-6 w-6 mr-3 flex-shrink-0" />
                     <h3 className="font-semibold text-sm">{sdk.name}</h3>
                   </div>
-                  <div className="flex items-center text-sm opacity-90">
-                    <Star className="h-3 w-3 mr-1" />
-                    <span>{sdk.stars.toLocaleString()}</span>
+                  <div className="flex flex-col gap-3">
+                    <a 
+                      href={sdk.githubUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                    >
+                      <Github className="h-4 w-4 mr-2 flex-shrink-0" />
+                      <span className="text-xs">Source Code</span>
+                    </a>
+                    <a 
+                      href={sdk.docsUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                    >
+                      <Book className="h-4 w-4 mr-2 flex-shrink-0" />
+                      <span className="text-xs">Documentation</span>
+                    </a>
+                    {sdk.apiUrl && (
+                      <a 
+                        href={sdk.apiUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center p-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors group/link"
+                      >
+                        <Code className="h-4 w-4 mr-2 flex-shrink-0" />
+                        <span className="text-xs">API Reference</span>
+                      </a>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -309,7 +491,7 @@ export default function Home() {
       </section>
 
       {/* Dashboard Section */}
-      <section id="dashboard" className="py-20 bg-gray-50 dark:bg-gray-800">
+      <section id="dashboard" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Parse Dashboard</h2>
@@ -483,8 +665,8 @@ export default function Home() {
             </Card>
 
             {/* Heading */}
-            <div className="mt-16">
-              <h3 className="text-2xl font-bold text-white text-center mb-8">Save and Find Objects</h3>
+            <div className="text-center text-white mb-8 mt-16">
+              <p className="text-xl opacity-90">Then save and find your first object using Parse Server's <a href="#server-apis" className="text-blue-300 hover:text-blue-200 underline transition-colors">REST API</a></p>
             </div>
 
             {/* Code Example */}
@@ -503,12 +685,14 @@ export default function Home() {
                     <span className="text-gray-400"># Create a new Booking object</span>{'\n'}
                     curl -X POST \{'\n'}
                     {'  '}-H "X-Parse-Application-Id: myAppId" \{'\n'}
+                    {'  '}-H "X-Parse-Master-Key: myMasterKey" \{'\n'}
                     {'  '}-H "Content-Type: application/json" \{'\n'}
                     {'  '}-d '{"{\"room\":101,\"guests\":2,\"nights\":4}"}' {'\\'}{'\n'}
                     {'  '}http://localhost:1337/parse/classes/Booking{'\n\n'}
                     <span className="text-gray-400"># Get all bookings of room 101</span>{'\n'}
                     curl -X GET \{'\n'}
                     {'  '}-H "X-Parse-Application-Id: myAppId" \{'\n'}
+                    {'  '}-H "X-Parse-Master-Key: myMasterKey" \{'\n'}
                     {'  '}-G \{'\n'}
                     {'  '}--data-urlencode {'\'where={\"room\":{\"$eq\":101}}\''} {'\\'}{'\n'}
                     {'  '}http://localhost:1337/parse/classes/Booking
@@ -538,8 +722,8 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-4">Parse Server Guide</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Complete guide for deploying and configuring Parse Server</p>
                 <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="https://docs.parseplatform.org/parse-server/guide/" target="_blank" rel="noopener noreferrer">
-                    Read Documentation <ExternalLink className="ml-2 h-4 w-4" />
+                  <a href="#server-apis">
+                    Read Documentation
                   </a>
                 </Button>
               </CardContent>
@@ -548,14 +732,12 @@ export default function Home() {
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-colors">
-                  <Code className="h-6 w-6 text-purple-500" />
+                  <OrbitIcon className="h-6 w-6 text-purple-500" />
                 </div>
-                <h3 className="text-xl font-semibold mb-4">API Reference</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">REST API documentation for Parse Server</p>
-                <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="https://docs.parseplatform.org/rest/guide/" target="_blank" rel="noopener noreferrer">
-                    View API Docs <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
+                <h3 className="text-xl font-semibold mb-4">Postman Template</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Ready-to-use Postman collection for Parse Server REST API testing</p>
+                <Button variant="link" className="p-0 h-auto text-gray-400" disabled>
+                  Coming Soon
                 </Button>
               </CardContent>
             </Card>
@@ -568,8 +750,8 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-4">Client SDK Guides</h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Platform-specific integration guides for all supported SDKs</p>
                 <Button variant="link" className="p-0 h-auto text-primary" asChild>
-                  <a href="https://docs.parseplatform.org/" target="_blank" rel="noopener noreferrer">
-                    Browse SDKs <ExternalLink className="ml-2 h-4 w-4" />
+                  <a href="#sdks">
+                    Browse SDKs
                   </a>
                 </Button>
               </CardContent>
@@ -641,7 +823,7 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center space-x-3 mb-6">
-                <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8" />
+                <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8" style={{filter: 'brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(201deg) brightness(102%) contrast(103%)'}} />
                 <span className="text-xl font-bold">Parse Platform</span>
               </div>
               <p className="text-gray-400">The open source Backend-as-a-Service platform for building modern applications.</p>
@@ -675,7 +857,7 @@ export default function Home() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400">&copy; 2025 Parse Platform. Open source project maintained by the community.</p>
+            <p className="text-gray-400">&copy; 2025 Parse Platform</p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a href="https://github.com/parse-community" className="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
                 <Github className="h-5 w-5" />
