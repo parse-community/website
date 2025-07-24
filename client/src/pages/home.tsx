@@ -217,7 +217,7 @@ export default function Home() {
       icon: Blocks, 
       stars: null, 
       color: "text-orange-500",
-      communityHighlightsUrl: "/community-highlights",
+      extensionsUrl: "/extensions",
       description: "Enhance Parse Server with official and community-built extensions."
     }
   ];
@@ -442,9 +442,9 @@ export default function Home() {
                         </a>
                       </Button>
                     )}
-                    {api.communityHighlightsUrl && (
+                    {api.extensionsUrl && (
                       <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
-                        <Link href={api.communityHighlightsUrl}>
+                        <Link href={api.extensionsUrl}>
                           <List className="h-4 w-4 mr-2" />
                           Explore Extensions
                         </Link>
@@ -835,7 +835,7 @@ export default function Home() {
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">Discover amazing community projects and tools for Parse Platform</p>
                 <Button className="bg-purple-500 hover:bg-purple-600 w-full" asChild>
-                  <Link href="/community-highlights#community-projects">
+                  <Link href="/extensions#community-projects">
                     Explore Projects
                   </Link>
                 </Button>
