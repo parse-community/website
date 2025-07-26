@@ -925,7 +925,7 @@ export default function Home() {
                 <img src={parseLogoPath} alt="Parse Platform" className="w-8 h-8" style={{filter: 'brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(201deg) brightness(102%) contrast(103%)'}} />
                 <span className="text-xl font-bold">Parse Platform</span>
               </div>
-              <p className="text-gray-400">The open source Backend-as-a-Service platform for building modern applications.</p>
+              <p className="text-gray-400">The open source backend for building modern applications without vendor lock-in. Deploy anywhere, scale infinitely, own your data.</p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Platform</h4>
