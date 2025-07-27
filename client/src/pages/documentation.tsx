@@ -184,7 +184,7 @@ export default function Documentation() {
                         <CodeBlock language="javascript">
 {`// Initialize Parse SDK
 Parse.initialize("YOUR_APP_ID", "YOUR_JAVASCRIPT_KEY");
-Parse.serverURL = 'https://your-app.parseapi.com/parse';
+Parse.serverURL = 'https://example.com/parse';
 
 // Optional: Enable local datastore for offline support
 Parse.enableLocalDatastore();
@@ -201,7 +201,7 @@ Parse.CoreManager.set("DEBUG", true);`}
 let configuration = ParseConfiguration {
     $0.applicationId = "YOUR_APP_ID"
     $0.clientKey = "YOUR_CLIENT_KEY"
-    $0.serverURL = URL(string: "https://your-app.parseapi.com/parse")!
+    $0.serverURL = URL(string: "https://example.com/parse")!
     
     // Optional: Enable local datastore for offline support
     $0.isUsingDataProtection = true
@@ -228,7 +228,7 @@ public class MyApplication extends Application {
         Parse.Configuration.Builder configBuilder = new Parse.Configuration.Builder(this)
             .applicationId("YOUR_APP_ID")
             .clientKey("YOUR_CLIENT_KEY")
-            .server("https://your-app.parseapi.com/parse/");
+            .server("https://example.com/parse/");
             
         // Optional: Enable local datastore for offline support
         configBuilder.enableLocalDataStore();
@@ -258,7 +258,7 @@ ParseClient::initialize(
 );
 
 // Set the server URL
-ParseClient::setServerURL('https://your-app.parseapi.com/parse');
+ParseClient::setServerURL('https://example.com/parse');
 
 // Optional: Set additional configuration
 ParseClient::setServerVersion('1.6.0');
@@ -340,7 +340,7 @@ echo "Parse SDK initialized successfully";
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
                           <code className="text-sm font-mono">
                             <div className="text-green-600 dark:text-green-400">POST</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/classes/GameScore</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/classes/GameScore</div>
                           </code>
                         </div>
                         <CodeBlock language="bash">
@@ -353,14 +353,14 @@ echo "Parse SDK initialized successfully";
     "playerName": "Sean Plott",
     "cheatMode": false
   }' \\
-  https://your-app.parseapi.com/parse/classes/GameScore`}
+  https://example.com/parse/classes/GameScore`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
                           <code className="text-sm font-mono">
                             <div className="text-green-600 dark:text-green-400">MUTATION</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/graphql</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/graphql</div>
                           </code>
                         </div>
                         <CodeBlock language="graphql">
@@ -505,21 +505,21 @@ try {
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
                           <code className="text-sm font-mono">
                             <div className="text-green-600 dark:text-green-400">GET</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/classes/GameScore/objectId</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/classes/GameScore/objectId</div>
                           </code>
                         </div>
                         <CodeBlock language="bash">
 {`curl -X GET \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
-  https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc`}
+  https://example.com/parse/classes/GameScore/Ed1nuqPvc`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
                           <code className="text-sm font-mono">
                             <div className="text-green-600 dark:text-green-400">QUERY</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/graphql</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/graphql</div>
                           </code>
                         </div>
                         <CodeBlock language="graphql">
@@ -634,7 +634,7 @@ try {
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
                           <code className="text-sm font-mono">
                             <div className="text-green-600 dark:text-green-400">PUT</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/classes/GameScore/Ed1nuqPvc</div>
                           </code>
                         </div>
                         <CodeBlock language="bash">
@@ -645,7 +645,7 @@ try {
   -d '{
     "score": 73453
   }' \\
-  https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc`}
+  https://example.com/parse/classes/GameScore/Ed1nuqPvc`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
@@ -772,14 +772,14 @@ try {
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
                           <code className="text-sm font-mono">
                             <div className="text-red-600 dark:text-red-400">DELETE</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/classes/GameScore/Ed1nuqPvc</div>
                           </code>
                         </div>
                         <CodeBlock language="bash">
 {`curl -X DELETE \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
-  https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc`}
+  https://example.com/parse/classes/GameScore/Ed1nuqPvc`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
@@ -902,7 +902,7 @@ curl -X GET \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
   -G \\
   --data-urlencode 'where={"playerName":"Sean Plott","score":{"$gte":1000}}' \\
-  https://your-app.parseapi.com/parse/classes/GameScore`}
+  https://example.com/parse/classes/GameScore`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
@@ -1156,7 +1156,7 @@ query.findInBackground(callback);`}
     "email": "cooldude6@example.com",
     "phone": "415-392-0202"
   }' \\
-  https://your-app.parseapi.com/parse/users`}
+  https://example.com/parse/users`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
@@ -1286,7 +1286,7 @@ try {
   -G \\
   --data-urlencode 'username=cooldude6' \\
   --data-urlencode 'password=p_n7!-e8' \\
-  https://your-app.parseapi.com/parse/login`}
+  https://example.com/parse/login`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
@@ -1419,7 +1419,7 @@ try {
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
   -H "Content-Type: text/plain" \\
   --data-binary 'Hello, World!' \\
-  https://your-app.parseapi.com/parse/files/hello.txt`}
+  https://example.com/parse/files/hello.txt`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
@@ -1676,7 +1676,7 @@ curl -X POST \\
       "alert": "Hello, World!"
     }
   }' \\
-  https://your-app.parseapi.com/parse/push
+  https://example.com/parse/push
 
 # Send to specific users
 curl -X POST \\
@@ -1691,7 +1691,7 @@ curl -X POST \\
       "alert": "Hello iOS users!"
     }
   }' \\
-  https://your-app.parseapi.com/parse/push`}
+  https://example.com/parse/push`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
@@ -1900,7 +1900,7 @@ ParsePush::send($data);
     "name": "John Doe",
     "email": "john@example.com"
   }' \\
-  https://your-app.parseapi.com/parse/functions/sendWelcomeEmail`}
+  https://example.com/parse/functions/sendWelcomeEmail`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="graphql" className="space-y-4">
