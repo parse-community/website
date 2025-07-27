@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Book,
@@ -9,8 +9,7 @@ import {
   FileText,
   Search,
   Server,
-  Shield,
-  User,
+  ShieldCheck,
   Users,
   Zap
 } from "lucide-react";
@@ -77,7 +76,7 @@ export default function Documentation() {
     { id: "files", title: "Files", icon: FileText },
     { id: "push", title: "Push Notifications", icon: Zap },
     { id: "cloud", title: "Cloud Functions", icon: Server },
-    { id: "security", title: "Security", icon: Shield },
+    { id: "security", title: "Security", icon: ShieldCheck },
   ];
 
   return (
@@ -162,18 +161,14 @@ export default function Documentation() {
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold mb-6">SDK Initialization</h2>
                 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Code className="h-5 w-5" />
-                      <span>Initialize Parse SDK</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Before using any Parse functionality, you need to initialize the SDK with your application credentials.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("initialization", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Initialize Parse SDK</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Before using any Parse functionality, you need to initialize the SDK with your application credentials.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("initialization", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
@@ -268,45 +263,37 @@ echo "Parse SDK initialized successfully";
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Shield className="h-5 w-5" />
-                      <span>Credentials Setup</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      You'll need to obtain your application credentials from your Parse Server dashboard or configuration.
-                    </p>
-                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
-                      <div className="flex items-start space-x-3">
-                        <Shield className="h-5 w-5 text-yellow-600 dark:text-yellow-400 mt-0.5" />
-                        <div>
-                          <h4 className="font-semibold text-yellow-800 dark:text-yellow-200">Security Notice</h4>
-                          <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
-                            Never expose your Master Key in client-side code. Use it only for server-side operations and administrative tasks.
-                          </p>
-                        </div>
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Credentials Setup</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    You'll need to obtain your application credentials from your Parse Server dashboard or configuration.
+                  </p>
+                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+                    <div className="flex items-start space-x-3">
+                      <ShieldCheck className="h-5 w-5 text-yellow-600 dark:text-yellow-400 mt-0.5" />
+                      <div>
+                        <h4 className="font-semibold text-yellow-800 dark:text-yellow-200">Security Notice</h4>
+                        <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
+                          Never expose your Master Key in client-side code. Use it only for server-side operations and administrative tasks.
+                        </p>
                       </div>
                     </div>
-                    <div className="mt-4 space-y-3">
-                      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-                        <h4 className="font-semibold mb-2">Required Credentials:</h4>
-                        <ul className="space-y-2 text-sm">
-                          <li><strong>Application ID:</strong> Unique identifier for your Parse app</li>
-                          <li><strong>JavaScript Key:</strong> For client-side JavaScript applications</li>
-                          <li><strong>REST API Key:</strong> For REST API access and server-side PHP</li>
-                          <li><strong>Client Key:</strong> For mobile applications (iOS/Android)</li>
-                          <li><strong>Master Key:</strong> For administrative operations (server-side only)</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                  <div className="mt-6">
+                    <h4 className="font-semibold mb-3">Required Credentials:</h4>
+                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                      <li><strong>Application ID:</strong> Unique identifier for your Parse app</li>
+                      <li><strong>JavaScript Key:</strong> For client-side JavaScript applications</li>
+                      <li><strong>REST API Key:</strong> For REST API access and server-side PHP</li>
+                      <li><strong>Client Key:</strong> For mobile applications (iOS/Android)</li>
+                      <li><strong>Master Key:</strong> For administrative operations (server-side only)</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -316,18 +303,14 @@ echo "Parse SDK initialized successfully";
                 <h2 className="text-3xl font-bold mb-6">Working with Objects</h2>
                 
                 {/* Save an Object */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Database className="h-5 w-5" />
-                      <span>Save an Object</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Create and save objects to the Parse database. Objects can contain any data that can be JSON-encoded.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Save an Object</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Create and save objects to the Parse database. Objects can contain any data that can be JSON-encoded.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -477,22 +460,19 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
 
                 {/* Retrieve an Object */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Search className="h-5 w-5" />
-                      <span>Retrieve an Object</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Retrieve objects from Parse by their objectId or using queries to find multiple objects.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Retrieve an Object</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Retrieve objects from Parse by their objectId or using queries to find multiple objects.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -606,22 +586,19 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
 
                 {/* Update an Object */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Database className="h-5 w-5" />
-                      <span>Update an Object</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Update existing objects by setting new values for fields and saving the changes.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Update an Object</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Update existing objects by setting new values for fields and saving the changes.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -744,22 +721,19 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
 
                 {/* Delete an Object */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Database className="h-5 w-5" />
-                      <span>Delete an Object</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Delete objects from the Parse database when they are no longer needed.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Delete an Object</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Delete objects from the Parse database when they are no longer needed.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -864,8 +838,9 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             )}
 
@@ -874,18 +849,14 @@ try {
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold mb-6">Queries</h2>
                 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Search className="h-5 w-5" />
-                      <span>Basic Queries</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Query for objects using constraints like equality, comparison operators, and more.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("queries", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Basic Queries</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Query for objects using constraints like equality, comparison operators, and more.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("queries", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -1016,22 +987,19 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
 
                 {/* Query Constraints */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Search className="h-5 w-5" />
-                      <span>Query Constraints</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Use various constraints to filter your queries: equality, less than, greater than, contained in, and more.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("queries-constraints", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Query Constraints</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Use various constraints to filter your queries: equality, less than, greater than, contained in, and more.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("queries-constraints", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
@@ -1114,8 +1082,9 @@ query.findInBackground(callback);`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             )}
 
@@ -1124,18 +1093,14 @@ query.findInBackground(callback);`}
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold mb-6">Users</h2>
                 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <User className="h-5 w-5" />
-                      <span>User Registration</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Register new users with username, password, and additional fields.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">User Registration</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Register new users with username, password, and additional fields.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -1255,21 +1220,18 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <User className="h-5 w-5" />
-                      <span>User Login</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Log in existing users with username and password.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">User Login</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Log in existing users with username and password.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -1382,8 +1344,9 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             )}
 
@@ -1392,18 +1355,14 @@ try {
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold mb-6">Files</h2>
                 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <FileText className="h-5 w-5" />
-                      <span>File Upload</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Upload files to Parse and associate them with your objects.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("files", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">File Upload</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Upload files to Parse and associate them with your objects.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("files", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -1547,21 +1506,18 @@ $file->save();
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <FileText className="h-5 w-5" />
-                      <span>File Retrieval</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Retrieve and work with files that have been uploaded to Parse.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("files-retrieval", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">File Retrieval</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Retrieve and work with files that have been uploaded to Parse.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("files-retrieval", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
@@ -1633,8 +1589,9 @@ if (profilePhoto != null) {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             )}
 
@@ -1643,18 +1600,14 @@ if (profilePhoto != null) {
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold mb-6">Push Notifications</h2>
                 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Zap className="h-5 w-5" />
-                      <span>Send Push Notifications</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Send push notifications to specific users or broadcast to all users.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("push", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Send Push Notifications</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Send push notifications to specific users or broadcast to all users.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("push", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -1860,28 +1813,25 @@ ParsePush::send($data);
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             )}
 
             {/* Cloud Functions Section */}
-            {activeSection === "cloud-functions" && (
+            {activeSection === "cloud" && (
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold mb-6">Cloud Functions</h2>
                 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Server className="h-5 w-5" />
-                      <span>Calling Cloud Functions</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Execute server-side logic with Cloud Functions that run on Parse Server.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("cloud", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Calling Cloud Functions</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Execute server-side logic with Cloud Functions that run on Parse Server.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("cloud", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
                         <TabsTrigger value="graphql">GraphQL</TabsTrigger>
@@ -2009,8 +1959,9 @@ echo "Server time: " . $serverTime;
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             )}
 
@@ -2019,18 +1970,14 @@ echo "Server time: " . $serverTime;
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold mb-6">Security</h2>
                 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Shield className="h-5 w-5" />
-                      <span>Access Control Lists (ACLs)</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Control who can read and write to your objects using Access Control Lists.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("security", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Access Control Lists (ACLs)</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Control who can read and write to your objects using Access Control Lists.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("security", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
@@ -2143,21 +2090,18 @@ $gameScore->save();
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                      <Shield className="h-5 w-5" />
-                      <span>Roles</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Create roles to group users and assign permissions at scale.
-                    </p>
-                    <Tabs value={getAvailableTabForSection("security-roles", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Roles</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Create roles to group users and assign permissions at scale.
+                  </p>
+                  <Card>
+                    <CardContent className="p-6">
+                      <Tabs value={getAvailableTabForSection("security-roles", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
@@ -2250,8 +2194,9 @@ post.saveInBackground();`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             )}
           </div>
