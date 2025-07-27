@@ -289,7 +289,7 @@ export default function Donations() {
                   Answer questions on GitHub, Discord, or Stack Overflow.
                 </p>
                 <Button variant="outline" asChild>
-                  <a href="https://discord.gg/parse" target="_blank" rel="noopener noreferrer">
+                  <a href="https://discord.gg/3BbTCJtZ5j" target="_blank" rel="noopener noreferrer">
                     Join Discord
                   </a>
                 </Button>
