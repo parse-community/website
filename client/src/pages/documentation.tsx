@@ -32,7 +32,6 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ language, children }) => {
       customStyle={{
         fontSize: '13px',
         lineHeight: '1.4',
-        borderRadius: '8px',
         margin: 0,
       }}
       showLineNumbers={false}
@@ -308,23 +307,19 @@ echo "Parse SDK initialized successfully";
                   <p className="text-gray-600 dark:text-gray-300">
                     Create and save objects to the Parse database. Objects can contain any data that can be JSON-encoded.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
-                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                          <code className="text-sm font-mono">
-                            <div className="text-green-600 dark:text-green-400">POST</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/classes/GameScore</div>
-                          </code>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/classes/GameScore
                         </div>
                         <CodeBlock language="bash">
 {`curl -X POST \\
@@ -339,12 +334,9 @@ echo "Parse SDK initialized successfully";
   https://example.com/parse/classes/GameScore`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
-                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                          <code className="text-sm font-mono">
-                            <div className="text-green-600 dark:text-green-400">MUTATION</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/graphql</div>
-                          </code>
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          MUTATION https://example.com/parse/graphql
                         </div>
                         <CodeBlock language="graphql">
 {`mutation CreateGameScore($input: CreateGameScoreFieldsInput!) {
@@ -370,7 +362,7 @@ echo "Parse SDK initialized successfully";
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Create a new GameScore object
 const GameScore = Parse.Object.extend("GameScore");
@@ -390,7 +382,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`import ParseSwift
 
@@ -421,7 +413,7 @@ do {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Create a new GameScore object
 ParseObject gameScore = new ParseObject("GameScore");
@@ -441,7 +433,7 @@ gameScore.saveInBackground(new SaveCallback() {
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 // Create a new GameScore object
@@ -460,8 +452,7 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
 
                 {/* Retrieve an Object */}
