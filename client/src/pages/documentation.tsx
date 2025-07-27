@@ -10,16 +10,67 @@ import {
   Search,
   Server,
   Shield,
+  User,
   Users,
   Zap
 } from "lucide-react";
 import { useState } from "react";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Link } from "wouter";
 
+// Helper component for syntax highlighted code blocks
+interface CodeBlockProps {
+  language: string;
+  children: string;
+}
+
+const CodeBlock: React.FC<CodeBlockProps> = ({ language, children }) => {
+  return (
+    <SyntaxHighlighter
+      language={language}
+      style={vscDarkPlus}
+      customStyle={{
+        fontSize: '13px',
+        lineHeight: '1.4',
+        borderRadius: '8px',
+        margin: 0,
+      }}
+      showLineNumbers={false}
+      wrapLongLines={true}
+    >
+      {children}
+    </SyntaxHighlighter>
+  );
+};
+
 export default function Documentation() {
-  const [activeSection, setActiveSection] = useState("objects");
+  const [activeSection, setActiveSection] = useState("initialization");
+  const [activeCodeTab, setActiveCodeTab] = useState("rest");
+
+  // Helper function to get the best available tab for a section
+  const getAvailableTabForSection = (sectionId: string, preferredTab: string) => {
+    const sectionTabs: Record<string, string[]> = {
+      "initialization": ["javascript", "swift", "android", "php"],
+      "objects": ["rest", "graphql", "javascript", "swift", "android", "php"],
+      "queries": ["rest", "graphql", "javascript", "swift", "android", "php"],
+      "queries-constraints": ["javascript", "swift", "android"],
+      "users": ["rest", "graphql", "javascript", "swift", "android", "php"],
+      "files": ["rest", "graphql", "javascript", "swift", "android", "php"],
+      "files-retrieval": ["javascript", "swift", "android"],
+      "push": ["rest", "graphql", "javascript", "swift", "android", "php"],
+      "cloud": ["rest", "graphql", "javascript", "swift", "android", "php"],
+      "security": ["javascript", "swift", "android", "php"],
+      "security-roles": ["javascript", "swift", "android"],
+    };
+
+    const availableTabs = sectionTabs[sectionId] || ["rest", "graphql", "javascript", "swift", "android", "php"];
+    
+    return availableTabs.includes(preferredTab) ? preferredTab : availableTabs[0];
+  };
 
   const navigationSections = [
+    { id: "initialization", title: "SDK Initialization", icon: Code },
     { id: "objects", title: "Objects", icon: Database },
     { id: "queries", title: "Queries", icon: Search },
     { id: "users", title: "Users", icon: Users },
@@ -106,6 +157,159 @@ export default function Documentation() {
               </p>
             </div>
 
+            {/* SDK Initialization Section */}
+            {activeSection === "initialization" && (
+              <div className="space-y-8">
+                <h2 className="text-3xl font-bold mb-6">SDK Initialization</h2>
+                
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Code className="h-5 w-5" />
+                      <span>Initialize Parse SDK</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Before using any Parse functionality, you need to initialize the SDK with your application credentials.
+                    </p>
+                    <Tabs value={getAvailableTabForSection("initialization", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-4">
+                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift">Swift</TabsTrigger>
+                        <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="javascript" className="space-y-4">
+                        <CodeBlock language="javascript">
+{`// Initialize Parse SDK
+Parse.initialize("YOUR_APP_ID", "YOUR_JAVASCRIPT_KEY");
+Parse.serverURL = 'https://your-app.parseapi.com/parse';
+
+// Optional: Enable local datastore for offline support
+Parse.enableLocalDatastore();
+
+// Optional: Set debug mode
+Parse.CoreManager.set("DEBUG", true);`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="swift" className="space-y-4">
+                        <CodeBlock language="swift">
+{`import ParseSwift
+
+// Initialize Parse SDK
+let configuration = ParseConfiguration {
+    $0.applicationId = "YOUR_APP_ID"
+    $0.clientKey = "YOUR_CLIENT_KEY"
+    $0.serverURL = URL(string: "https://your-app.parseapi.com/parse")!
+    
+    // Optional: Enable local datastore for offline support
+    $0.isUsingDataProtection = true
+    $0.fileTransferType = .useSession
+}
+
+do {
+    try ParseSwift.initialize(configuration: configuration)
+    print("Parse SDK initialized successfully")
+} catch {
+    print("Failed to initialize Parse SDK: \\(error)")
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="android" className="space-y-4">
+                        <CodeBlock language="java">
+{`// Initialize Parse SDK in your Application class
+public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        
+        // Initialize Parse
+        Parse.Configuration.Builder configBuilder = new Parse.Configuration.Builder(this)
+            .applicationId("YOUR_APP_ID")
+            .clientKey("YOUR_CLIENT_KEY")
+            .server("https://your-app.parseapi.com/parse/");
+            
+        // Optional: Enable local datastore for offline support
+        configBuilder.enableLocalDataStore();
+        
+        Parse.initialize(configBuilder.build());
+        
+        Log.d("Parse", "Parse SDK initialized successfully");
+    }
+}
+
+// Don't forget to add your Application class to AndroidManifest.xml:
+// <application android:name=".MyApplication" ...>`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+require_once 'vendor/autoload.php';
+
+use Parse\\ParseClient;
+
+// Initialize Parse SDK
+ParseClient::initialize(
+    "YOUR_APP_ID",          // Application ID
+    "YOUR_REST_API_KEY",    // REST API Key
+    "YOUR_MASTER_KEY"       // Master Key (for server-side operations)
+);
+
+// Set the server URL
+ParseClient::setServerURL('https://your-app.parseapi.com/parse');
+
+// Optional: Set additional configuration
+ParseClient::setServerVersion('1.6.0');
+
+echo "Parse SDK initialized successfully";
+?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Shield className="h-5 w-5" />
+                      <span>Credentials Setup</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      You'll need to obtain your application credentials from your Parse Server dashboard or configuration.
+                    </p>
+                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+                      <div className="flex items-start space-x-3">
+                        <Shield className="h-5 w-5 text-yellow-600 dark:text-yellow-400 mt-0.5" />
+                        <div>
+                          <h4 className="font-semibold text-yellow-800 dark:text-yellow-200">Security Notice</h4>
+                          <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
+                            Never expose your Master Key in client-side code. Use it only for server-side operations and administrative tasks.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-4 space-y-3">
+                      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                        <h4 className="font-semibold mb-2">Required Credentials:</h4>
+                        <ul className="space-y-2 text-sm">
+                          <li><strong>Application ID:</strong> Unique identifier for your Parse app</li>
+                          <li><strong>JavaScript Key:</strong> For client-side JavaScript applications</li>
+                          <li><strong>REST API Key:</strong> For REST API access and server-side PHP</li>
+                          <li><strong>Client Key:</strong> For mobile applications (iOS/Android)</li>
+                          <li><strong>Master Key:</strong> For administrative operations (server-side only)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
             {/* Objects Section */}
             {activeSection === "objects" && (
               <div className="space-y-8">
@@ -123,22 +327,24 @@ export default function Documentation() {
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
                       Create and save objects to the Parse database. Objects can contain any data that can be JSON-encoded.
                     </p>
-                    <Tabs defaultValue="rest" className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
+                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
                         <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="space-y-4">
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                          <code className="text-sm">
+                          <code className="text-sm font-mono">
                             <div className="text-green-600 dark:text-green-400">POST</div>
                             <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/classes/GameScore</div>
                           </code>
                         </div>
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`curl -X POST \\
+                        <CodeBlock language="bash">
+{`curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
   -H "Content-Type: application/json" \\
@@ -147,16 +353,43 @@ export default function Documentation() {
     "playerName": "Sean Plott",
     "cheatMode": false
   }' \\
-  https://your-app.parseapi.com/parse/classes/GameScore`}</code>
-                        </pre>
+  https://your-app.parseapi.com/parse/classes/GameScore`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                          <code className="text-sm font-mono">
+                            <div className="text-green-600 dark:text-green-400">MUTATION</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/graphql</div>
+                          </code>
+                        </div>
+                        <CodeBlock language="graphql">
+{`mutation CreateGameScore($input: CreateGameScoreFieldsInput!) {
+  createGameScore(input: $input) {
+    objectId
+    score
+    playerName
+    cheatMode
+    createdAt
+    updatedAt
+  }
+}
+
+# Variables:
+{
+  "input": {
+    "fields": {
+      "score": 1337,
+      "playerName": "Sean Plott",
+      "cheatMode": false
+    }
+  }
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="javascript" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Initialize Parse
-Parse.initialize("YOUR_APP_ID", "YOUR_JAVASCRIPT_KEY");
-Parse.serverURL = 'https://your-app.parseapi.com/parse';
-
-// Create a new GameScore object
+                        <CodeBlock language="javascript">
+{`// Create a new GameScore object
 const GameScore = Parse.Object.extend("GameScore");
 const gameScore = new GameScore();
 
@@ -171,12 +404,12 @@ try {
   console.log('GameScore created:', result.id);
 } catch (error) {
   console.error('Error saving GameScore:', error);
-}`}</code>
-                        </pre>
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="swift" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`import ParseSwift
+                        <CodeBlock language="swift">
+{`import ParseSwift
 
 // Define your Parse Object
 struct GameScore: ParseObject {
@@ -202,19 +435,12 @@ do {
     print("GameScore saved: \\(savedGameScore.objectId ?? "")")
 } catch {
     print("Error saving GameScore: \\(error)")
-}`}</code>
-                        </pre>
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="android" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Initialize Parse in your Application class
-Parse.initialize(new Parse.Configuration.Builder(this)
-    .applicationId("YOUR_APP_ID")
-    .clientKey("YOUR_CLIENT_KEY")
-    .server("https://your-app.parseapi.com/parse/")
-    .build());
-
-// Create a new GameScore object
+                        <CodeBlock language="java">
+{`// Create a new GameScore object
 ParseObject gameScore = new ParseObject("GameScore");
 gameScore.put("score", 1337);
 gameScore.put("playerName", "Sean Plott");
@@ -229,8 +455,26 @@ gameScore.saveInBackground(new SaveCallback() {
             Log.e("GameScore", "Error saving: " + e.getMessage());
         }
     }
-});`}</code>
-                        </pre>
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+// Create a new GameScore object
+$gameScore = new ParseObject("GameScore");
+$gameScore->set("score", 1337);
+$gameScore->set("playerName", "Sean Plott");
+$gameScore->set("cheatMode", false);
+
+try {
+    $gameScore->save();
+    echo 'GameScore created: ' . $gameScore->getObjectId();
+} catch (Exception $e) {
+    echo 'Error saving GameScore: ' . $e->getMessage();
+}
+?>`}
+                        </CodeBlock>
                       </TabsContent>
                     </Tabs>
                   </CardContent>
@@ -248,30 +492,57 @@ gameScore.saveInBackground(new SaveCallback() {
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
                       Retrieve objects from Parse by their objectId or using queries to find multiple objects.
                     </p>
-                    <Tabs defaultValue="rest" className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
+                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
                         <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="space-y-4">
                         <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                          <code className="text-sm">
+                          <code className="text-sm font-mono">
                             <div className="text-green-600 dark:text-green-400">GET</div>
                             <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/classes/GameScore/objectId</div>
                           </code>
                         </div>
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`curl -X GET \\
+                        <CodeBlock language="bash">
+{`curl -X GET \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
-  https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc`}</code>
-                        </pre>
+  https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                          <code className="text-sm font-mono">
+                            <div className="text-green-600 dark:text-green-400">QUERY</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/graphql</div>
+                          </code>
+                        </div>
+                        <CodeBlock language="graphql">
+{`query GetGameScore($objectId: String!) {
+  gameScore(objectId: $objectId) {
+    objectId
+    score
+    playerName
+    cheatMode
+    createdAt
+    updatedAt
+  }
+}
+
+# Variables:
+{
+  "objectId": "Ed1nuqPvc"
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="javascript" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Get object by ID
+                        <CodeBlock language="javascript">
+{`// Get object by ID
 const GameScore = Parse.Object.extend("GameScore");
 const query = new Parse.Query(GameScore);
 
@@ -281,12 +552,12 @@ try {
   console.log('Player:', gameScore.get('playerName'));
 } catch (error) {
   console.error('Error fetching GameScore:', error);
-}`}</code>
-                        </pre>
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="swift" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Retrieve object by ID
+                        <CodeBlock language="swift">
+{`// Retrieve object by ID
 do {
     let gameScore: GameScore = try await GameScore.query()
         .where("objectId" == "Ed1nuqPvc")
@@ -296,12 +567,12 @@ do {
     print("Player: \\(gameScore.playerName ?? "")")
 } catch {
     print("Error fetching GameScore: \\(error)")
-}`}</code>
-                        </pre>
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="android" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Get object by ID
+                        <CodeBlock language="java">
+{`// Get object by ID
 ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
 query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
     public void done(ParseObject gameScore, ParseException e) {
@@ -313,8 +584,284 @@ query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
             Log.e("GameScore", "Error fetching: " + e.getMessage());
         }
     }
-});`}</code>
-                        </pre>
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+use Parse\\ParseQuery;
+
+// Get object by ID
+$query = new ParseQuery("GameScore");
+
+try {
+    $gameScore = $query->get("Ed1nuqPvc");
+    echo 'Score: ' . $gameScore->get("score");
+    echo 'Player: ' . $gameScore->get("playerName");
+} catch (Exception $e) {
+    echo 'Error fetching GameScore: ' . $e->getMessage();
+}
+?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+
+                {/* Update an Object */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Database className="h-5 w-5" />
+                      <span>Update an Object</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Update existing objects by setting new values for fields and saving the changes.
+                    </p>
+                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
+                        <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift">Swift</TabsTrigger>
+                        <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="rest" className="space-y-4">
+                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                          <code className="text-sm font-mono">
+                            <div className="text-green-600 dark:text-green-400">PUT</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc</div>
+                          </code>
+                        </div>
+                        <CodeBlock language="bash">
+{`curl -X PUT \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "score": 73453
+  }' \\
+  https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <CodeBlock language="graphql">
+{`mutation UpdateGameScore($objectId: String!, $input: UpdateGameScoreFieldsInput!) {
+  updateGameScore(objectId: $objectId, input: $input) {
+    objectId
+    score
+    playerName
+    cheatMode
+    updatedAt
+  }
+}
+
+# Variables:
+{
+  "objectId": "Ed1nuqPvc",
+  "input": {
+    "fields": {
+      "score": 73453
+    }
+  }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="javascript" className="space-y-4">
+                        <CodeBlock language="javascript">
+{`// Update an existing object
+const GameScore = Parse.Object.extend("GameScore");
+const query = new Parse.Query(GameScore);
+
+try {
+  const gameScore = await query.get("Ed1nuqPvc");
+  gameScore.set("score", 73453);
+  
+  const updatedScore = await gameScore.save();
+  console.log('GameScore updated:', updatedScore.id);
+} catch (error) {
+  console.error('Error updating GameScore:', error);
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="swift" className="space-y-4">
+                        <CodeBlock language="swift">
+{`// Update an existing object
+do {
+    var gameScore: GameScore = try await GameScore.query()
+        .where("objectId" == "Ed1nuqPvc")
+        .first()
+    
+    gameScore.score = 73453
+    let updatedGameScore = try await gameScore.save()
+    print("GameScore updated: \\(updatedGameScore.objectId ?? "")")
+} catch {
+    print("Error updating GameScore: \\(error)")
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="android" className="space-y-4">
+                        <CodeBlock language="java">
+{`// Update an existing object
+ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
+    public void done(ParseObject gameScore, ParseException e) {
+        if (e == null) {
+            gameScore.put("score", 73453);
+            gameScore.saveInBackground(new SaveCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("GameScore", "Updated successfully");
+                    } else {
+                        Log.e("GameScore", "Error updating: " + e.getMessage());
+                    }
+                }
+            });
+        }
+    }
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+// Update an existing object
+$query = new ParseQuery("GameScore");
+
+try {
+    $gameScore = $query->get("Ed1nuqPvc");
+    $gameScore->set("score", 73453);
+    $gameScore->save();
+    echo 'GameScore updated: ' . $gameScore->getObjectId();
+} catch (Exception $e) {
+    echo 'Error updating GameScore: ' . $e->getMessage();
+}
+?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+
+                {/* Delete an Object */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Database className="h-5 w-5" />
+                      <span>Delete an Object</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Delete objects from the Parse database when they are no longer needed.
+                    </p>
+                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
+                        <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift">Swift</TabsTrigger>
+                        <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="rest" className="space-y-4">
+                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+                          <code className="text-sm font-mono">
+                            <div className="text-red-600 dark:text-red-400">DELETE</div>
+                            <div className="text-blue-600 dark:text-blue-400">https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc</div>
+                          </code>
+                        </div>
+                        <CodeBlock language="bash">
+{`curl -X DELETE \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  https://your-app.parseapi.com/parse/classes/GameScore/Ed1nuqPvc`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <CodeBlock language="graphql">
+{`mutation DeleteGameScore($objectId: String!) {
+  deleteGameScore(objectId: $objectId) {
+    objectId
+  }
+}
+
+# Variables:
+{
+  "objectId": "Ed1nuqPvc"
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="javascript" className="space-y-4">
+                        <CodeBlock language="javascript">
+{`// Delete an object
+const GameScore = Parse.Object.extend("GameScore");
+const query = new Parse.Query(GameScore);
+
+try {
+  const gameScore = await query.get("Ed1nuqPvc");
+  await gameScore.destroy();
+  console.log('GameScore deleted');
+} catch (error) {
+  console.error('Error deleting GameScore:', error);
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="swift" className="space-y-4">
+                        <CodeBlock language="swift">
+{`// Delete an object
+do {
+    let gameScore: GameScore = try await GameScore.query()
+        .where("objectId" == "Ed1nuqPvc")
+        .first()
+    
+    try await gameScore.delete()
+    print("GameScore deleted")
+} catch {
+    print("Error deleting GameScore: \\(error)")
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="android" className="space-y-4">
+                        <CodeBlock language="java">
+{`// Delete an object
+ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
+    public void done(ParseObject gameScore, ParseException e) {
+        if (e == null) {
+            gameScore.deleteInBackground(new DeleteCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("GameScore", "Deleted successfully");
+                    } else {
+                        Log.e("GameScore", "Error deleting: " + e.getMessage());
+                    }
+                }
+            });
+        }
+    }
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+// Delete an object
+$query = new ParseQuery("GameScore");
+
+try {
+    $gameScore = $query->get("Ed1nuqPvc");
+    $gameScore->destroy();
+    echo 'GameScore deleted';
+} catch (Exception $e) {
+    echo 'Error deleting GameScore: ' . $e->getMessage();
+}
+?>`}
+                        </CodeBlock>
                       </TabsContent>
                     </Tabs>
                   </CardContent>
@@ -338,27 +885,58 @@ query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
                       Query for objects using constraints like equality, comparison operators, and more.
                     </p>
-                    <Tabs defaultValue="rest" className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
+                    <Tabs value={getAvailableTabForSection("queries", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
                         <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`# Query with constraints
+                        <CodeBlock language="bash">
+{`# Query with constraints
 curl -X GET \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
   -G \\
   --data-urlencode 'where={"playerName":"Sean Plott","score":{"$gte":1000}}' \\
-  https://your-app.parseapi.com/parse/classes/GameScore`}</code>
-                        </pre>
+  https://your-app.parseapi.com/parse/classes/GameScore`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <CodeBlock language="graphql">
+{`query FindGameScores($where: GameScoreWhereInput) {
+  gameScores(where: $where) {
+    edges {
+      node {
+        objectId
+        score
+        playerName
+        cheatMode
+        createdAt
+      }
+    }
+  }
+}
+
+# Variables:
+{
+  "where": {
+    "playerName": {
+      "equalTo": "Sean Plott"
+    },
+    "score": {
+      "greaterThanOrEqualTo": 1000
+    }
+  }
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="javascript" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`const GameScore = Parse.Object.extend("GameScore");
+                        <CodeBlock language="javascript">
+{`const GameScore = Parse.Object.extend("GameScore");
 const query = new Parse.Query(GameScore);
 
 // Add constraints
@@ -375,12 +953,12 @@ try {
   });
 } catch (error) {
   console.error('Error finding games:', error);
-}`}</code>
-                        </pre>
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="swift" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`do {
+                        <CodeBlock language="swift">
+{`do {
     let gameScores: [GameScore] = try await GameScore.query()
         .where("playerName" == "Sean Plott")
         .where("score" >= 1000)
@@ -393,12 +971,12 @@ try {
     }
 } catch {
     print("Error finding games: \\(error)")
-}`}</code>
-                        </pre>
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="android" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+                        <CodeBlock language="java">
+{`ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
 query.whereEqualTo("playerName", "Sean Plott");
 query.whereGreaterThanOrEqualTo("score", 1000);
 
@@ -414,8 +992,126 @@ query.findInBackground(new FindCallback<ParseObject>() {
             Log.e("GameScore", "Error finding games: " + e.getMessage());
         }
     }
-});`}</code>
-                        </pre>
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+$query = new ParseQuery("GameScore");
+$query->equalTo("playerName", "Sean Plott");
+$query->greaterThanOrEqualTo("score", 1000);
+
+try {
+    $results = $query->find();
+    echo 'Found ' . count($results) . ' games';
+    
+    foreach ($results as $gameScore) {
+        echo 'Score: ' . $gameScore->get("score");
+    }
+} catch (Exception $e) {
+    echo 'Error finding games: ' . $e->getMessage();
+}
+?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+
+                {/* Query Constraints */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Search className="h-5 w-5" />
+                      <span>Query Constraints</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Use various constraints to filter your queries: equality, less than, greater than, contained in, and more.
+                    </p>
+                    <Tabs value={getAvailableTabForSection("queries-constraints", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-3">
+                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift">Swift</TabsTrigger>
+                        <TabsTrigger value="android">Android</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="javascript" className="space-y-4">
+                        <CodeBlock language="javascript">
+{`// Basic constraints
+query.equalTo("playerName", "Dan Stemkoski");
+query.notEqualTo("playerName", "Michael Yabuti");
+query.greaterThan("score", 1000);
+query.lessThan("score", 2000);
+query.greaterThanOrEqualTo("score", 1000);
+query.lessThanOrEqualTo("score", 2000);
+
+// Array constraints
+query.containedIn("playerName", ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]);
+query.notContainedIn("playerName", ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]);
+
+// String constraints
+query.startsWith("playerName", "Big Daddy");
+query.endsWith("playerName", "Jr.");
+query.contains("playerName", "Daddy");
+
+// Query limit and ordering
+query.limit(10);
+query.skip(10);
+query.ascending("score");
+query.descending("score");
+
+// Execute query
+const results = await query.find();`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="swift" className="space-y-4">
+                        <CodeBlock language="swift">
+{`// Basic constraints
+let gameScores = try await GameScore.query()
+    .where("playerName" == "Dan Stemkoski")
+    .where("playerName" != "Michael Yabuti")
+    .where("score" > 1000)
+    .where("score" < 2000)
+    .where("score" >= 1000)
+    .where("score" <= 2000)
+    .containedIn("playerName", ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"])
+    .order([.ascending("score")])
+    .limit(10)
+    .skip(10)
+    .find()`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="android" className="space-y-4">
+                        <CodeBlock language="java">
+{`// Basic constraints
+query.whereEqualTo("playerName", "Dan Stemkoski");
+query.whereNotEqualTo("playerName", "Michael Yabuti");
+query.whereGreaterThan("score", 1000);
+query.whereLessThan("score", 2000);
+query.whereGreaterThanOrEqualTo("score", 1000);
+query.whereLessThanOrEqualTo("score", 2000);
+
+// Array constraints
+List<String> names = Arrays.asList("Jonathan Walsh", "Dario Wunsch", "Shawn Simon");
+query.whereContainedIn("playerName", names);
+query.whereNotContainedIn("playerName", names);
+
+// String constraints
+query.whereStartsWith("playerName", "Big Daddy");
+query.whereEndsWith("playerName", "Jr.");
+query.whereContains("playerName", "Daddy");
+
+// Query options
+query.setLimit(10);
+query.setSkip(10);
+query.orderByAscending("score");
+query.orderByDescending("score");
+
+// Execute query
+query.findInBackground(callback);`}
+                        </CodeBlock>
                       </TabsContent>
                     </Tabs>
                   </CardContent>
@@ -426,89 +1122,264 @@ query.findInBackground(new FindCallback<ParseObject>() {
             {/* Users Section */}
             {activeSection === "users" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">User Management</h2>
+                <h2 className="text-3xl font-bold mb-6">Users</h2>
                 
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center space-x-2">
-                      <Users className="h-5 w-5" />
-                      <span>User Sign Up</span>
+                      <User className="h-5 w-5" />
+                      <span>User Registration</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Create new user accounts with username and password, or using email verification.
+                      Register new users with username, password, and additional fields.
                     </p>
-                    <Tabs defaultValue="rest" className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
+                    <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
                         <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`curl -X POST \\
+                        <CodeBlock language="bash">
+{`curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
     "username": "cooldude6",
     "password": "p_n7!-e8",
-    "email": "user@example.com"
+    "email": "cooldude6@example.com",
+    "phone": "415-392-0202"
   }' \\
-  https://your-app.parseapi.com/parse/users`}</code>
-                        </pre>
+  https://your-app.parseapi.com/parse/users`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <CodeBlock language="graphql">
+{`mutation CreateUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    user {
+      objectId
+      username
+      email
+      createdAt
+    }
+  }
+}
+
+# Variables:
+{
+  "input": {
+    "fields": {
+      "username": "cooldude6",
+      "password": "p_n7!-e8",
+      "email": "cooldude6@example.com",
+      "phone": "415-392-0202"
+    }
+  }
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="javascript" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Sign up a new user
-const user = new Parse.User();
+                        <CodeBlock language="javascript">
+{`const user = new Parse.User();
 user.set("username", "cooldude6");
 user.set("password", "p_n7!-e8");
-user.set("email", "user@example.com");
+user.set("email", "cooldude6@example.com");
+user.set("phone", "415-392-0202");
 
 try {
-  const newUser = await user.signUp();
-  console.log('User created:', newUser.id);
+  await user.signUp();
+  console.log("User signed up successfully:", user.id);
 } catch (error) {
-  console.error('Error signing up:', error);
-}`}</code>
-                        </pre>
+  console.error("Error signing up user:", error);
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="swift" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Sign up a new user
-var user = User()
+                        <CodeBlock language="swift">
+{`let user = User()
 user.username = "cooldude6"
 user.password = "p_n7!-e8"
-user.email = "user@example.com"
+user.email = "cooldude6@example.com"
+user.phone = "415-392-0202"
 
 do {
-    let signedUpUser = try await user.signup()
-    print("User created: \\(signedUpUser.objectId ?? "")")
+    try await user.signup()
+    print("User signed up successfully: \\(user.objectId)")
 } catch {
-    print("Error signing up: \\(error)")
-}`}</code>
-                        </pre>
+    print("Error signing up user: \\(error)")
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="android" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`ParseUser user = new ParseUser();
+                        <CodeBlock language="java">
+{`ParseUser user = new ParseUser();
 user.setUsername("cooldude6");
 user.setPassword("p_n7!-e8");
-user.setEmail("user@example.com");
+user.setEmail("cooldude6@example.com");
+user.put("phone", "415-392-0202");
 
 user.signUpInBackground(new SignUpCallback() {
     public void done(ParseException e) {
         if (e == null) {
-            Log.d("User", "Sign up successful: " + user.getObjectId());
+            Log.d("User", "User signed up successfully: " + user.getObjectId());
         } else {
-            Log.e("User", "Sign up failed: " + e.getMessage());
+            Log.e("User", "Error signing up user: " + e.getMessage());
         }
     }
-});`}</code>
-                        </pre>
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+$user = new ParseUser();
+$user->set("username", "cooldude6");
+$user->set("password", "p_n7!-e8");
+$user->set("email", "cooldude6@example.com");
+$user->set("phone", "415-392-0202");
+
+try {
+    $user->signUp();
+    echo "User signed up successfully: " . $user->getObjectId();
+} catch (Exception $e) {
+    echo "Error signing up user: " . $e->getMessage();
+}
+?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <User className="h-5 w-5" />
+                      <span>User Login</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Log in existing users with username and password.
+                    </p>
+                    <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
+                        <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift">Swift</TabsTrigger>
+                        <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="rest" className="space-y-4">
+                        <CodeBlock language="bash">
+{`curl -X GET \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  -G \\
+  --data-urlencode 'username=cooldude6' \\
+  --data-urlencode 'password=p_n7!-e8' \\
+  https://your-app.parseapi.com/parse/login`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <CodeBlock language="graphql">
+{`mutation LogIn($input: LogInInput!) {
+  logIn(input: $input) {
+    viewer {
+      user {
+        objectId
+        username
+        email
+        sessionToken
+      }
+    }
+  }
+}
+
+# Variables:
+{
+  "input": {
+    "username": "cooldude6",
+    "password": "p_n7!-e8"
+  }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="javascript" className="space-y-4">
+                        <CodeBlock language="javascript">
+{`try {
+  const user = await Parse.User.logIn("cooldude6", "p_n7!-e8");
+  console.log("User logged in successfully:", user.id);
+  
+  // Get current user
+  const currentUser = Parse.User.current();
+  if (currentUser) {
+    console.log("Current user:", currentUser.get("username"));
+  }
+} catch (error) {
+  console.error("Error logging in user:", error);
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="swift" className="space-y-4">
+                        <CodeBlock language="swift">
+{`do {
+    let user = try await User.login(username: "cooldude6", password: "p_n7!-e8")
+    print("User logged in successfully: \\(user.objectId)")
+    
+    // Get current user
+    if let currentUser = User.current {
+        print("Current user: \\(currentUser.username)")
+    }
+} catch {
+    print("Error logging in user: \\(error)")
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="android" className="space-y-4">
+                        <CodeBlock language="java">
+{`ParseUser.logInInBackground("cooldude6", "p_n7!-e8", new LogInCallback() {
+    public void done(ParseUser user, ParseException e) {
+        if (user != null) {
+            Log.d("User", "User logged in successfully: " + user.getObjectId());
+            
+            // Get current user
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser != null) {
+                Log.d("User", "Current user: " + currentUser.getUsername());
+            }
+        } else {
+            Log.e("User", "Error logging in user: " + e.getMessage());
+        }
+    }
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+try {
+    $user = ParseUser::logIn("cooldude6", "p_n7!-e8");
+    echo "User logged in successfully: " . $user->getObjectId();
+    
+    // Get current user
+    $currentUser = ParseUser::getCurrentUser();
+    if ($currentUser) {
+        echo "Current user: " . $currentUser->getUsername();
+    }
+} catch (Exception $e) {
+    echo "Error logging in user: " . $e->getMessage();
+}
+?>`}
+                        </CodeBlock>
                       </TabsContent>
                     </Tabs>
                   </CardContent>
@@ -519,97 +1390,247 @@ user.signUpInBackground(new SignUpCallback() {
             {/* Files Section */}
             {activeSection === "files" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">File Storage</h2>
+                <h2 className="text-3xl font-bold mb-6">Files</h2>
                 
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center space-x-2">
                       <FileText className="h-5 w-5" />
-                      <span>Upload Files</span>
+                      <span>File Upload</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Upload and store files in Parse, including images, documents, and other binary data.
+                      Upload files to Parse and associate them with your objects.
                     </p>
-                    <Tabs defaultValue="rest" className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
+                    <Tabs value={getAvailableTabForSection("files", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
                         <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`curl -X POST \\
+                        <CodeBlock language="bash">
+{`curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
-  -H "Content-Type: image/jpeg" \\
-  --data-binary @myfile.jpg \\
-  https://your-app.parseapi.com/parse/files/pic.jpg`}</code>
-                        </pre>
+  -H "Content-Type: text/plain" \\
+  --data-binary 'Hello, World!' \\
+  https://your-app.parseapi.com/parse/files/hello.txt`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <CodeBlock language="graphql">
+{`mutation CreateFile($input: CreateFileInput!) {
+  createFile(input: $input) {
+    fileInfo {
+      name
+      url
+    }
+  }
+}
+
+# Variables:
+{
+  "input": {
+    "upload": "data:text/plain;base64,SGVsbG8sIFdvcmxkIQ=="
+  }
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="javascript" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Upload file from input element
-const fileInput = document.getElementById('fileInput');
-const file = fileInput.files[0];
+                        <CodeBlock language="javascript">
+{`// From input element
+const fileUploadControl = document.getElementById("profilePhotoFileUpload");
+const file = fileUploadControl.files[0];
+const name = "photo.jpg";
 
-const parseFile = new Parse.File("photo.jpg", file);
+const parseFile = new Parse.File(name, file);
 
 try {
-  const savedFile = await parseFile.save();
-  console.log('File saved:', savedFile.url());
+  await parseFile.save();
+  console.log("File uploaded successfully:", parseFile.url());
   
-  // Associate with an object
-  const photo = new Parse.Object("Photo");
-  photo.set("image", savedFile);
-  await photo.save();
+  // Associate with object
+  const user = Parse.User.current();
+  user.set("profilePhoto", parseFile);
+  await user.save();
 } catch (error) {
-  console.error('Error uploading file:', error);
-}`}</code>
-                        </pre>
+  console.error("Error uploading file:", error);
+}
+
+// From byte array
+const base64 = "V29ya2luZyBhdCBQYXJzZSBpcyBncmVhdCE=";
+const parseFile = new Parse.File("myfile.txt", { base64: base64 });
+await parseFile.save();`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="swift" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Upload file
-let imageData = image.jpegData(compressionQuality: 0.8)!
-let parseFile = ParseFile(name: "photo.jpg", data: imageData)
+                        <CodeBlock language="swift">
+{`// From Data
+let data = "Hello, World!".data(using: .utf8)!
+let parseFile = ParseFile(name: "hello.txt", data: data)
 
 do {
-    let savedFile = try await parseFile.save()
-    print("File saved: \\(savedFile.url?.absoluteString ?? "")")
+    try await parseFile.save()
+    print("File uploaded successfully: \\(parseFile.url)")
     
-    // Associate with an object
-    var photo = Photo()
-    photo.image = savedFile
-    let savedPhoto = try await photo.save()
+    // Associate with object
+    var user = try await User.current()
+    user.profilePhoto = parseFile
+    try await user.save()
 } catch {
     print("Error uploading file: \\(error)")
-}`}</code>
-                        </pre>
+}
+
+// From URL
+if let url = URL(string: "https://example.com/image.jpg") {
+    let parseFile = ParseFile(name: "image.jpg", cloudURL: url)
+    try await parseFile.save()
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="android" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Upload file
-byte[] data = // your file data
-ParseFile file = new ParseFile("photo.jpg", data);
+                        <CodeBlock language="java">
+{`// From byte array
+String str = "Hello, World!";
+byte[] data = str.getBytes();
+ParseFile file = new ParseFile("hello.txt", data);
 
 file.saveInBackground(new SaveCallback() {
     public void done(ParseException e) {
         if (e == null) {
-            Log.d("File", "File saved: " + file.getUrl());
+            Log.d("File", "File uploaded successfully: " + file.getUrl());
             
-            // Associate with an object
-            ParseObject photo = new ParseObject("Photo");
-            photo.put("image", file);
-            photo.saveInBackground();
+            // Associate with object
+            ParseUser user = ParseUser.getCurrentUser();
+            user.put("profilePhoto", file);
+            user.saveInBackground();
         } else {
             Log.e("File", "Error uploading file: " + e.getMessage());
         }
     }
-});`}</code>
-                        </pre>
+});
+
+// From File object
+File imageFile = new File("path/to/image.jpg");
+ParseFile parseFile = new ParseFile(imageFile);
+parseFile.saveInBackground(callback);`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+// From string data
+$data = "Hello, World!";
+$file = ParseFile::createFromData($data, "hello.txt");
+
+try {
+    $file->save();
+    echo "File uploaded successfully: " . $file->getURL();
+    
+    // Associate with object
+    $user = ParseUser::getCurrentUser();
+    $user->set("profilePhoto", $file);
+    $user->save();
+} catch (Exception $e) {
+    echo "Error uploading file: " . $e->getMessage();
+}
+
+// From file path
+$file = ParseFile::createFromFile("/path/to/image.jpg", "image.jpg");
+$file->save();
+?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <FileText className="h-5 w-5" />
+                      <span>File Retrieval</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Retrieve and work with files that have been uploaded to Parse.
+                    </p>
+                    <Tabs value={getAvailableTabForSection("files-retrieval", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-3">
+                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift">Swift</TabsTrigger>
+                        <TabsTrigger value="android">Android</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="javascript" className="space-y-4">
+                        <CodeBlock language="javascript">
+{`// Get file from object
+const user = Parse.User.current();
+const profilePhoto = user.get("profilePhoto");
+
+if (profilePhoto) {
+  console.log("File name:", profilePhoto.name());
+  console.log("File URL:", profilePhoto.url());
+  
+  // Download file data
+  const response = await fetch(profilePhoto.url());
+  const blob = await response.blob();
+  
+  // Create download link
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = profilePhoto.name();
+  a.click();
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="swift" className="space-y-4">
+                        <CodeBlock language="swift">
+{`// Get file from object
+let user = try await User.current()
+if let profilePhoto = user.profilePhoto {
+    print("File name: \\(profilePhoto.name)")
+    print("File URL: \\(profilePhoto.url)")
+    
+    // Download file data
+    do {
+        let data = try await profilePhoto.fetch()
+        // Use the data...
+    } catch {
+        print("Error downloading file: \\(error)")
+    }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="android" className="space-y-4">
+                        <CodeBlock language="java">
+{`// Get file from object
+ParseUser user = ParseUser.getCurrentUser();
+ParseFile profilePhoto = user.getParseFile("profilePhoto");
+
+if (profilePhoto != null) {
+    Log.d("File", "File name: " + profilePhoto.getName());
+    Log.d("File", "File URL: " + profilePhoto.getUrl());
+    
+    // Download file data
+    profilePhoto.getDataInBackground(new GetDataCallback() {
+        public void done(byte[] data, ParseException e) {
+            if (e == null) {
+                // Use the data...
+                Log.d("File", "File downloaded successfully");
+            } else {
+                Log.e("File", "Error downloading file: " + e.getMessage());
+            }
+        }
+    });
+}`}
+                        </CodeBlock>
                       </TabsContent>
                     </Tabs>
                   </CardContent>
@@ -631,91 +1652,212 @@ file.saveInBackground(new SaveCallback() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Send push notifications to your app users using Parse's push notification service.
+                      Send push notifications to specific users or broadcast to all users.
                     </p>
-                    <Tabs defaultValue="rest" className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
+                    <Tabs value={getAvailableTabForSection("push", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
                         <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`curl -X POST \\
+                        <CodeBlock language="bash">
+{`# Send to all users
+curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
-  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "channels": [""],
+    "data": {
+      "alert": "Hello, World!"
+    }
+  }' \\
+  https://your-app.parseapi.com/parse/push
+
+# Send to specific users
+curl -X POST \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
     "where": {
       "deviceType": "ios"
     },
     "data": {
-      "alert": "Hello World!"
+      "alert": "Hello iOS users!"
     }
   }' \\
-  https://your-app.parseapi.com/parse/push`}</code>
-                        </pre>
+  https://your-app.parseapi.com/parse/push`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="space-y-4">
+                        <CodeBlock language="graphql">
+{`mutation SendPushNotification($input: SendPushNotificationInput!) {
+  sendPushNotification(input: $input) {
+    success
+  }
+}
+
+# Variables:
+{
+  "input": {
+    "fields": {
+      "data": {
+        "alert": "Hello, World!"
+      },
+      "channels": [""]
+    }
+  }
+}
+
+# Or with targeting:
+{
+  "input": {
+    "fields": {
+      "data": {
+        "alert": "Hello iOS users!"
+      },
+      "where": {
+        "deviceType": {
+          "equalTo": "ios"
+        }
+      }
+    }
+  }
+}`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="javascript" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Send push notification
+                        <CodeBlock language="javascript">
+{`// Send to all users
 Parse.Push.send({
-  where: {
-    deviceType: "ios"
-  },
+  channels: [""],
   data: {
-    alert: "Hello World!"
+    alert: "Hello, World!"
   }
 }).then(() => {
-  console.log('Push sent successfully');
-}).catch(error => {
-  console.error('Error sending push:', error);
-});`}</code>
-                        </pre>
+  console.log("Push notification sent successfully");
+}).catch((error) => {
+  console.error("Error sending push notification:", error);
+});
+
+// Send to specific users
+const query = new Parse.Query(Parse.Installation);
+query.equalTo("deviceType", "ios");
+
+Parse.Push.send({
+  where: query,
+  data: {
+    alert: "Hello iOS users!",
+    badge: 1,
+    sound: "default"
+  }
+}).then(() => {
+  console.log("Targeted push notification sent");
+}).catch((error) => {
+  console.error("Error sending targeted push:", error);
+});`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="swift" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Send push notification (from Cloud Code)
-// This example shows how to trigger from client,
-// but push sending should typically be done from Cloud Code
-
-let query = Installation.query()
-    .where("deviceType" == "ios")
+                        <CodeBlock language="swift">
+{`// Send to all users
+let push = PFPush()
+push.setChannel("")
+push.setMessage("Hello, World!")
 
 do {
-    try await ParsePush()
-        .set(message: "Hello World!")
-        .send(query: query)
-    print("Push sent successfully")
+    try await push.send()
+    print("Push notification sent successfully")
 } catch {
-    print("Error sending push: \\(error)")
-}`}</code>
-                        </pre>
+    print("Error sending push notification: \\(error)")
+}
+
+// Send to specific users
+let query = PFInstallation.query()
+query?.whereKey("deviceType", equalTo: "ios")
+
+let targetedPush = PFPush()
+targetedPush.setQuery(query)
+targetedPush.setData([
+    "alert": "Hello iOS users!",
+    "badge": 1,
+    "sound": "default"
+])
+
+try await targetedPush.send()`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="android" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Send push notification (from Cloud Code)
-// This example shows how to trigger from client,
-// but push sending should typically be done from Cloud Code
-
-ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
-query.whereEqualTo("deviceType", "android");
-
+                        <CodeBlock language="java">
+{`// Send to all users
 ParsePush push = new ParsePush();
-push.setQuery(query);
-push.setMessage("Hello World!");
+push.setChannel("");
+push.setMessage("Hello, World!");
 
 push.sendInBackground(new SendCallback() {
     public void done(ParseException e) {
         if (e == null) {
-            Log.d("Push", "Push sent successfully");
+            Log.d("Push", "Push notification sent successfully");
         } else {
-            Log.e("Push", "Error sending push: " + e.getMessage());
+            Log.e("Push", "Error sending push notification: " + e.getMessage());
         }
     }
-});`}</code>
-                        </pre>
+});
+
+// Send to specific users
+ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
+query.whereEqualTo("deviceType", "android");
+
+ParsePush targetedPush = new ParsePush();
+targetedPush.setQuery(query);
+
+JSONObject data = new JSONObject();
+data.put("alert", "Hello Android users!");
+data.put("badge", 1);
+
+targetedPush.setData(data);
+targetedPush.sendInBackground();`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+// Send to all users
+$data = array(
+    "channels" => array(""),
+    "data" => array(
+        "alert" => "Hello, World!"
+    )
+);
+
+try {
+    ParsePush::send($data);
+    echo "Push notification sent successfully";
+} catch (Exception $e) {
+    echo "Error sending push notification: " . $e->getMessage();
+}
+
+// Send to specific users
+$query = new ParseQuery("_Installation");
+$query->equalTo("deviceType", "ios");
+
+$data = array(
+    "where" => $query,
+    "data" => array(
+        "alert" => "Hello iOS users!",
+        "badge" => 1,
+        "sound" => "default"
+    )
+);
+
+ParsePush::send($data);
+?>`}
+                        </CodeBlock>
                       </TabsContent>
                     </Tabs>
                   </CardContent>
@@ -724,7 +1866,7 @@ push.sendInBackground(new SendCallback() {
             )}
 
             {/* Cloud Functions Section */}
-            {activeSection === "cloud" && (
+            {activeSection === "cloud-functions" && (
               <div className="space-y-8">
                 <h2 className="text-3xl font-bold mb-6">Cloud Functions</h2>
                 
@@ -732,116 +1874,139 @@ push.sendInBackground(new SendCallback() {
                   <CardHeader>
                     <CardTitle className="flex items-center space-x-2">
                       <Server className="h-5 w-5" />
-                      <span>Define and Call Cloud Functions</span>
+                      <span>Calling Cloud Functions</span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Create server-side functions that run in the Parse Server environment and call them from your client apps.
+                      Execute server-side logic with Cloud Functions that run on Parse Server.
                     </p>
-                    <Tabs defaultValue="cloud-code" className="w-full">
-                      <TabsList className="grid w-full grid-cols-5">
-                        <TabsTrigger value="cloud-code">Cloud Code</TabsTrigger>
+                    <Tabs value={getAvailableTabForSection("cloud", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-6">
                         <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
                         <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="cloud-code" className="space-y-4">
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                          Define the function in your Parse Server cloud/main.js:
-                        </p>
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// cloud/main.js
-Parse.Cloud.define("hello", async (request) => {
-  const { params, user } = request;
-  
-  return {
-    message: \`Hello \${params.name}!\`,
-    user: user ? user.get("username") : "anonymous"
-  };
-});
-
-Parse.Cloud.define("averageStars", async (request) => {
-  const query = new Parse.Query("Review");
-  const results = await query.find({ useMasterKey: true });
-  
-  let sum = 0;
-  for (let i = 0; i < results.length; ++i) {
-    sum += results[i].get("stars");
-  }
-  
-  return sum / results.length;
-});`}</code>
-                        </pre>
-                      </TabsContent>
                       <TabsContent value="rest" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`curl -X POST \\
+                        <CodeBlock language="bash">
+{`curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
-    "name": "World"
+    "name": "John Doe",
+    "email": "john@example.com"
   }' \\
-  https://your-app.parseapi.com/parse/functions/hello`}</code>
-                        </pre>
+  https://your-app.parseapi.com/parse/functions/sendWelcomeEmail`}
+                        </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Call cloud function
-try {
-  const result = await Parse.Cloud.run("hello", { name: "World" });
-  console.log('Cloud function result:', result);
-} catch (error) {
-  console.error('Error calling cloud function:', error);
+                      <TabsContent value="graphql" className="space-y-4">
+                        <CodeBlock language="graphql">
+{`mutation CallCloudFunction($input: CallCloudCodeInput!) {
+  callCloudCode(input: $input) {
+    result
+  }
 }
 
-// Call function that returns average
+# Variables:
+{
+  "input": {
+    "functionName": "sendWelcomeEmail",
+    "params": {
+      "name": "John Doe",
+      "email": "john@example.com"
+    }
+  }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="javascript" className="space-y-4">
+                        <CodeBlock language="javascript">
+{`// Call cloud function
 try {
-  const averageStars = await Parse.Cloud.run("averageStars");
-  console.log('Average stars:', averageStars);
+  const result = await Parse.Cloud.run("sendWelcomeEmail", {
+    name: "John Doe",
+    email: "john@example.com"
+  });
+  
+  console.log("Cloud function result:", result);
 } catch (error) {
-  console.error('Error getting average:', error);
-}`}</code>
-                        </pre>
+  console.error("Error calling cloud function:", error);
+}
+
+// Cloud function with no parameters
+const simpleResult = await Parse.Cloud.run("getServerTime");
+console.log("Server time:", simpleResult);`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="swift" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Call cloud function
+                        <CodeBlock language="swift">
+{`// Call cloud function
+let parameters = [
+    "name": "John Doe",
+    "email": "john@example.com"
+]
+
 do {
-    let result: [String: Any] = try await Cloud.function("hello", 
-                                                         parameters: ["name": "World"])
+    let result = try await PFCloud.callFunction(withName: "sendWelcomeEmail", 
+                                               parameters: parameters)
     print("Cloud function result: \\(result)")
 } catch {
     print("Error calling cloud function: \\(error)")
 }
 
-// Call function that returns a value
-do {
-    let averageStars: Double = try await Cloud.function("averageStars")
-    print("Average stars: \\(averageStars)")
-} catch {
-    print("Error getting average: \\(error)")
-}`}</code>
-                        </pre>
+// Cloud function with no parameters
+let serverTime = try await PFCloud.callFunction(withName: "getServerTime", 
+                                               parameters: nil)
+print("Server time: \\(serverTime)")`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="android" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Call cloud function
+                        <CodeBlock language="java">
+{`// Call cloud function
 HashMap<String, Object> params = new HashMap<>();
-params.put("name", "World");
+params.put("name", "John Doe");
+params.put("email", "john@example.com");
 
-ParseCloud.callFunctionInBackground("hello", params, new FunctionCallback<HashMap<String, Object>>() {
-    public void done(HashMap<String, Object> result, ParseException e) {
-        if (e == null) {
-            Log.d("Cloud", "Result: " + result.toString());
-        } else {
-            Log.e("Cloud", "Error: " + e.getMessage());
+ParseCloud.callFunctionInBackground("sendWelcomeEmail", params, 
+    new FunctionCallback<Object>() {
+        public void done(Object result, ParseException e) {
+            if (e == null) {
+                Log.d("CloudFunction", "Result: " + result.toString());
+            } else {
+                Log.e("CloudFunction", "Error: " + e.getMessage());
+            }
         }
-    }
-});`}</code>
-                        </pre>
+    });
+
+// Cloud function with no parameters
+ParseCloud.callFunctionInBackground("getServerTime", null, callback);`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+// Call cloud function
+$params = array(
+    "name" => "John Doe",
+    "email" => "john@example.com"
+);
+
+try {
+    $result = ParseCloud::run("sendWelcomeEmail", $params);
+    echo "Cloud function result: " . $result;
+} catch (Exception $e) {
+    echo "Error calling cloud function: " . $e->getMessage();
+}
+
+// Cloud function with no parameters
+$serverTime = ParseCloud::run("getServerTime");
+echo "Server time: " . $serverTime;
+?>`}
+                        </CodeBlock>
                       </TabsContent>
                     </Tabs>
                   </CardContent>
@@ -852,7 +2017,7 @@ ParseCloud.callFunctionInBackground("hello", params, new FunctionCallback<HashMa
             {/* Security Section */}
             {activeSection === "security" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">Security & ACLs</h2>
+                <h2 className="text-3xl font-bold mb-6">Security</h2>
                 
                 <Card>
                   <CardHeader>
@@ -863,109 +2028,226 @@ ParseCloud.callFunctionInBackground("hello", params, new FunctionCallback<HashMa
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      Control who can read and write objects using Access Control Lists (ACLs).
+                      Control who can read and write to your objects using Access Control Lists.
                     </p>
-                    <Tabs defaultValue="rest" className="w-full">
+                    <Tabs value={getAvailableTabForSection("security", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="grid w-full grid-cols-4">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
+                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift">Swift</TabsTrigger>
+                        <TabsTrigger value="android">Android</TabsTrigger>
+                        <TabsTrigger value="php">PHP</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="javascript" className="space-y-4">
+                        <CodeBlock language="javascript">
+{`const GameScore = Parse.Object.extend("GameScore");
+const gameScore = new GameScore();
+
+// Create ACL
+const acl = new Parse.ACL();
+
+// Set public read/write access
+acl.setPublicReadAccess(true);
+acl.setPublicWriteAccess(false);
+
+// Set user-specific access
+const user = Parse.User.current();
+acl.setReadAccess(user, true);
+acl.setWriteAccess(user, true);
+
+// Set role-based access
+const adminRole = new Parse.Role("admin", acl);
+acl.setRoleReadAccess(adminRole, true);
+acl.setRoleWriteAccess(adminRole, true);
+
+// Apply ACL to object
+gameScore.setACL(acl);
+gameScore.set("score", 1337);
+gameScore.set("playerName", "Sean Plott");
+
+await gameScore.save();`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="swift" className="space-y-4">
+                        <CodeBlock language="swift">
+{`let gameScore = GameScore()
+
+// Create ACL
+let acl = PFACL()
+
+// Set public access
+acl.setPublicReadAccess(true)
+acl.setPublicWriteAccess(false)
+
+// Set user-specific access
+if let user = PFUser.current() {
+    acl.setReadAccess(true, for: user)
+    acl.setWriteAccess(true, for: user)
+}
+
+// Apply ACL to object
+gameScore.acl = acl
+gameScore.score = 1337
+gameScore.playerName = "Sean Plott"
+
+try await gameScore.save()`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="android" className="space-y-4">
+                        <CodeBlock language="java">
+{`ParseObject gameScore = new ParseObject("GameScore");
+
+// Create ACL
+ParseACL acl = new ParseACL();
+
+// Set public access
+acl.setPublicReadAccess(true);
+acl.setPublicWriteAccess(false);
+
+// Set user-specific access
+ParseUser user = ParseUser.getCurrentUser();
+acl.setReadAccess(user, true);
+acl.setWriteAccess(user, true);
+
+// Apply ACL to object
+gameScore.setACL(acl);
+gameScore.put("score", 1337);
+gameScore.put("playerName", "Sean Plott");
+
+gameScore.saveInBackground();`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="space-y-4">
+                        <CodeBlock language="php">
+{`<?php
+$gameScore = new ParseObject("GameScore");
+
+// Create ACL
+$acl = new ParseACL();
+
+// Set public access
+$acl->setPublicReadAccess(true);
+$acl->setPublicWriteAccess(false);
+
+// Set user-specific access
+$user = ParseUser::getCurrentUser();
+$acl->setUserReadAccess($user, true);
+$acl->setUserWriteAccess($user, true);
+
+// Apply ACL to object
+$gameScore->setACL($acl);
+$gameScore->set("score", 1337);
+$gameScore->set("playerName", "Sean Plott");
+
+$gameScore->save();
+?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center space-x-2">
+                      <Shield className="h-5 w-5" />
+                      <span>Roles</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Create roles to group users and assign permissions at scale.
+                    </p>
+                    <Tabs value={getAvailableTabForSection("security-roles", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="javascript">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift">Swift</TabsTrigger>
                         <TabsTrigger value="android">Android</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`curl -X POST \\
-  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
-  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "message": "Private message",
-    "ACL": {
-      "user123": {
-        "read": true,
-        "write": true
-      },
-      "*": {
-        "read": false,
-        "write": false
-      }
-    }
-  }' \\
-  https://your-app.parseapi.com/parse/classes/Message`}</code>
-                        </pre>
-                      </TabsContent>
                       <TabsContent value="javascript" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Create an ACL for a private message
-const Message = Parse.Object.extend("Message");
-const message = new Message();
+                        <CodeBlock language="javascript">
+{`// Create a role
+const roleACL = new Parse.ACL();
+roleACL.setPublicReadAccess(true);
 
-message.set("text", "Private message");
+const adminRole = new Parse.Role("admin", roleACL);
 
-// Create ACL
-const acl = new Parse.ACL();
-acl.setReadAccess(Parse.User.current(), true);
-acl.setWriteAccess(Parse.User.current(), true);
-acl.setPublicReadAccess(false);
-acl.setPublicWriteAccess(false);
+// Add users to role
+const user1 = await new Parse.Query(Parse.User).get("user1Id");
+const user2 = await new Parse.Query(Parse.User).get("user2Id");
 
-message.setACL(acl);
+adminRole.getUsers().add(user1);
+adminRole.getUsers().add(user2);
 
-try {
-  await message.save();
-  console.log('Private message saved');
-} catch (error) {
-  console.error('Error saving message:', error);
-}`}</code>
-                        </pre>
+// Add child roles
+const moderatorRole = await new Parse.Query(Parse.Role).get("moderatorRoleId");
+adminRole.getRoles().add(moderatorRole);
+
+await adminRole.save();
+
+// Use role in ACL
+const postACL = new Parse.ACL();
+postACL.setRoleReadAccess(adminRole, true);
+postACL.setRoleWriteAccess(adminRole, true);
+
+const post = new Parse.Object("Post");
+post.setACL(postACL);
+await post.save();`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="swift" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`// Create an ACL for a private message
-var message = Message()
-message.text = "Private message"
+                        <CodeBlock language="swift">
+{`// Create a role
+let roleACL = PFACL()
+roleACL.setPublicReadAccess(true)
 
-// Create ACL
-var acl = ParseACL()
-acl.setReadAccess(user: User.current, value: true)
-acl.setWriteAccess(user: User.current, value: true)
-acl.publicReadAccess = false
-acl.publicWriteAccess = false
+let adminRole = PFRole(name: "admin", acl: roleACL)
 
-message.ACL = acl
+// Add users to role
+let user1 = try await PFUser.query()?.getObjectWithId("user1Id")
+let user2 = try await PFUser.query()?.getObjectWithId("user2Id")
 
-do {
-    let savedMessage = try await message.save()
-    print("Private message saved")
-} catch {
-    print("Error saving message: \\(error)")
-}`}</code>
-                        </pre>
+adminRole.users.add(user1)
+adminRole.users.add(user2)
+
+try await adminRole.save()
+
+// Use role in ACL
+let postACL = PFACL()
+postACL.setAccess(true, forRole: adminRole)
+
+let post = PFObject(className: "Post")
+post.acl = postACL
+try await post.save()`}
+                        </CodeBlock>
                       </TabsContent>
                       <TabsContent value="android" className="space-y-4">
-                        <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
-<code>{`ParseObject message = new ParseObject("Message");
-message.put("text", "Private message");
+                        <CodeBlock language="java">
+{`// Create a role
+ParseACL roleACL = new ParseACL();
+roleACL.setPublicReadAccess(true);
 
-// Create ACL
-ParseACL acl = new ParseACL();
-acl.setReadAccess(ParseUser.getCurrentUser(), true);
-acl.setWriteAccess(ParseUser.getCurrentUser(), true);
-acl.setPublicReadAccess(false);
-acl.setPublicWriteAccess(false);
+ParseRole adminRole = new ParseRole("admin", roleACL);
 
-message.setACL(acl);
-
-message.saveInBackground(new SaveCallback() {
-    public void done(ParseException e) {
+// Add users to role
+ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+userQuery.getInBackground("user1Id", new GetCallback<ParseUser>() {
+    public void done(ParseUser user, ParseException e) {
         if (e == null) {
-            Log.d("Message", "Private message saved");
-        } else {
-            Log.e("Message", "Error saving message: " + e.getMessage());
+            adminRole.getUsers().add(user);
+            adminRole.saveInBackground();
         }
     }
-});`}</code>
-                        </pre>
+});
+
+// Use role in ACL
+ParseACL postACL = new ParseACL();
+postACL.setRoleReadAccess(adminRole, true);
+postACL.setRoleWriteAccess(adminRole, true);
+
+ParseObject post = new ParseObject("Post");
+post.setACL(postACL);
+post.saveInBackground();`}
+                        </CodeBlock>
                       </TabsContent>
                     </Tabs>
                   </CardContent>
