@@ -1,5 +1,6 @@
 import { AnimatedCounter } from "@/components/animated-counter";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 
@@ -758,7 +759,8 @@ export default function Home() {
             <p className="text-xl text-gray-600 dark:text-gray-300">Comprehensive guides and references for every platform</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* First row: Parse Server Guide, Client SDK Guides, General Guide */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
                 <div className="flex items-center mb-6">
@@ -769,23 +771,8 @@ export default function Home() {
                 <div className="flex flex-col gap-2">
                   <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
                     <a href="#server-apis">
-                      Read Documentation
+                      Read Guide
                     </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="flex items-center mb-6">
-                  <OrbitIcon className="h-8 w-8 text-purple-500 mr-3 flex-shrink-0" />
-                  <h3 className="text-xl font-semibold">Postman Template</h3>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">Ready-to-use Postman collection for Parse Server REST API testing</p>
-                <div className="flex flex-col gap-2">
-                  <Button variant="link" className="p-0 h-auto text-gray-400 justify-start" disabled>
-                    Coming Soon
                   </Button>
                 </div>
               </CardContent>
@@ -803,6 +790,28 @@ export default function Home() {
                     <a href="#sdks">
                       Browse SDKs
                     </a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-xl transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center">
+                    <Book className="h-8 w-8 text-blue-500 mr-3 flex-shrink-0" />
+                    <h3 className="text-xl font-semibold">General Guide</h3>
+                  </div>
+                  <Badge variant="default" className="bg-green-500 hover:bg-green-600 text-white">
+                    New
+                  </Badge>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">General guide for Parse Server APIs and SDKs</p>
+                <div className="flex flex-col gap-2">
+                  <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                    <Link href="/documentation">
+                      Read Guide
+                    </Link>
                   </Button>
                 </div>
               </CardContent>

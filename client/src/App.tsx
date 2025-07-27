@@ -2,6 +2,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import Documentation from "@/pages/documentation";
 import Donations from "@/pages/donations";
 import Extensions from "@/pages/extensions";
 import Home from "@/pages/home";
@@ -17,6 +18,7 @@ function Router() {
       <ScrollToTop />
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/documentation" component={Documentation} />
         <Route path="/donations" component={Donations} />
         <Route path="/security" component={Security} />
         <Route path="/extensions" component={Extensions} />
