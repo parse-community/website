@@ -89,6 +89,7 @@ const SuggestChange: React.FC<SuggestChangeProps> = ({ sectionTitle, sectionId }
 export default function Documentation() {
   const [activeSection, setActiveSection] = useState("initialization");
   const [activeCodeTab, setActiveCodeTab] = useState("rest");
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["initialization"])); // Default expand SDK Initialization
 
   // Helper function to get the best available tab for a section
   const getAvailableTabForSection = (sectionId: string, preferredTab: string) => {
@@ -111,12 +112,74 @@ export default function Documentation() {
     return availableTabs.includes(preferredTab) ? preferredTab : availableTabs[0];
   };
 
+  // Toggle section expansion
+  const toggleSectionExpansion = (sectionId: string) => {
+    // Always expand the clicked section and collapse all others
+    setExpandedSections(new Set([sectionId]));
+  };
+
+  // Navigate to section and subsection
+  const navigateToSubsection = (sectionId: string, subsectionId?: string) => {
+    setActiveSection(sectionId);
+    if (subsectionId) {
+      // Scroll to subsection after a short delay to ensure content is rendered
+      setTimeout(() => {
+        const element = document.getElementById(subsectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  };
+
   const navigationSections = [
-    { id: "initialization", title: "SDK Initialization", icon: Code },
-    { id: "objects", title: "Objects", icon: Database },
-    { id: "queries", title: "Queries", icon: Search },
-    { id: "users", title: "Users", icon: Users },
-    { id: "files", title: "Files", icon: FileText },
+    { 
+      id: "initialization", 
+      title: "SDK Initialization", 
+      icon: Code,
+      subsections: [
+        { id: "initialize-parse-sdk", title: "Initialize Parse SDK" },
+        { id: "credentials-setup", title: "Credentials Setup" }
+      ]
+    },
+    { 
+      id: "objects", 
+      title: "Objects", 
+      icon: Database,
+      subsections: [
+        { id: "save-an-object", title: "Save an Object" },
+        { id: "retrieve-an-object", title: "Retrieve an Object" },
+        { id: "update-an-object", title: "Update an Object" },
+        { id: "delete-an-object", title: "Delete an Object" }
+      ]
+    },
+    { 
+      id: "queries", 
+      title: "Queries", 
+      icon: Search,
+      subsections: [
+        { id: "basic-queries", title: "Basic Queries" },
+        { id: "query-constraints", title: "Query Constraints" }
+      ]
+    },
+    { 
+      id: "users", 
+      title: "Users", 
+      icon: Users,
+      subsections: [
+        { id: "user-registration", title: "User Registration" },
+        { id: "user-login", title: "User Login" }
+      ]
+    },
+    { 
+      id: "files", 
+      title: "Files", 
+      icon: FileText,
+      subsections: [
+        { id: "file-upload", title: "File Upload" },
+        { id: "file-retrieval", title: "File Retrieval" }
+      ]
+    },
     { id: "push", title: "Push Notifications", icon: Zap },
     { id: "cloud", title: "Cloud Functions", icon: Server },
     { id: "security", title: "Security", icon: ShieldCheck },
@@ -146,18 +209,45 @@ export default function Documentation() {
             <h3 className="text-lg font-semibold mb-4">Topics</h3>
             <nav className="space-y-2">
               {navigationSections.map((section) => (
-                <button
-                  key={section.id}
-                  onClick={() => setActiveSection(section.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-left transition-colors ${
-                    activeSection === section.id
-                      ? "bg-blue-500 text-white"
-                      : "hover:bg-gray-200 dark:hover:bg-gray-700"
-                  }`}
-                >
-                  <section.icon className="h-5 w-5" />
-                  <span>{section.title}</span>
-                </button>
+                <div key={section.id}>
+                  <button
+                    onClick={() => {
+                      if (section.subsections) {
+                        // If section has subsections, expand it and navigate to first subsection
+                        toggleSectionExpansion(section.id);
+                        navigateToSubsection(section.id, section.subsections[0].id);
+                      } else {
+                        // No subsections, just navigate to the section
+                        setActiveSection(section.id);
+                      }
+                    }}
+                    className={`w-full flex items-center px-3 py-2 rounded-md text-left transition-colors ${
+                      activeSection === section.id
+                        ? "bg-blue-500 text-white"
+                        : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <section.icon className="h-5 w-5" />
+                      <span>{section.title}</span>
+                    </div>
+                  </button>
+                  
+                  {/* Subsections */}
+                  {section.subsections && expandedSections.has(section.id) && (
+                    <div className="ml-8 mt-1 space-y-1">
+                      {section.subsections.map((subsection) => (
+                        <button
+                          key={subsection.id}
+                          onClick={() => navigateToSubsection(section.id, subsection.id)}
+                          className="w-full text-left px-3 py-1 text-sm text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                        >
+                          {subsection.title}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
             </nav>
             
@@ -213,7 +303,7 @@ export default function Documentation() {
                   <SuggestChange sectionTitle="SDK Initialization" sectionId="initialization" />
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-4" id="initialize-parse-sdk">
                   <h3 className="text-2xl font-bold">Initialize Parse SDK</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Before using any Parse functionality, you need to initialize the SDK with your application credentials.
@@ -474,7 +564,7 @@ echo "Parse SDK initialized successfully";
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4" id="credentials-setup">
                   <h3 className="text-2xl font-bold">Credentials Setup</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     You'll need to obtain your application credentials from your Parse Server dashboard or configuration.
@@ -513,7 +603,7 @@ echo "Parse SDK initialized successfully";
                 </div>
                 
                 {/* Save an Object */}
-                <div className="space-y-4">
+                <div className="space-y-4" id="save-an-object">
                   <h3 className="text-2xl font-bold">Save an Object</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Create and save objects to the Parse database. Objects can contain any data that can be JSON-encoded.
@@ -715,7 +805,7 @@ try {
                 </div>
 
                 {/* Retrieve an Object */}
-                <div className="space-y-4">
+                <div className="space-y-4" id="retrieve-an-object">
                   <h3 className="text-2xl font-bold">Retrieve an Object</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Retrieve objects from Parse by their objectId or using queries to find multiple objects.
@@ -940,7 +1030,7 @@ http.end();`}
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4" id="update-an-object">
                   <h3 className="text-2xl font-bold">Update an Object</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Update existing objects by setting new values for fields and saving the changes.
@@ -1119,7 +1209,7 @@ try {
                 </div>
 
                 {/* Delete an Object */}
-                <div className="space-y-4">
+                <div className="space-y-4" id="delete-an-object">
                   <h3 className="text-2xl font-bold">Delete an Object</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Delete objects from the Parse database when they are no longer needed.
@@ -1285,7 +1375,7 @@ try {
                   <SuggestChange sectionTitle="Queries" sectionId="queries" />
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-4" id="basic-queries">
                   <h3 className="text-2xl font-bold">Basic Queries</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Query for objects using constraints like equality, comparison operators, and more.
@@ -1473,7 +1563,7 @@ try {
                 </div>
 
                 {/* Query Constraints */}
-                <div className="space-y-4">
+                <div className="space-y-4" id="query-constraints">
                   <h3 className="text-2xl font-bold">Query Constraints</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Use various constraints to filter your queries: equality, less than, greater than, contained in, and more.
@@ -1777,7 +1867,7 @@ try {
                   <SuggestChange sectionTitle="Users" sectionId="users" />
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-4" id="user-registration">
                   <h3 className="text-2xl font-bold">User Registration</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Register new users with username, password, and additional fields.
@@ -1948,7 +2038,7 @@ try {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4" id="user-login">
                   <h3 className="text-2xl font-bold">User Login</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Log in existing users with username and password.
@@ -2124,7 +2214,7 @@ try {
                   <SuggestChange sectionTitle="Files" sectionId="files" />
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-4" id="file-upload">
                   <h3 className="text-2xl font-bold">File Upload</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Upload files to Parse and associate them with your objects.
@@ -2285,7 +2375,7 @@ $file->save();
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4" id="file-retrieval">
                   <h3 className="text-2xl font-bold">File Retrieval</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Retrieve Parse File objects and their metadata from your objects.
