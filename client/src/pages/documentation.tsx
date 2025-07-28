@@ -93,20 +93,20 @@ export default function Documentation() {
   // Helper function to get the best available tab for a section
   const getAvailableTabForSection = (sectionId: string, preferredTab: string) => {
     const sectionTabs: Record<string, string[]> = {
-      "initialization": ["javascript", "swift", "android", "php"],
-      "objects": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "queries": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "queries-constraints": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "users": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "files": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "files-retrieval": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "push": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "cloud": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "security": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "security-roles": ["rest", "graphql", "javascript", "swift", "android", "php"],
+      "initialization": ["javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "objects": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "queries": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "queries-constraints": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "users": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "files": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "files-retrieval": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "push": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "cloud": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "security": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
+      "security-roles": ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"],
     };
 
-    const availableTabs = sectionTabs[sectionId] || ["rest", "graphql", "javascript", "swift", "android", "php"];
+    const availableTabs = sectionTabs[sectionId] || ["rest", "graphql", "javascript", "swift", "android", "flutter", "apple", "dotnet", "dart", "arduino", "php"];
     
     return availableTabs.includes(preferredTab) ? preferredTab : availableTabs[0];
   };
@@ -224,6 +224,11 @@ export default function Documentation() {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
+                        <TabsTrigger value="dotnet" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">.NET</TabsTrigger>
+                        <TabsTrigger value="dart" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Dart</TabsTrigger>
+                        <TabsTrigger value="arduino" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Arduino</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="javascript" className="p-0 -mt-px">
@@ -287,6 +292,158 @@ public class MyApplication extends Application {
 
 // Don't forget to add your Application class to AndroidManifest.xml:
 // <application android:name=".MyApplication" ...>`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+
+// Initialize Parse SDK
+void initializeParse() async {
+  const keyApplicationId = 'YOUR_APP_ID';
+  const keyClientKey = 'YOUR_CLIENT_KEY';
+  const keyParseServerUrl = 'https://example.com/parse';
+
+  await Parse().initialize(
+    keyApplicationId,
+    keyParseServerUrl,
+    clientKey: keyClientKey,
+    // Optional: Enable debug mode
+    debug: true,
+    // Optional: Enable local datastore for offline support
+    coreStore: await CoreStoreMemoryImp.getInstance(),
+  );
+
+  print('Parse SDK initialized successfully');
+}
+
+// Call this in your main() function
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeParse();
+  runApp(MyApp());
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`import ParseCore
+
+// Initialize Parse SDK in AppDelegate or SceneDelegate
+func initializeParse() {
+    let configuration = ParseConfiguration {
+        $0.applicationId = "YOUR_APP_ID"
+        $0.clientKey = "YOUR_CLIENT_KEY" 
+        $0.server = "https://example.com/parse"
+        
+        // Optional: Enable local datastore for offline support
+        $0.isLocalDatastoreEnabled = true
+        
+        // Optional: Set additional options
+        $0.isUsingDataProtection = true
+    }
+    
+    Parse.initialize(with: configuration)
+    print("Parse SDK initialized successfully")
+}
+
+// In AppDelegate.swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    initializeParse()
+    return true
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="dotnet" className="p-0 -mt-px">
+                        <CodeBlock language="csharp">
+{`using Parse;
+
+// Initialize Parse SDK
+public static void InitializeParse()
+{
+    ParseClient.Initialize(new ParseClient.Configuration
+    {
+        ApplicationId = "YOUR_APP_ID",
+        Key = "YOUR_DOTNET_KEY",
+        Server = "https://example.com/parse"
+    });
+    
+    Console.WriteLine("Parse SDK initialized successfully");
+}
+
+// In your main application
+static void Main(string[] args)
+{
+    InitializeParse();
+    
+    // Your application code here
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="dart" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`import 'package:parse_server_sdk/parse_server_sdk.dart';
+
+// Initialize Parse SDK (Pure Dart)
+void initializeParse() async {
+  const keyApplicationId = 'YOUR_APP_ID';
+  const keyClientKey = 'YOUR_CLIENT_KEY';
+  const keyParseServerUrl = 'https://example.com/parse';
+
+  await Parse().initialize(
+    keyApplicationId,
+    keyParseServerUrl,
+    clientKey: keyClientKey,
+    // Optional: Enable debug mode
+    debug: true,
+    // Optional: Enable local datastore for offline support
+    coreStore: await CoreStoreMemoryImp.getInstance(),
+  );
+
+  print('Parse SDK initialized successfully');
+}
+
+// Call this in your main() function
+void main() async {
+  await initializeParse();
+  
+  // Your application code here
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="arduino" className="p-0 -mt-px">
+                        <CodeBlock language="cpp">
+{`#include <WiFi.h>
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
+
+// Parse configuration
+const char* PARSE_APPLICATION_ID = "YOUR_APP_ID";
+const char* PARSE_REST_API_KEY = "YOUR_REST_API_KEY";
+const char* PARSE_SERVER_URL = "https://example.com/parse";
+
+// WiFi credentials
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
+
+void setup() {
+  Serial.begin(115200);
+  
+  // Initialize WiFi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+  Serial.println("WiFi connected!");
+  
+  // Parse is now ready to use with HTTP requests
+  Serial.println("Parse SDK ready for Arduino");
+}
+
+void loop() {
+  // Your main application code here
+}`}
                         </CodeBlock>
                       </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
@@ -369,6 +526,11 @@ echo "Parse SDK initialized successfully";
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
+                        <TabsTrigger value="dotnet" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">.NET</TabsTrigger>
+                        <TabsTrigger value="dart" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Dart</TabsTrigger>
+                        <TabsTrigger value="arduino" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Arduino</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
@@ -487,6 +649,49 @@ gameScore.saveInBackground(new SaveCallback() {
 });`}
                         </CodeBlock>
                       </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+
+// Create a new GameScore object
+final gameScore = ParseObject('GameScore')
+  ..set('score', 1337)
+  ..set('playerName', 'Sean Plott')
+  ..set('cheatMode', false);
+
+// Save the object
+try {
+  final response = await gameScore.save();
+  if (response.success) {
+    print('GameScore saved: \${gameScore.objectId}');
+  } else {
+    print('Error saving GameScore: \${response.error?.message}');
+  }
+} catch (e) {
+  print('Error saving GameScore: \$e');
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`import ParseCore
+
+// Create a new GameScore object
+let gameScore = PFObject(className: "GameScore")
+gameScore["score"] = 1337
+gameScore["playerName"] = "Sean Plott"
+gameScore["cheatMode"] = false
+
+// Save the object
+gameScore.saveInBackground { (success, error) in
+    if success {
+        print("GameScore saved: \\(gameScore.objectId ?? "")")
+    } else {
+        print("Error saving GameScore: \\(error?.localizedDescription ?? "Unknown error")")
+    }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
@@ -523,6 +728,11 @@ try {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
+                        <TabsTrigger value="dotnet" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">.NET</TabsTrigger>
+                        <TabsTrigger value="dart" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Dart</TabsTrigger>
+                        <TabsTrigger value="arduino" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Arduino</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
@@ -605,6 +815,41 @@ query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
 });`}
                         </CodeBlock>
                       </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`// Get object by ID
+final query = QueryBuilder<ParseObject>(ParseObject('GameScore'));
+
+try {
+  final gameScore = await query.getObject('Ed1nuqPvc');
+  if (gameScore != null) {
+    final score = gameScore.get<int>('score') ?? 0;
+    final playerName = gameScore.get<String>('playerName') ?? '';
+    print('Score: \$score, Player: \$playerName');
+  } else {
+    print('GameScore not found');
+  }
+} catch (e) {
+  print('Error fetching GameScore: \$e');
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`// Get object by ID
+let query = PFQuery(className: "GameScore")
+
+query.getObjectInBackground(withId: "Ed1nuqPvc") { (gameScore, error) in
+    if let gameScore = gameScore {
+        let score = gameScore["score"] as? Int ?? 0
+        let playerName = gameScore["playerName"] as? String ?? ""
+        print("Score: \\(score), Player: \\(playerName)")
+    } else {
+        print("Error fetching GameScore: \\(error?.localizedDescription ?? "Unknown error")")
+    }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
@@ -621,6 +866,74 @@ try {
     echo 'Error fetching GameScore: ' . $e->getMessage();
 }
 ?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="dotnet" className="p-0 -mt-px">
+                        <CodeBlock language="csharp">
+{`// Get object by ID
+var query = ParseClient.Instance.GetQuery("GameScore");
+
+try 
+{
+    var gameScore = await query.GetAsync("Ed1nuqPvc");
+    var score = gameScore.Get<int>("score");
+    var playerName = gameScore.Get<string>("playerName");
+    Console.WriteLine($"Score: {score}, Player: {playerName}");
+}
+catch (ParseException e)
+{
+    Console.WriteLine($"Error fetching GameScore: {e.Message}");
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="dart" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`// Get object by ID
+final dio = Dio();
+
+try {
+  final response = await dio.get(
+    'https://example.com/parse/classes/GameScore/Ed1nuqPvc',
+    options: Options(
+      headers: {
+        'X-Parse-Application-Id': 'YOUR_APP_ID',
+        'X-Parse-REST-API-Key': 'YOUR_REST_API_KEY',
+      },
+    ),
+  );
+  
+  final gameScore = response.data;
+  print('Score: \${gameScore['score']}');
+  print('Player: \${gameScore['playerName']}');
+} catch (e) {
+  print('Error fetching GameScore: \$e');
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="arduino" className="p-0 -mt-px">
+                        <CodeBlock language="cpp">
+{`// Get object by ID
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
+
+HTTPClient http;
+http.begin("https://example.com/parse/classes/GameScore/Ed1nuqPvc");
+http.addHeader("X-Parse-Application-Id", "YOUR_APP_ID");
+http.addHeader("X-Parse-REST-API-Key", "YOUR_REST_API_KEY");
+
+int httpCode = http.GET();
+if (httpCode == HTTP_CODE_OK) {
+  String payload = http.getString();
+  DynamicJsonDocument doc(1024);
+  deserializeJson(doc, payload);
+  
+  int score = doc["score"];
+  const char* playerName = doc["playerName"];
+  Serial.printf("Score: %d, Player: %s\\n", score, playerName);
+} else {
+  Serial.printf("Error fetching GameScore: %d\\n", httpCode);
+}
+http.end();`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
@@ -640,6 +953,11 @@ try {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
+                        <TabsTrigger value="dotnet" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">.NET</TabsTrigger>
+                        <TabsTrigger value="dart" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Dart</TabsTrigger>
+                        <TabsTrigger value="arduino" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Arduino</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
@@ -735,6 +1053,50 @@ query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
 });`}
                         </CodeBlock>
                       </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`// Update an existing object
+final query = QueryBuilder<ParseObject>(ParseObject('GameScore'));
+
+try {
+  final gameScore = await query.getObject('Ed1nuqPvc');
+  if (gameScore != null) {
+    gameScore.set('score', 73453);
+    
+    final response = await gameScore.save();
+    if (response.success) {
+      print('GameScore updated: \${gameScore.objectId}');
+    } else {
+      print('Error updating GameScore: \${response.error?.message}');
+    }
+  }
+} catch (e) {
+  print('Error updating GameScore: \$e');
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`// Update an existing object
+let query = PFQuery(className: "GameScore")
+
+query.getObjectInBackground(withId: "Ed1nuqPvc") { (gameScore, error) in
+    if let gameScore = gameScore {
+        gameScore["score"] = 73453
+        
+        gameScore.saveInBackground { (success, error) in
+            if success {
+                print("GameScore updated: \\(gameScore.objectId ?? "")")
+            } else {
+                print("Error updating GameScore: \\(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    } else {
+        print("Error fetching GameScore: \\(error?.localizedDescription ?? "Unknown error")")
+    }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
@@ -770,6 +1132,11 @@ try {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
+                        <TabsTrigger value="dotnet" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">.NET</TabsTrigger>
+                        <TabsTrigger value="dart" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Dart</TabsTrigger>
+                        <TabsTrigger value="arduino" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Arduino</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
@@ -848,6 +1215,46 @@ query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
 });`}
                         </CodeBlock>
                       </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`// Delete an object
+final query = QueryBuilder<ParseObject>(ParseObject('GameScore'));
+
+try {
+  final gameScore = await query.getObject('Ed1nuqPvc');
+  if (gameScore != null) {
+    final response = await gameScore.delete();
+    if (response.success) {
+      print('GameScore deleted');
+    } else {
+      print('Error deleting GameScore: \${response.error?.message}');
+    }
+  }
+} catch (e) {
+  print('Error deleting GameScore: \$e');
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`// Delete an object
+let query = PFQuery(className: "GameScore")
+
+query.getObjectInBackground(withId: "Ed1nuqPvc") { (gameScore, error) in
+    if let gameScore = gameScore {
+        gameScore.deleteInBackground { (success, error) in
+            if success {
+                print("GameScore deleted")
+            } else {
+                print("Error deleting GameScore: \\(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    } else {
+        print("Error fetching GameScore: \\(error?.localizedDescription ?? "Unknown error")")
+    }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
@@ -891,6 +1298,8 @@ try {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
@@ -1000,6 +1409,45 @@ query.findInBackground(new FindCallback<ParseObject>() {
 });`}
                         </CodeBlock>
                       </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`final query = QueryBuilder<ParseObject>(ParseObject('GameScore'))
+  ..whereEqualTo('playerName', 'Sean Plott')
+  ..whereGreaterThanOrEqualTo('score', 1000);
+
+try {
+  final gameScores = await query.find();
+  print('Found \${gameScores.length} games');
+  
+  for (final gameScore in gameScores) {
+    final score = gameScore.get<int>('score') ?? 0;
+    print('Score: \$score');
+  }
+} catch (e) {
+  print('Error finding games: \$e');
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`let query = PFQuery(className: "GameScore")
+query.whereKey("playerName", equalTo: "Sean Plott")
+query.whereKey("score", greaterThanOrEqualTo: 1000)
+
+query.findObjectsInBackground { (gameScores, error) in
+    if let gameScores = gameScores {
+        print("Found \\(gameScores.count) games")
+        
+        for gameScore in gameScores {
+            let score = gameScore["score"] as? Int ?? 0
+            print("Score: \\(score)")
+        }
+    } else {
+        print("Error finding games: \\(error?.localizedDescription ?? "Unknown error")")
+    }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
@@ -1038,6 +1486,8 @@ try {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
@@ -1201,6 +1651,76 @@ query.orderByDescending("score");
 query.findInBackground(callback);`}
                         </CodeBlock>
                       </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`final query = QueryBuilder<ParseObject>(ParseObject('GameScore'));
+
+// Basic constraints
+query
+  ..whereEqualTo('playerName', 'Dan Stemkoski')
+  ..whereNotEqualTo('playerName', 'Michael Yabuti')
+  ..whereGreaterThan('score', 1000)
+  ..whereLessThan('score', 2000)
+  ..whereGreaterThanOrEqualTo('score', 1000)
+  ..whereLessThanOrEqualTo('score', 2000);
+
+// Array constraints
+final names = ['Jonathan Walsh', 'Dario Wunsch', 'Shawn Simon'];
+query
+  ..whereContainedIn('playerName', names)
+  ..whereNotContainedIn('playerName', names);
+
+// String constraints
+query
+  ..whereStartsWith('playerName', 'Big Daddy')
+  ..whereEndsWith('playerName', 'Jr.')
+  ..whereContains('playerName', 'Daddy');
+
+// Query options
+query
+  ..setLimit(10)
+  ..setAmountToSkip(10)
+  ..orderByAscending('score')
+  ..orderByDescending('score');
+
+// Execute query
+final results = await query.find();`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`let query = PFQuery(className: "GameScore")
+
+// Basic constraints
+query.whereKey("playerName", equalTo: "Dan Stemkoski")
+query.whereKey("playerName", notEqualTo: "Michael Yabuti")
+query.whereKey("score", greaterThan: 1000)
+query.whereKey("score", lessThan: 2000)
+query.whereKey("score", greaterThanOrEqualTo: 1000)
+query.whereKey("score", lessThanOrEqualTo: 2000)
+
+// Array constraints
+let names = ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]
+query.whereKey("playerName", containedIn: names)
+query.whereKey("playerName", notContainedIn: names)
+
+// String constraints
+query.whereKey("playerName", hasPrefix: "Big Daddy")
+query.whereKey("playerName", hasSuffix: "Jr.")
+query.whereKey("playerName", contains: "Daddy")
+
+// Query options
+query.limit = 10
+query.skip = 10
+query.order(byAscending: "score")
+query.order(byDescending: "score")
+
+// Execute query
+query.findObjectsInBackground { (results, error) in
+    // Handle results
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
@@ -1270,6 +1790,8 @@ try {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
@@ -1370,6 +1892,40 @@ user.signUpInBackground(new SignUpCallback() {
 });`}
                         </CodeBlock>
                       </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`final user = ParseUser.createUser("cooldude6", "p_n7!-e8", "cooldude6@example.com");
+user.set("phone", "415-392-0202");
+
+try {
+  final response = await user.signUp();
+  if (response.success) {
+    print("User signed up successfully: \${user.objectId}");
+  } else {
+    print("Error signing up user: \${response.error?.message}");
+  }
+} catch (e) {
+  print("Error signing up user: \$e");
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`let user = PFUser()
+user.username = "cooldude6"
+user.password = "p_n7!-e8"
+user.email = "cooldude6@example.com"
+user["phone"] = "415-392-0202"
+
+user.signUpInBackground { (success, error) in
+    if success {
+        print("User signed up successfully: \\(user.objectId ?? "")")
+    } else {
+        print("Error signing up user: \\(error?.localizedDescription ?? "Unknown error")")
+    }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
@@ -1405,6 +1961,8 @@ try {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
@@ -1498,6 +2056,42 @@ try {
 });`}
                         </CodeBlock>
                       </TabsContent>
+                      <TabsContent value="flutter" className="p-0 -mt-px">
+                        <CodeBlock language="dart">
+{`try {
+  final user = await ParseUser.currentUser()?.login("cooldude6", "p_n7!-e8");
+  if (user != null && user.success) {
+    print("User logged in successfully: \${user.result?.objectId}");
+    
+    // Get current user
+    final currentUser = await ParseUser.currentUser();
+    if (currentUser != null) {
+      print("Current user: \${currentUser.username}");
+    }
+  } else {
+    print("Error logging in user: \${user?.error?.message}");
+  }
+} catch (e) {
+  print("Error logging in user: \$e");
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="apple" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`PFUser.logInWithUsername(inBackground: "cooldude6", password: "p_n7!-e8") { (user, error) in
+    if let user = user {
+        print("User logged in successfully: \\(user.objectId ?? "")")
+        
+        // Get current user
+        if let currentUser = PFUser.current() {
+            print("Current user: \\(currentUser.username ?? "")")
+        }
+    } else {
+        print("Error logging in user: \\(error?.localizedDescription ?? "Unknown error")")
+    }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
@@ -1543,6 +2137,8 @@ try {
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="flutter" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Flutter</TabsTrigger>
+                        <TabsTrigger value="apple" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Apple</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="rest" className="p-0 -mt-px">
