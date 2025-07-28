@@ -81,11 +81,11 @@ export default function Documentation() {
     <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-1xl mx-auto px- sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
               <Book className="h-8 w-8 text-blue-500" />
-              <span className="text-xl font-bold">Documentation</span>
+              <span className="text-xl font-bold">Developer Guide</span>
             </Link>
             <Button variant="outline" asChild>
               <Link href="/">← Back to Home</Link>
@@ -98,7 +98,7 @@ export default function Documentation() {
         {/* Sidebar */}
         <aside className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
           <div className="p-6">
-            <h3 className="text-lg font-semibold mb-4">API Reference</h3>
+            <h3 className="text-lg font-semibold mb-4">Topics</h3>
             <nav className="space-y-2">
               {navigationSections.map((section) => (
                 <button
@@ -144,16 +144,6 @@ export default function Documentation() {
         {/* Main Content */}
         <main className="ml-64 flex-1 p-8">
           <div className="max-w-4xl">
-            {/* Hero Section */}
-            <div className="mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Parse Platform Documentation
-              </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300">
-                Learn how to build applications with Parse Server using our comprehensive API reference and code examples.
-              </p>
-            </div>
-
             {/* SDK Initialization Section */}
             {activeSection === "initialization" && (
               <div className="space-y-8">

@@ -194,7 +194,7 @@ export default function Home() {
       docsUrl: "https://docs.parseplatform.org/parse-server/guide/",
       cloudCodeUrl: "https://docs.parseplatform.org/cloudcode/guide/",
       schemasUrl: "https://docs.parseplatform.org/defined-schema/guide/",
-      description: "The main backend server powering all Parse Platform features."
+      description: "The main backend server powering all Parse Platform features"
     },
     { 
       name: "Cloud Code", 
@@ -203,7 +203,7 @@ export default function Home() {
       color: "text-purple-500",
       docsUrl: "https://docs.parseplatform.org/cloudcode/guide/",
       apiUrl: "https://docs.parseplatform.org/cloudcode/guide/",
-      description: "Custom server-side JavaScript functions for advanced business logic."
+      description: "Custom server-side JavaScript functions for advanced business logic"
     },
     { 
       name: "REST API", 
@@ -212,7 +212,7 @@ export default function Home() {
       color: "text-green-500",
       docsUrl: "https://docs.parseplatform.org/rest/guide/",
       apiUrl: "https://docs.parseplatform.org/rest/guide/",
-      description: "A RESTful HTTP API for interacting with all Parse Platform services."
+      description: "A RESTful HTTP API for interacting with all Parse Platform services"
     },
     { 
       name: "GraphQL API", 
@@ -221,7 +221,7 @@ export default function Home() {
       color: "text-pink-500",
       docsUrl: "https://docs.parseplatform.org/graphql/guide/",
       apiUrl: "https://docs.parseplatform.org/graphql/guide/",
-      description: "A modern GraphQL API supporting queries, mutations, and subscriptions."
+      description: "A modern GraphQL API supporting queries, mutations, and subscriptions"
     },
     { 
       name: "Extensions", 
@@ -229,7 +229,7 @@ export default function Home() {
       stars: null, 
       color: "text-orange-500",
       extensionsUrl: "/extensions",
-      description: "Enhance Parse Server with official and community-built extensions."
+      description: "Enhance Parse Server with official and community-built extensions"
     }
   ];
 
@@ -758,7 +758,7 @@ export default function Home() {
             <p className="text-xl text-gray-600 dark:text-gray-300">Comprehensive guides and references for every platform</p>
           </div>
           
-          {/* First row: Parse Server Guide, Client SDK Guides, General Guide */}
+          {/* First row: Parse Server Guide, Client SDK Guides, Developer Guide */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
             <Card className="group hover:shadow-xl transition-all duration-300">
               <CardContent className="p-8">
@@ -799,13 +799,13 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center">
                     <Book className="h-8 w-8 text-blue-500 mr-3 flex-shrink-0" />
-                    <h3 className="text-xl font-semibold">General Guide</h3>
+                    <h3 className="text-xl font-semibold">Developer Guide</h3>
                   </div>
                   <Badge variant="default" className="bg-green-500 hover:bg-green-600 text-white">
                     New
                   </Badge>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">General guide for Parse Server APIs and SDKs</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">Practical developer guide for Parse Server APIs and SDKs</p>
                 <div className="flex flex-col gap-2">
                   <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
                     <Link href="/documentation">
