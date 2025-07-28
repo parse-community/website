@@ -2076,6 +2076,19 @@ echo "Content-Length: " . $headers['Content-Length'];
                   <h2 className="text-3xl font-bold">Push Notifications</h2>
                   <SuggestChange sectionTitle="Push Notifications" sectionId="push" />
                 </div>
+
+                {/* Security Warning */}
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-8">
+                  <div className="flex items-start space-x-3">
+                    <ShieldCheck className="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold text-red-800 dark:text-red-200">Security Warning</h4>
+                      <p className="text-sm text-red-700 dark:text-red-300 mt-1">
+                        Enabling Client Push can lead to security vulnerabilities. We recommend enabling Client Push for testing purposes only, and moving push notification logic into Cloud Code when your app is ready for production.
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Send Push Notifications</h3>
