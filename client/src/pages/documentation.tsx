@@ -54,7 +54,7 @@ export default function Documentation() {
       "queries-constraints": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "users": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "files": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "files-retrieval": ["rest", "graphql", "javascript", "swift", "android"],
+      "files-retrieval": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "push": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "cloud": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "security": ["rest", "graphql", "javascript", "swift", "android", "php"],
@@ -281,7 +281,7 @@ echo "Parse SDK initialized successfully";
                   </div>
                   <div className="mt-6">
                     <h4 className="font-semibold mb-3">Required Credentials:</h4>
-                    <ul className="space-y-2 text-gray-600 dark:text-gray-300">
+                    <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
                       <li><strong>Application ID:</strong> Unique identifier for your Parse app</li>
                       <li><strong>JavaScript Key:</strong> For client-side JavaScript applications</li>
                       <li><strong>REST API Key:</strong> For REST API access and server-side PHP</li>
@@ -1626,16 +1626,76 @@ $file->save();
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">File Retrieval</h3>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Retrieve and work with files that have been uploaded to Parse.
+                    Retrieve Parse File objects and their metadata from your objects.
                   </p>
                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                     <Tabs value={getAvailableTabForSection("files-retrieval", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          GET https://example.com/parse/classes/MyClass/objectId
+                        </div>
+                        <CodeBlock language="bash">
+{`# Get file metadata from object
+curl -X GET \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  https://example.com/parse/classes/MyClass/objectId?include=fileField
+
+# Response will include file URL:
+# {
+#   "objectId": "...",
+#   "fileField": {
+#     "__type": "File",
+#     "name": "image.jpg",
+#     "url": "https://example.com/parse/files/YOUR_APP_ID/image.jpg"
+#   }
+# }`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          QUERY https://example.com/parse/graphql
+                        </div>
+                        <CodeBlock language="graphql">
+{`query GetObjectWithFile($objectId: String!) {
+  myObject(objectId: $objectId) {
+    objectId
+    fileField {
+      name
+      url
+    }
+    createdAt
+    updatedAt
+  }
+}
+
+# Variables:
+{
+  "objectId": "your_object_id"
+}
+
+# Response includes file metadata and URL:
+# {
+#   "data": {
+#     "myObject": {
+#       "objectId": "...",
+#       "fileField": {
+#         "name": "image.jpg",
+#         "url": "https://example.com/parse/files/YOUR_APP_ID/image.jpg"
+#       }
+#     }
+#   }
+# }`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Get file from object
@@ -1646,16 +1706,10 @@ if (profilePhoto) {
   console.log("File name:", profilePhoto.name());
   console.log("File URL:", profilePhoto.url());
   
-  // Download file data
-  const response = await fetch(profilePhoto.url());
-  const blob = await response.blob();
-  
-  // Create download link
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = profilePhoto.name();
-  a.click();
+  // The URL can be used directly in HTML
+  const img = document.createElement('img');
+  img.src = profilePhoto.url();
+  document.body.appendChild(img);
 }`}
                         </CodeBlock>
                       </TabsContent>
@@ -1667,11 +1721,11 @@ if let profilePhoto = user.profilePhoto {
     print("File name: \\(profilePhoto.name)")
     print("File URL: \\(profilePhoto.url)")
     
-    // Download file data
-    do {
-        let data = try await profilePhoto.fetch()
-        // Use the data...
-    } catch {
+    // Use URL to load image
+    if let url = URL(string: profilePhoto.url) {
+        // Load image from URL
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let image = UIImage(data: data)
     }
 }`}
                         </CodeBlock>
@@ -1686,14 +1740,15 @@ if (profilePhoto != null) {
     Log.d("File", "File name: " + profilePhoto.getName());
     Log.d("File", "File URL: " + profilePhoto.getUrl());
     
-    // Download file data
+    // Use URL to load image with Picasso/Glide
+    // Picasso.get().load(profilePhoto.getUrl()).into(imageView);
+    
+    // Or get file data
     profilePhoto.getDataInBackground(new GetDataCallback() {
         public void done(byte[] data, ParseException e) {
             if (e == null) {
-                // Use the data...
-                Log.d("File", "File downloaded successfully");
-            } else {
-                Log.e("File", "Error downloading file: " + e.getMessage());
+                // Convert bytes to bitmap
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
             }
         }
     });
@@ -1711,7 +1766,10 @@ if ($profilePhoto) {
     echo "File name: " . $profilePhoto->getName();
     echo "File URL: " . $profilePhoto->getURL();
     
-    // Download file data
+    // Output HTML img tag
+    echo '<img src="' . $profilePhoto->getURL() . '" alt="Profile Photo">';
+    
+    // Or get file data
     try {
         $data = $profilePhoto->getData();
         // Use the data...
@@ -1720,6 +1778,223 @@ if ($profilePhoto) {
         echo "Error downloading file: " . $e->getMessage();
     }
 }
+?>`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">File Content Retrieval</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Access the actual file content directly via URL without any Parse headers or authentication.
+                  </p>
+                  
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                    <div className="flex items-start space-x-3">
+                      <div className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5">💡</div>
+                      <div>
+                        <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-1">Performance Tip</h4>
+                        <p className="text-sm text-blue-800 dark:text-blue-200">
+                          Consider using a CDN (Content Delivery Network) to serve your files. This can significantly reduce costs and improve latency by caching files closer to your users.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("files-content", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Direct Access</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">HTML/JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          GET https://example.com/parse/files/YOUR_APP_ID/image.jpg
+                        </div>
+                        <CodeBlock language="bash">
+{`# Direct file access - no authentication headers required
+curl -X GET https://example.com/parse/files/YOUR_APP_ID/image.jpg
+
+# This returns the actual file content (image, PDF, etc.)
+# The response will have the appropriate Content-Type header
+# For images: Content-Type: image/jpeg, image/png, etc.
+# For PDFs: Content-Type: application/pdf
+# For videos: Content-Type: video/mp4, etc.
+
+# You can save the file directly
+curl -X GET https://example.com/parse/files/YOUR_APP_ID/image.jpg -o downloaded_image.jpg
+
+# Or stream it
+curl -X GET https://example.com/parse/files/YOUR_APP_ID/video.mp4 --output video.mp4`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="javascript" className="p-0 -mt-px">
+                        <CodeBlock language="javascript">
+{`// Use file URL directly in HTML elements
+const fileUrl = "https://example.com/parse/files/YOUR_APP_ID/image.jpg";
+
+// For images
+const img = document.createElement('img');
+img.src = fileUrl;
+img.alt = 'My Image';
+document.body.appendChild(img);
+
+// For videos
+const video = document.createElement('video');
+video.src = fileUrl;
+video.controls = true;
+document.body.appendChild(video);
+
+// For audio
+const audio = document.createElement('audio');
+audio.src = fileUrl;
+audio.controls = true;
+document.body.appendChild(audio);
+
+// For downloads
+const downloadLink = document.createElement('a');
+downloadLink.href = fileUrl;
+downloadLink.download = 'filename.jpg';
+downloadLink.textContent = 'Download File';
+document.body.appendChild(downloadLink);
+
+// Fetch file content as blob
+fetch(fileUrl)
+  .then(response => response.blob())
+  .then(blob => {
+    // Use blob for further processing
+    const objectURL = URL.createObjectURL(blob);
+    console.log('Object URL:', objectURL);
+  });`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="swift" className="p-0 -mt-px">
+                        <CodeBlock language="swift">
+{`// Load image from URL
+if let url = URL(string: "https://example.com/parse/files/YOUR_APP_ID/image.jpg") {
+    // Using URLSession
+    do {
+        let (data, response) = try await URLSession.shared.data(from: url)
+        if let image = UIImage(data: data) {
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
+    } catch {
+        print("Error loading image: \\(error)")
+    }
+    
+    // Using AsyncImage (iOS 15+)
+    AsyncImage(url: url) { image in
+        image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+    } placeholder: {
+        ProgressView()
+    }
+}
+
+// Download and save file
+if let url = URL(string: "https://example.com/parse/files/YOUR_APP_ID/document.pdf") {
+    let downloadTask = URLSession.shared.downloadTask(with: url) { localURL, response, error in
+        guard let localURL = localURL else { return }
+        
+        // Move to documents directory
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let destinationURL = documentsPath.appendingPathComponent("document.pdf")
+        
+        try? FileManager.default.moveItem(at: localURL, to: destinationURL)
+    }
+    downloadTask.resume()
+}`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="android" className="p-0 -mt-px">
+                        <CodeBlock language="java">
+{`// Load image using Picasso
+String fileUrl = "https://example.com/parse/files/YOUR_APP_ID/image.jpg";
+Picasso.get().load(fileUrl).into(imageView);
+
+// Load image using Glide
+Glide.with(context)
+    .load(fileUrl)
+    .into(imageView);
+
+// Download file manually
+new AsyncTask<String, Void, Bitmap>() {
+    @Override
+    protected Bitmap doInBackground(String... urls) {
+        try {
+            URL url = new URL(urls[0]);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            return BitmapFactory.decodeStream(input);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        if (bitmap != null) {
+            imageView.setImageBitmap(bitmap);
+        }
+    }
+}.execute(fileUrl);
+
+// For video playback
+VideoView videoView = findViewById(R.id.videoView);
+Uri videoUri = Uri.parse("https://example.com/parse/files/YOUR_APP_ID/video.mp4");
+videoView.setVideoURI(videoUri);
+videoView.start();`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="p-0 -mt-px">
+                        <CodeBlock language="php">
+{`<?php
+$fileUrl = "https://example.com/parse/files/YOUR_APP_ID/image.jpg";
+
+// Display image in HTML
+echo '<img src="' . htmlspecialchars($fileUrl) . '" alt="My Image">';
+
+// Download file content
+$fileContent = file_get_contents($fileUrl);
+if ($fileContent !== false) {
+    // Save to local file
+    file_put_contents('downloaded_image.jpg', $fileContent);
+    echo "File downloaded successfully";
+} else {
+    echo "Error downloading file";
+}
+
+// Stream file to browser
+function streamFile($fileUrl, $filename) {
+    $headers = get_headers($fileUrl, 1);
+    $contentType = $headers['Content-Type'];
+    $contentLength = $headers['Content-Length'];
+    
+    header('Content-Type: ' . $contentType);
+    header('Content-Length: ' . $contentLength);
+    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    
+    readfile($fileUrl);
+}
+
+// Usage
+// streamFile($fileUrl, 'image.jpg');
+
+// Get file info without downloading
+$headers = get_headers($fileUrl, 1);
+echo "Content-Type: " . $headers['Content-Type'];
+echo "Content-Length: " . $headers['Content-Length'];
 ?>`}
                         </CodeBlock>
                       </TabsContent>
