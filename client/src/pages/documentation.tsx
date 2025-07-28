@@ -165,16 +165,15 @@ export default function Documentation() {
                   <p className="text-gray-600 dark:text-gray-300">
                     Before using any Parse functionality, you need to initialize the SDK with your application credentials.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("initialization", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("initialization", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Initialize Parse SDK
 Parse.initialize("YOUR_APP_ID", "YOUR_JAVASCRIPT_KEY");
@@ -187,7 +186,7 @@ Parse.enableLocalDatastore();
 Parse.CoreManager.set("DEBUG", true);`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`import ParseSwift
 
@@ -210,7 +209,7 @@ do {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Initialize Parse SDK in your Application class
 public class MyApplication extends Application {
@@ -237,7 +236,7 @@ public class MyApplication extends Application {
 // <application android:name=".MyApplication" ...>`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 require_once 'vendor/autoload.php';
@@ -262,8 +261,7 @@ echo "Parse SDK initialized successfully";
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -1365,7 +1363,10 @@ try {
   https://example.com/parse/files/hello.txt`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          MUTATION https://example.com/parse/graphql
+                        </div>
                         <CodeBlock language="graphql">
 {`mutation CreateFile($input: CreateFileInput!) {
   createFile(input: $input) {
@@ -1384,7 +1385,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// From input element
 const fileUploadControl = document.getElementById("profilePhotoFileUpload");
@@ -1411,7 +1412,7 @@ const parseFile = new Parse.File("myfile.txt", { base64: base64 });
 await parseFile.save();`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// From Data
 let data = "Hello, World!".data(using: .utf8)!
@@ -1436,7 +1437,7 @@ if let url = URL(string: "https://example.com/image.jpg") {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// From byte array
 String str = "Hello, World!";
@@ -1498,15 +1499,14 @@ $file->save();
                   <p className="text-gray-600 dark:text-gray-300">
                     Retrieve and work with files that have been uploaded to Parse.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("files-retrieval", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("files-retrieval", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Get file from object
 const user = Parse.User.current();
@@ -1529,7 +1529,7 @@ if (profilePhoto) {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// Get file from object
 let user = try await User.current()
@@ -1547,7 +1547,7 @@ if let profilePhoto = user.profilePhoto {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Get file from object
 ParseUser user = ParseUser.getCurrentUser();
@@ -1572,8 +1572,7 @@ if (profilePhoto != null) {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
               </div>
             )}
@@ -1588,18 +1587,20 @@ if (profilePhoto != null) {
                   <p className="text-gray-600 dark:text-gray-300">
                     Send push notifications to specific users or broadcast to all users.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("push", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("push", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/push
+                        </div>
                         <CodeBlock language="bash">
 {`# Send to all users
 curl -X POST \\
@@ -1630,7 +1631,10 @@ curl -X POST \\
   https://example.com/parse/push`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          MUTATION https://example.com/parse/graphql
+                        </div>
                         <CodeBlock language="graphql">
 {`mutation SendPushNotification($input: SendPushNotificationInput!) {
   sendPushNotification(input: $input) {
@@ -1667,7 +1671,7 @@ curl -X POST \\
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Send to all users
 Parse.Push.send({
@@ -1699,7 +1703,7 @@ Parse.Push.send({
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// Send to all users
 let push = PFPush()
@@ -1728,7 +1732,7 @@ targetedPush.setData([
 try await targetedPush.send()`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Send to all users
 ParsePush push = new ParsePush();
@@ -1760,7 +1764,7 @@ targetedPush.setData(data);
 targetedPush.sendInBackground();`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 // Send to all users
@@ -1796,8 +1800,7 @@ ParsePush::send($data);
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
               </div>
             )}
@@ -1812,18 +1815,20 @@ ParsePush::send($data);
                   <p className="text-gray-600 dark:text-gray-300">
                     Execute server-side logic with Cloud Functions that run on Parse Server.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("cloud", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("cloud", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/functions/functionName
+                        </div>
                         <CodeBlock language="bash">
 {`curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
@@ -1836,7 +1841,10 @@ ParsePush::send($data);
   https://example.com/parse/functions/sendWelcomeEmail`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          MUTATION https://example.com/parse/graphql
+                        </div>
                         <CodeBlock language="graphql">
 {`mutation CallCloudFunction($input: CallCloudCodeInput!) {
   callCloudCode(input: $input) {
@@ -1856,7 +1864,7 @@ ParsePush::send($data);
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Call cloud function
 try {
@@ -1875,7 +1883,7 @@ const simpleResult = await Parse.Cloud.run("getServerTime");
 console.log("Server time:", simpleResult);`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// Call cloud function
 let parameters = [
@@ -1897,7 +1905,7 @@ let serverTime = try await PFCloud.callFunction(withName: "getServerTime",
 print("Server time: \\(serverTime)")`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Call cloud function
 HashMap<String, Object> params = new HashMap<>();
@@ -1919,7 +1927,7 @@ ParseCloud.callFunctionInBackground("sendWelcomeEmail", params,
 ParseCloud.callFunctionInBackground("getServerTime", null, callback);`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 // Call cloud function
@@ -1942,8 +1950,7 @@ echo "Server time: " . $serverTime;
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
               </div>
             )}
@@ -1958,16 +1965,15 @@ echo "Server time: " . $serverTime;
                   <p className="text-gray-600 dark:text-gray-300">
                     Control who can read and write to your objects using Access Control Lists.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("security", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("security", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`const GameScore = Parse.Object.extend("GameScore");
 const gameScore = new GameScore();
@@ -1997,7 +2003,7 @@ gameScore.set("playerName", "Sean Plott");
 await gameScore.save();`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`let gameScore = GameScore()
 
@@ -2022,7 +2028,7 @@ gameScore.playerName = "Sean Plott"
 try await gameScore.save()`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`ParseObject gameScore = new ParseObject("GameScore");
 
@@ -2046,7 +2052,7 @@ gameScore.put("playerName", "Sean Plott");
 gameScore.saveInBackground();`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 $gameScore = new ParseObject("GameScore");
@@ -2073,8 +2079,7 @@ $gameScore->save();
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -2082,15 +2087,14 @@ $gameScore->save();
                   <p className="text-gray-600 dark:text-gray-300">
                     Create roles to group users and assign permissions at scale.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("security-roles", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("security-roles", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Create a role
 const roleACL = new Parse.ACL();
@@ -2121,7 +2125,7 @@ post.setACL(postACL);
 await post.save();`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// Create a role
 let roleACL = PFACL()
@@ -2147,7 +2151,7 @@ post.acl = postACL
 try await post.save()`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Create a role
 ParseACL roleACL = new ParseACL();
@@ -2177,8 +2181,7 @@ post.saveInBackground();`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
               </div>
             )}
