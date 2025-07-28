@@ -50,20 +50,20 @@ interface SuggestChangeProps {
 
 const SuggestChange: React.FC<SuggestChangeProps> = ({ sectionTitle, sectionId }) => {
   const handleSuggestChange = () => {
-    const issueTitle = `Documentation: Suggestion for ${sectionTitle} section`;
-    const issueBody = `**Section:** ${sectionTitle} (${sectionId})
+    const issueTitle = `docs: Suggestion for section ${sectionTitle}`;
+    const issueBody = `## Section ${sectionTitle}
 
-**Suggested Change:**
+### Suggested Change
+
 <!-- Please describe your suggested improvement or correction here -->
 
-**Reason:**
+### Reason
+
 <!-- Please explain why this change would be helpful -->
 
-**Additional Context:**
-<!-- Add any other context or screenshots about the suggestion here -->
+### Additional Context
 
----
-*This issue was created using the "Suggest Change" feature in the Developer Guide.*`;
+<!-- Add any other context or screenshots about the suggestion here -->`;
 
     const encodedTitle = encodeURIComponent(issueTitle);
     const encodedBody = encodeURIComponent(issueBody);
@@ -74,13 +74,13 @@ const SuggestChange: React.FC<SuggestChangeProps> = ({ sectionTitle, sectionId }
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="sm"
       onClick={handleSuggestChange}
-      className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 border-gray-300 dark:border-gray-600"
+      className="flex items-center space-x-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 opacity-60 hover:opacity-100 transition-opacity"
     >
-      <MessageSquare className="h-4 w-4" />
-      <span>Suggest Change</span>
+      <MessageSquare className="h-3 w-3" />
+      <span className="text-xs">Suggest Change</span>
     </Button>
   );
 };
