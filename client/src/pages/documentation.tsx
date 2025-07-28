@@ -51,14 +51,14 @@ export default function Documentation() {
       "initialization": ["javascript", "swift", "android", "php"],
       "objects": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "queries": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "queries-constraints": ["javascript", "swift", "android"],
+      "queries-constraints": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "users": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "files": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "files-retrieval": ["javascript", "swift", "android"],
+      "files-retrieval": ["rest", "graphql", "javascript", "swift", "android"],
       "push": ["rest", "graphql", "javascript", "swift", "android", "php"],
       "cloud": ["rest", "graphql", "javascript", "swift", "android", "php"],
-      "security": ["javascript", "swift", "android", "php"],
-      "security-roles": ["javascript", "swift", "android"],
+      "security": ["rest", "graphql", "javascript", "swift", "android", "php"],
+      "security-roles": ["rest", "graphql", "javascript", "swift", "android", "php"],
     };
 
     const availableTabs = sectionTabs[sectionId] || ["rest", "graphql", "javascript", "swift", "android", "php"];
@@ -973,10 +973,98 @@ try {
                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                     <Tabs value={getAvailableTabForSection("queries-constraints", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          GET https://example.com/parse/classes/GameScore?where=...
+                        </div>
+                        <CodeBlock language="bash">
+{`# Basic constraints
+curl -X GET \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  -G \\
+  --data-urlencode 'where={"playerName":"Dan Stemkoski","score":{"$gte":1000,"$lt":2000}}' \\
+  https://example.com/parse/classes/GameScore
+
+# Array constraints (contained in)
+curl -X GET \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  -G \\
+  --data-urlencode 'where={"playerName":{"$in":["Jonathan Walsh","Dario Wunsch","Shawn Simon"]}}' \\
+  https://example.com/parse/classes/GameScore
+
+# String constraints  
+curl -X GET \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  -G \\
+  --data-urlencode 'where={"playerName":{"$regex":"^Big Daddy"}}' \\
+  --data-urlencode 'limit=10' \\
+  --data-urlencode 'skip=10' \\
+  --data-urlencode 'order=score' \\
+  https://example.com/parse/classes/GameScore`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          QUERY https://example.com/parse/graphql
+                        </div>
+                        <CodeBlock language="graphql">
+{`query FindGameScoresWithConstraints($where: GameScoreWhereInput, $limit: Int, $skip: Int) {
+  gameScores(where: $where, limit: $limit, skip: $skip, order: [score_ASC]) {
+    edges {
+      node {
+        objectId
+        score
+        playerName
+        createdAt
+      }
+    }
+  }
+}
+
+# Variables for basic constraints:
+{
+  "where": {
+    "playerName": {
+      "equalTo": "Dan Stemkoski"
+    },
+    "score": {
+      "greaterThanOrEqualTo": 1000,
+      "lessThan": 2000
+    }
+  },
+  "limit": 10,
+  "skip": 10
+}
+
+# Variables for array constraints:
+{
+  "where": {
+    "playerName": {
+      "in": ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"]
+    }
+  }
+}
+
+# Variables for string constraints:
+{
+  "where": {
+    "playerName": {
+      "matchesRegex": "^Big Daddy"
+    }
+  }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Basic constraints
@@ -1051,6 +1139,48 @@ query.orderByDescending("score");
 
 // Execute query
 query.findInBackground(callback);`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="p-0 -mt-px">
+                        <CodeBlock language="php">
+{`<?php
+$query = new ParseQuery("GameScore");
+
+// Basic constraints
+$query->equalTo("playerName", "Dan Stemkoski");
+$query->notEqualTo("playerName", "Michael Yabuti");
+$query->greaterThan("score", 1000);
+$query->lessThan("score", 2000);
+$query->greaterThanOrEqualTo("score", 1000);
+$query->lessThanOrEqualTo("score", 2000);
+
+// Array constraints
+$names = ["Jonathan Walsh", "Dario Wunsch", "Shawn Simon"];
+$query->containedIn("playerName", $names);
+$query->notContainedIn("playerName", $names);
+
+// String constraints
+$query->startsWith("playerName", "Big Daddy");
+$query->endsWith("playerName", "Jr.");
+$query->contains("playerName", "Daddy");
+
+// Query options
+$query->limit(10);
+$query->skip(10);
+$query->ascending("score");
+$query->descending("score");
+
+try {
+    $results = $query->find();
+    echo 'Found ' . count($results) . ' games matching constraints';
+    
+    foreach ($results as $gameScore) {
+        echo 'Score: ' . $gameScore->get("score");
+    }
+} catch (Exception $e) {
+    echo 'Error finding games: ' . $e->getMessage();
+}
+?>`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
@@ -1504,6 +1634,7 @@ $file->save();
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
                       <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
@@ -1541,7 +1672,6 @@ if let profilePhoto = user.profilePhoto {
         let data = try await profilePhoto.fetch()
         // Use the data...
     } catch {
-        print("Error downloading file: \\(error)")
     }
 }`}
                         </CodeBlock>
@@ -1568,6 +1698,29 @@ if (profilePhoto != null) {
         }
     });
 }`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="p-0 -mt-px">
+                        <CodeBlock language="php">
+{`<?php
+// Get file from object
+$user = ParseUser::getCurrentUser();
+$profilePhoto = $user->get("profilePhoto");
+
+if ($profilePhoto) {
+    echo "File name: " . $profilePhoto->getName();
+    echo "File URL: " . $profilePhoto->getURL();
+    
+    // Download file data
+    try {
+        $data = $profilePhoto->getData();
+        // Use the data...
+        echo "File downloaded successfully";
+    } catch (Exception $e) {
+        echo "Error downloading file: " . $e->getMessage();
+    }
+}
+?>`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
@@ -1967,11 +2120,84 @@ echo "Server time: " . $serverTime;
                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                     <Tabs value={getAvailableTabForSection("security", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
                         <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/classes/GameScore
+                        </div>
+                        <CodeBlock language="bash">
+{`curl -X POST \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-REST-API-Key: YOUR_REST_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "score": 1337,
+    "playerName": "Sean Plott",
+    "ACL": {
+      "*": {
+        "read": true,
+        "write": false
+      },
+      "3KmCvT7Zsb": {
+        "read": true,
+        "write": true
+      },
+      "role:admin": {
+        "read": true,
+        "write": true
+      }
+    }
+  }' \\
+  https://example.com/parse/classes/GameScore`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          MUTATION https://example.com/parse/graphql
+                        </div>
+                        <CodeBlock language="graphql">
+{`mutation CreateGameScoreWithACL($input: CreateGameScoreInput!) {
+  createGameScore(input: $input) {
+    gameScore {
+      objectId
+      score
+      playerName
+      ACL
+    }
+  }
+}
+
+# Variables:
+{
+  "input": {
+    "fields": {
+      "score": 1337,
+      "playerName": "Sean Plott",
+      "ACL": {
+        "*": {
+          "read": true,
+          "write": false
+        },
+        "3KmCvT7Zsb": {
+          "read": true,
+          "write": true
+        },
+        "role:admin": {
+          "read": true,
+          "write": true
+        }
+      }
+    }
+  }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`const GameScore = Parse.Object.extend("GameScore");
@@ -2089,10 +2315,110 @@ $gameScore->save();
                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                     <Tabs value={getAvailableTabForSection("security-roles", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
                         <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
                         <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/roles
+                        </div>
+                        <CodeBlock language="bash">
+{`# Create a role
+curl -X POST \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "name": "admin",
+    "ACL": {
+      "*": {
+        "read": true
+      }
+    }
+  }' \\
+  https://example.com/parse/roles
+
+# Add users to role
+curl -X PUT \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "users": {
+      "__op": "AddRelation",
+      "objects": [
+        {"__type": "Pointer", "className": "_User", "objectId": "user1Id"}
+      ]
+    }
+  }' \\
+  https://example.com/parse/roles/roleObjectId`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          MUTATION https://example.com/parse/graphql
+                        </div>
+                        <CodeBlock language="graphql">
+{`mutation CreateRole($input: CreateRoleInput!) {
+  createRole(input: $input) {
+    role {
+      objectId
+      name
+      users {
+        edges {
+          node {
+            objectId
+            username
+          }
+        }
+      }
+    }
+  }
+}
+
+# Variables:
+{
+  "input": {
+    "fields": {
+      "name": "admin",
+      "ACL": {
+        "*": {
+          "read": true
+        }
+      }
+    }
+  }
+}
+
+# Add users to role:
+mutation UpdateRole($input: UpdateRoleInput!) {
+  updateRole(input: $input) {
+    role {
+      objectId
+      name
+    }
+  }
+}
+
+# Variables:
+{
+  "input": {
+    "id": "roleObjectId",
+    "fields": {
+      "users": {
+        "add": [
+          {"objectId": "user1Id"}
+        ]
+      }
+    }
+  }
+}`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Create a role
@@ -2177,6 +2503,33 @@ postACL.setRoleWriteAccess(adminRole, true);
 ParseObject post = new ParseObject("Post");
 post.setACL(postACL);
 post.saveInBackground();`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="php" className="p-0 -mt-px">
+                        <CodeBlock language="php">
+{`<?php
+// Create a role
+$roleACL = new ParseACL();
+$roleACL->setPublicReadAccess(true);
+
+$adminRole = new ParseRole("admin", $roleACL);
+
+// Add users to role
+$user1Query = new ParseQuery("_User");
+$user1 = $user1Query->get("user1Id");
+
+$adminRole->getUsers()->add($user1);
+$adminRole->save();
+
+// Use role in ACL
+$postACL = new ParseACL();
+$postACL->setRoleReadAccess($adminRole, true);
+$postACL->setRoleWriteAccess($adminRole, true);
+
+$post = new ParseObject("Post");
+$post->setACL($postACL);
+$post->save();
+?>`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
