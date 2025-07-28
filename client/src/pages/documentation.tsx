@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  AlertTriangle,
   Book,
   Code,
   Database,
@@ -197,7 +198,7 @@ export default function Documentation() {
                   <MessageSquare className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm text-blue-800 dark:text-blue-200">
-                      This guide is still under construction. Found something unclear or want to suggest an improvement? Use the "Suggest Change" buttons to provide your feedback.
+                      This new guide is under construction. If you found something unclear, missing, or incorrect, use the "Suggest Change" button.
                     </p>
                   </div>
                 </div>
@@ -2077,6 +2078,13 @@ echo "Content-Length: " . $headers['Content-Length'];
                   <SuggestChange sectionTitle="Push Notifications" sectionId="push" />
                 </div>
 
+                {/* Introduction */}
+                <div className="space-y-4">
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Push notifications are a great way to keep your users engaged and informed about your app. You can reach your entire user base quickly and effectively. This guide will help you through the setup process and the general usage of Parse to send push notifications.
+                  </p>
+                </div>
+
                 {/* Security Warning */}
                 <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-8">
                   <div className="flex items-start space-x-3">
@@ -2089,41 +2097,158 @@ echo "Content-Length: " . $headers['Content-Length'];
                     </div>
                   </div>
                 </div>
-                
+
+                {/* Installation Overview */}
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-bold">Send Push Notifications</h3>
+                  <h3 className="text-2xl font-bold">Installation Objects</h3>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Send push notifications to specific users or broadcast to all users.
+                    Every Parse application installed on a device registered for push notifications has an associated Installation object. The Installation object is where you store all the data needed to target push notifications.
                   </p>
+                  
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Important Installation Fields:</h4>
+                    <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                      <li><strong>channels:</strong> An array of the channels to which a device is currently subscribed</li>
+                      <li><strong>deviceType:</strong> The type of device, "ios", "android", "winrt", "winphone", or "dotnet" (readonly)</li>
+                      <li><strong>deviceToken:</strong> The Apple or Google generated token used to deliver messages</li>
+                      <li><strong>installationId:</strong> Universally Unique Identifier (UUID) for the device (readonly)</li>
+                      <li><strong>badge:</strong> The current value of the icon badge for iOS apps</li>
+                      <li><strong>timeZone:</strong> The current time zone where the target device is located</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Using Channels */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Using Channels</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    The simplest way to start sending notifications is using channels. This allows you to use a publisher-subscriber model for sending pushes. Devices start by subscribing to one or more channels, and notifications can later be sent to these subscribers.
+                  </p>
+                  
                   <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
-                    <Tabs value={getAvailableTabForSection("push", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                    <Tabs value={getAvailableTabForSection("push-channels", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
                       <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
-                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
-                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
                         <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
-                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
-                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
                       </TabsList>
+                      <TabsContent value="javascript" className="p-0 -mt-px">
+                        <CodeBlock language="javascript">
+{`// Send to specific channels
+Parse.Push.send({
+  channels: ["Giants", "Mets"],
+  data: {
+    alert: "The Giants won against the Mets 2-3."
+  }
+}).then(() => {
+  console.log("Push was successful");
+}, (error) => {
+  console.error("Push failed:", error);
+});
+
+// Send to all subscribers of a channel
+Parse.Push.send({
+  channels: [""],  // Empty string = broadcast channel
+  data: {
+    alert: "Hello, World!"
+  }
+});`}
+                        </CodeBlock>
+                      </TabsContent>
                       <TabsContent value="rest" className="p-0 -mt-px">
                         <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
                           POST https://example.com/parse/push
                         </div>
                         <CodeBlock language="bash">
-{`# Send to all users
+{`# Send to specific channels
 curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
-    "channels": [""],
+    "channels": ["Giants", "Mets"],
     "data": {
-      "alert": "Hello, World!"
+      "alert": "The Giants won against the Mets 2-3."
     }
   }' \\
-  https://example.com/parse/push
+  https://example.com/parse/push`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </div>
 
-# Send to specific users
+                {/* Advanced Targeting */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Advanced Targeting with Queries</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    While channels are great for many applications, sometimes you need more precision when targeting the recipients of your pushes. Parse allows you to write a query for any subset of your Installation objects using the querying API.
+                  </p>
+                  
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("push-queries", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="javascript" className="p-0 -mt-px">
+                        <CodeBlock language="javascript">
+{`// Target users by device type
+const query = new Parse.Query(Parse.Installation);
+query.equalTo('deviceType', 'ios');
+
+Parse.Push.send({
+  where: query,
+  data: {
+    alert: "Hello iOS users!",
+    badge: 1,
+    sound: "default"
+  }
+});
+
+// Target users with specific user data
+const query = new Parse.Query(Parse.Installation);
+query.equalTo('injuryReports', true);
+
+Parse.Push.send({
+  where: query,
+  data: {
+    alert: "Willie Hayes injured by own pop fly."
+  }
+});
+
+// Combine channels with queries
+const query = new Parse.Query(Parse.Installation);
+query.equalTo('channels', 'Giants');
+query.equalTo('scores', true);
+
+Parse.Push.send({
+  where: query,
+  data: {
+    alert: "Giants scored against the A's! It's now 2-2."
+  }
+});
+
+// Target users by location
+const userQuery = new Parse.Query(Parse.User);
+userQuery.withinMiles("location", stadiumLocation, 1.0);
+
+const pushQuery = new Parse.Query(Parse.Installation);
+pushQuery.matchesQuery('user', userQuery);
+
+Parse.Push.send({
+  where: pushQuery,
+  data: {
+    alert: "Free hotdogs at the Parse concession stand!"
+  }
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/push
+                        </div>
+                        <CodeBlock language="bash">
+{`# Target by device type
 curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
   -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
@@ -2133,181 +2258,397 @@ curl -X POST \\
       "deviceType": "ios"
     },
     "data": {
-      "alert": "Hello iOS users!"
+      "alert": "Hello iOS users!",
+      "badge": 1,
+      "sound": "default"
     }
   }' \\
   https://example.com/parse/push`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="p-0 -mt-px">
-                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
-                          MUTATION https://example.com/parse/graphql
-                        </div>
-                        <CodeBlock language="graphql">
-{`mutation SendPushNotification($input: SendPushNotificationInput!) {
-  sendPushNotification(input: $input) {
-    success
-  }
-}
+                    </Tabs>
+                  </div>
+                </div>
 
-# Variables:
-{
-  "input": {
-    "fields": {
-      "data": {
-        "alert": "Hello, World!"
-      },
-      "channels": [""]
-    }
-  }
-}
+                {/* Customizing Notifications */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Customizing Your Notifications</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    If you want to send more than just a message, you can set other fields in the data dictionary. There are some reserved fields that have a special meaning for different platforms.
+                  </p>
 
-# Or with targeting:
-{
-  "input": {
-    "fields": {
-      "data": {
-        "alert": "Hello iOS users!"
-      },
-      "where": {
-        "deviceType": {
-          "equalTo": "ios"
-        }
-      }
-    }
-  }
-}`}
-                        </CodeBlock>
-                      </TabsContent>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("push-custom", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
+                      </TabsList>
                       <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
-{`// Send to all users
+{`// Rich notification with platform-specific features
 Parse.Push.send({
-  channels: [""],
+  channels: ["Mets"],
   data: {
-    alert: "Hello, World!"
+    alert: "The Mets scored! The game is now tied 1-1.",
+    badge: "Increment",           // iOS: increment badge
+    sound: "cheering.caf",        // iOS: custom sound
+    title: "Mets Score!",         // Android: notification title
+    action: "com.example.UPDATE_STATUS",  // Android: custom action
+    category: "SPORTS_UPDATE",    // iOS: notification category
+    
+    // Custom data accessible in your app
+    gameId: "12345",
+    homeTeam: "Mets",
+    awayTeam: "Giants",
+    score: "1-1"
   }
-}).then(() => {
-  console.log("Push notification sent successfully");
-}).catch((error) => {
-  console.error("Error sending push notification:", error);
 });
 
-// Send to specific users
+// Background notification for iOS
+Parse.Push.send({
+  where: iosQuery,
+  data: {
+    "content-available": 1,
+    "push_type": "background",
+    "priority": 5,
+    // Custom data for background processing
+    updateType: "scoreUpdate",
+    gameId: "12345"
+  }
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/push
+                        </div>
+                        <CodeBlock language="bash">
+{`curl -X POST \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "channels": ["Mets"],
+    "data": {
+      "alert": "The Mets scored! The game is now tied 1-1.",
+      "badge": "Increment",
+      "sound": "cheering.caf",
+      "title": "Mets Score!",
+      "gameId": "12345",
+      "homeTeam": "Mets",
+      "awayTeam": "Giants",
+      "score": "1-1"
+    }
+  }' \\
+  https://example.com/parse/push`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </div>
+
+                {/* Scheduling Pushes */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Scheduling Push Notifications</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    You can schedule a push in advance by specifying a push_time. The scheduled time cannot be in the past, and can be up to two weeks in the future.
+                  </p>
+                  
+                  <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4">
+                    <div className="flex items-start space-x-3">
+                      <AlertTriangle className="h-5 w-5 text-orange-600 dark:text-orange-400 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-orange-900 dark:text-orange-100 mb-1">Scheduler Setup Required</h4>
+                        <p className="text-sm text-orange-800 dark:text-orange-200">
+                          Scheduled push notifications require setting up a scheduler with Parse Server, which is not included out of the box. You'll need to implement a scheduling mechanism (such as a cron job or task queue) to process scheduled pushes at the specified times.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("push-schedule", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="javascript" className="p-0 -mt-px">
+                        <CodeBlock language="javascript">
+{`// Schedule a push for tomorrow at noon UTC
+const tomorrowNoon = new Date();
+tomorrowNoon.setDate(tomorrowNoon.getDate() + 1);
+tomorrowNoon.setHours(12, 0, 0, 0);
+
 const query = new Parse.Query(Parse.Installation);
-query.equalTo("deviceType", "ios");
+query.equalTo('user', user);
 
 Parse.Push.send({
   where: query,
   data: {
-    alert: "Hello iOS users!",
-    badge: 1,
-    sound: "default"
-  }
-}).then(() => {
-  console.log("Targeted push notification sent");
-}).catch((error) => {
-  console.error("Error sending targeted push:", error);
+    alert: "You previously created a reminder for the game today"
+  },
+  push_time: tomorrowNoon
+});
+
+// Schedule with expiration
+const oneWeekFromNow = new Date();
+oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+
+Parse.Push.send({
+  channels: [""],
+  data: {
+    alert: "Season tickets on sale until next week!"
+  },
+  push_time: tomorrowNoon,
+  expiration_time: oneWeekFromNow
+});
+
+// Use expiration interval instead of absolute time
+const oneDayFromNow = new Date();
+oneDayFromNow.setDate(oneDayFromNow.getDate() + 1);
+const sixDaysInMs = 6 * 24 * 60 * 60 * 1000;
+
+Parse.Push.send({
+  data: {
+    alert: "Limited time offer!"
+  },
+  push_time: oneDayFromNow,
+  expiration_interval: sixDaysInMs
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="p-0 -mt-px">
-                        <CodeBlock language="swift">
-{`// Send to all users
-let push = PFPush()
-push.setChannel("")
-push.setMessage("Hello, World!")
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/push
+                        </div>
+                        <CodeBlock language="bash">
+{`# Schedule push for specific time (ISO 8601 format)
+curl -X POST \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "channels": [""],
+    "data": {
+      "alert": "Season tickets on sale until next week!"
+    },
+    "push_time": "2024-08-22T12:00:00",
+    "expiration_time": "2024-08-29T12:00:00"
+  }' \\
+  https://example.com/parse/push
 
-do {
-    try await push.send()
-    print("Push notification sent successfully")
-} catch {
-    print("Error sending push notification: \\(error)")
-}
-
-// Send to specific users
-let query = PFInstallation.query()
-query?.whereKey("deviceType", equalTo: "ios")
-
-let targetedPush = PFPush()
-targetedPush.setQuery(query)
-targetedPush.setData([
-    "alert": "Hello iOS users!",
-    "badge": 1,
-    "sound": "default"
-])
-
-try await targetedPush.send()`}
-                        </CodeBlock>
-                      </TabsContent>
-                      <TabsContent value="android" className="p-0 -mt-px">
-                        <CodeBlock language="java">
-{`// Send to all users
-ParsePush push = new ParsePush();
-push.setChannel("");
-push.setMessage("Hello, World!");
-
-push.sendInBackground(new SendCallback() {
-    public void done(ParseException e) {
-        if (e == null) {
-            Log.d("Push", "Push notification sent successfully");
-        } else {
-            Log.e("Push", "Error sending push notification: " + e.getMessage());
-        }
-    }
-});
-
-// Send to specific users
-ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
-query.whereEqualTo("deviceType", "android");
-
-ParsePush targetedPush = new ParsePush();
-targetedPush.setQuery(query);
-
-JSONObject data = new JSONObject();
-data.put("alert", "Hello Android users!");
-data.put("badge", 1);
-
-targetedPush.setData(data);
-targetedPush.sendInBackground();`}
-                        </CodeBlock>
-                      </TabsContent>
-                      <TabsContent value="php" className="p-0 -mt-px">
-                        <CodeBlock language="php">
-{`<?php
-// Send to all users
-$data = array(
-    "channels" => array(""),
-    "data" => array(
-        "alert" => "Hello, World!"
-    )
-);
-
-try {
-    ParsePush::send($data);
-    echo "Push notification sent successfully";
-} catch (Exception $e) {
-    echo "Error sending push notification: " . $e->getMessage();
-}
-
-// Send to specific users
-$query = new ParseQuery("_Installation");
-$query->equalTo("deviceType", "ios");
-
-$data = array(
-    "where" => $query,
-    "data" => array(
-        "alert" => "Hello iOS users!",
-        "badge" => 1,
-        "sound" => "default"
-    )
-);
-
-ParsePush::send($data);
-?>`}
+# Schedule with UNIX timestamp (seconds)
+curl -X POST \\
+  -H "X-Parse-Application-Id: YOUR_APP_ID" \\
+  -H "X-Parse-Master-Key: YOUR_MASTER_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "channels": [""],
+    "data": {
+      "alert": "Game reminder!"
+    },
+    "push_time": 1440226800
+  }' \\
+  https://example.com/parse/push`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
+                  </div>
+                </div>
+
+                {/* Platform Targeting */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Platform-Specific Targeting</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    If you build a cross-platform app, you may want to target iOS or Android devices specifically with platform-optimized notifications.
+                  </p>
+                  
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("push-platform", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="javascript" className="p-0 -mt-px">
+                        <CodeBlock language="javascript">
+{`// Send different notifications to different platforms
+const androidQuery = new Parse.Query(Parse.Installation);
+androidQuery.equalTo('deviceType', 'android');
+
+Parse.Push.send({
+  where: androidQuery,
+  data: {
+    alert: "New Android app update available!",
+    title: "App Update",
+    uri: "https://play.google.com/store/apps/details?id=com.yourapp"
+  }
+});
+
+const iosQuery = new Parse.Query(Parse.Installation);
+iosQuery.equalTo('deviceType', 'ios');
+
+Parse.Push.send({
+  where: iosQuery,
+  data: {
+    alert: "New iOS app update available!",
+    badge: 1,
+    sound: "update.caf",
+    category: "APP_UPDATE"
+  }
+});
+
+// Windows platforms
+const windowsQuery = new Parse.Query(Parse.Installation);
+windowsQuery.equalTo('deviceType', 'winrt');
+
+Parse.Push.send({
+  where: windowsQuery,
+  data: {
+    alert: "Your Windows app has been updated!"
+  }
+});
+
+const windowsPhoneQuery = new Parse.Query(Parse.Installation);
+windowsPhoneQuery.equalTo('deviceType', 'winphone');
+
+Parse.Push.send({
+  where: windowsPhoneQuery,
+  data: {
+    alert: "New features available on Windows Phone!"
+  }
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </div>
+
+                {/* Cloud Code Best Practices */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Cloud Code Best Practices</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    For production apps, it's recommended to send push notifications from Cloud Code rather than client-side code for security and reliability.
+                  </p>
+                  
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("push-cloud", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Cloud Code</TabsTrigger>
+                      </TabsList>
+                      <TabsContent value="javascript" className="p-0 -mt-px">
+                        <CodeBlock language="javascript">
+{`// Cloud Function to send push notification
+Parse.Cloud.define("sendGameNotification", async (request) => {
+  const { gameId, homeTeam, awayTeam, message } = request.params;
+  const user = request.user;
+  
+  // Validate user authentication
+  if (!user) {
+    throw new Parse.Error(Parse.Error.INVALID_SESSION_TOKEN, "User must be authenticated");
+  }
+  
+  // Find installations for users interested in this game
+  const query = new Parse.Query(Parse.Installation);
+  query.equalTo('channels', \`game_\${gameId}\`);
+  
+  try {
+    await Parse.Push.send({
+      where: query,
+      data: {
+        alert: message,
+        badge: "Increment",
+        sound: "default",
+        gameId: gameId,
+        homeTeam: homeTeam,
+        awayTeam: awayTeam
+      }
+    }, { useMasterKey: true });
+    
+    return { success: true, message: "Push notification sent successfully" };
+  } catch (error) {
+    console.error("Push notification failed:", error);
+    throw new Parse.Error(Parse.Error.PUSH_MISCONFIGURED, "Failed to send push notification");
+  }
+});
+
+// Cloud Function to handle user engagement notifications
+Parse.Cloud.define("sendWelcomePush", async (request) => {
+  const { userId } = request.params;
+  
+  const userQuery = new Parse.Query(Parse.User);
+  const user = await userQuery.get(userId, { useMasterKey: true });
+  
+  const pushQuery = new Parse.Query(Parse.Installation);
+  pushQuery.equalTo('user', user);
+  
+  await Parse.Push.send({
+    where: pushQuery,
+    data: {
+      alert: \`Welcome to our app, \${user.get('firstName')}!\`,
+      badge: 1,
+      category: "WELCOME"
+    }
+  }, { useMasterKey: true });
+  
+  return { success: true };
+});
+
+// Background job for scheduled notifications
+Parse.Cloud.job("sendDailyDigest", async (request) => {
+  const { message } = request.params;
+  
+  // Find users who have opted in for daily notifications
+  const userQuery = new Parse.Query(Parse.User);
+  userQuery.equalTo('dailyNotifications', true);
+  
+  const pushQuery = new Parse.Query(Parse.Installation);
+  pushQuery.matchesQuery('user', userQuery);
+  
+  const result = await Parse.Push.send({
+    where: pushQuery,
+    data: {
+      alert: message || "Check out what's new today!",
+      badge: 1,
+      category: "DAILY_DIGEST"
+    }
+  }, { useMasterKey: true });
+  
+  console.log("Daily digest sent to", result.length, "devices");
+  return { sentTo: result.length };
+});`}
+                        </CodeBlock>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </div>
+
+                {/* Troubleshooting */}
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-bold">Troubleshooting Push Notifications</h3>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+                      <h4 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">Common Issues</h4>
+                      <ul className="text-sm text-yellow-800 dark:text-yellow-200 space-y-2">
+                        <li>• Push certificates not properly configured</li>
+                        <li>• Device tokens not being saved to Installation</li>
+                        <li>• Client Push disabled in app settings</li>
+                        <li>• Incorrect channel subscriptions</li>
+                        <li>• Missing master key for server-side pushes</li>
+                        <li>• Invalid device tokens or expired certificates</li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                      <h4 className="font-semibold text-green-900 dark:text-green-100 mb-2">Debugging Tips</h4>
+                      <ul className="text-sm text-green-800 dark:text-green-200 space-y-2">
+                        <li>• Check Parse Dashboard push console for delivery status</li>
+                        <li>• Verify Installation objects have correct deviceToken</li>
+                        <li>• Test with small audience first</li>
+                        <li>• Monitor push analytics in Dashboard</li>
+                        <li>• Use push_type: "background" for silent notifications</li>
+                        <li>• Check device notification settings</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
