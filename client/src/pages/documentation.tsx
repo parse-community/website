@@ -461,23 +461,19 @@ try {
                   <p className="text-gray-600 dark:text-gray-300">
                     Retrieve objects from Parse by their objectId or using queries to find multiple objects.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
-                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                          <code className="text-sm font-mono">
-                            <div className="text-green-600 dark:text-green-400">GET</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/classes/GameScore/objectId</div>
-                          </code>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          GET https://example.com/parse/classes/GameScore/objectId
                         </div>
                         <CodeBlock language="bash">
 {`curl -X GET \\
@@ -486,12 +482,9 @@ try {
   https://example.com/parse/classes/GameScore/Ed1nuqPvc`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
-                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                          <code className="text-sm font-mono">
-                            <div className="text-green-600 dark:text-green-400">QUERY</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/graphql</div>
-                          </code>
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          QUERY https://example.com/parse/graphql
                         </div>
                         <CodeBlock language="graphql">
 {`query GetGameScore($objectId: String!) {
@@ -511,7 +504,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Get object by ID
 const GameScore = Parse.Object.extend("GameScore");
@@ -526,7 +519,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// Retrieve object by ID
 do {
@@ -541,7 +534,7 @@ do {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Get object by ID
 ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
@@ -558,7 +551,7 @@ query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 use Parse\\ParseQuery;
@@ -577,33 +570,27 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
 
-                {/* Update an Object */}
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Update an Object</h3>
                   <p className="text-gray-600 dark:text-gray-300">
                     Update existing objects by setting new values for fields and saving the changes.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
-                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                          <code className="text-sm font-mono">
-                            <div className="text-green-600 dark:text-green-400">PUT</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/classes/GameScore/Ed1nuqPvc</div>
-                          </code>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          PUT https://example.com/parse/classes/GameScore/Ed1nuqPvc
                         </div>
                         <CodeBlock language="bash">
 {`curl -X PUT \\
@@ -616,7 +603,7 @@ try {
   https://example.com/parse/classes/GameScore/Ed1nuqPvc`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
+                      <TabsContent value="graphql" className="p-0 -mt-px">
                         <CodeBlock language="graphql">
 {`mutation UpdateGameScore($objectId: String!, $input: UpdateGameScoreFieldsInput!) {
   updateGameScore(objectId: $objectId, input: $input) {
@@ -639,7 +626,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Update an existing object
 const GameScore = Parse.Object.extend("GameScore");
@@ -656,7 +643,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// Update an existing object
 do {
@@ -672,7 +659,7 @@ do {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Update an existing object
 ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
@@ -694,7 +681,7 @@ query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 // Update an existing object
@@ -712,8 +699,7 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
 
                 {/* Delete an Object */}
@@ -722,23 +708,19 @@ try {
                   <p className="text-gray-600 dark:text-gray-300">
                     Delete objects from the Parse database when they are no longer needed.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("objects", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
-                        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
-                          <code className="text-sm font-mono">
-                            <div className="text-red-600 dark:text-red-400">DELETE</div>
-                            <div className="text-blue-600 dark:text-blue-400">https://example.com/parse/classes/GameScore/Ed1nuqPvc</div>
-                          </code>
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          DELETE https://example.com/parse/classes/GameScore/Ed1nuqPvc
                         </div>
                         <CodeBlock language="bash">
 {`curl -X DELETE \\
@@ -747,7 +729,7 @@ try {
   https://example.com/parse/classes/GameScore/Ed1nuqPvc`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
+                      <TabsContent value="graphql" className="p-0 -mt-px">
                         <CodeBlock language="graphql">
 {`mutation DeleteGameScore($objectId: String!) {
   deleteGameScore(objectId: $objectId) {
@@ -761,7 +743,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Delete an object
 const GameScore = Parse.Object.extend("GameScore");
@@ -776,7 +758,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// Delete an object
 do {
@@ -791,7 +773,7 @@ do {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Delete an object
 ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
@@ -812,7 +794,7 @@ query.getInBackground("Ed1nuqPvc", new GetCallback<ParseObject>() {
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 // Delete an object
@@ -829,8 +811,7 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
               </div>
             )}
@@ -845,18 +826,20 @@ try {
                   <p className="text-gray-600 dark:text-gray-300">
                     Query for objects using constraints like equality, comparison operators, and more.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("queries", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("queries", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          GET https://example.com/parse/classes/GameScore?where=...
+                        </div>
                         <CodeBlock language="bash">
 {`# Query with constraints
 curl -X GET \\
@@ -867,7 +850,10 @@ curl -X GET \\
   https://example.com/parse/classes/GameScore`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          QUERY https://example.com/parse/graphql
+                        </div>
                         <CodeBlock language="graphql">
 {`query FindGameScores($where: GameScoreWhereInput) {
   gameScores(where: $where) {
@@ -896,7 +882,7 @@ curl -X GET \\
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`const GameScore = Parse.Object.extend("GameScore");
 const query = new Parse.Query(GameScore);
@@ -918,7 +904,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`do {
     let gameScores: [GameScore] = try await GameScore.query()
@@ -936,7 +922,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
 query.whereEqualTo("playerName", "Sean Plott");
@@ -957,7 +943,7 @@ query.findInBackground(new FindCallback<ParseObject>() {
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 $query = new ParseQuery("GameScore");
@@ -978,8 +964,7 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
 
                 {/* Query Constraints */}
@@ -988,15 +973,14 @@ try {
                   <p className="text-gray-600 dark:text-gray-300">
                     Use various constraints to filter your queries: equality, less than, greater than, contained in, and more.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("queries-constraints", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-3">
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("queries-constraints", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`// Basic constraints
 query.equalTo("playerName", "Dan Stemkoski");
@@ -1025,7 +1009,7 @@ query.descending("score");
 const results = await query.find();`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`// Basic constraints
 let gameScores = try await GameScore.query()
@@ -1042,7 +1026,7 @@ let gameScores = try await GameScore.query()
     .find()`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`// Basic constraints
 query.whereEqualTo("playerName", "Dan Stemkoski");
@@ -1073,8 +1057,7 @@ query.findInBackground(callback);`}
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
               </div>
             )}
@@ -1089,18 +1072,20 @@ query.findInBackground(callback);`}
                   <p className="text-gray-600 dark:text-gray-300">
                     Register new users with username, password, and additional fields.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/users
+                        </div>
                         <CodeBlock language="bash">
 {`curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
@@ -1115,7 +1100,10 @@ query.findInBackground(callback);`}
   https://example.com/parse/users`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          MUTATION https://example.com/parse/graphql
+                        </div>
                         <CodeBlock language="graphql">
 {`mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
@@ -1141,7 +1129,7 @@ query.findInBackground(callback);`}
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`const user = new Parse.User();
 user.set("username", "cooldude6");
@@ -1157,7 +1145,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`let user = User()
 user.username = "cooldude6"
@@ -1173,7 +1161,7 @@ do {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`ParseUser user = new ParseUser();
 user.setUsername("cooldude6");
@@ -1192,7 +1180,7 @@ user.signUpInBackground(new SignUpCallback() {
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 $user = new ParseUser();
@@ -1211,8 +1199,7 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -1220,18 +1207,20 @@ try {
                   <p className="text-gray-600 dark:text-gray-300">
                     Log in existing users with username and password.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("users", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          GET https://example.com/parse/login?username=...&password=...
+                        </div>
                         <CodeBlock language="bash">
 {`curl -X GET \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
@@ -1242,7 +1231,10 @@ try {
   https://example.com/parse/login`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="graphql" className="space-y-4">
+                      <TabsContent value="graphql" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          MUTATION https://example.com/parse/graphql
+                        </div>
                         <CodeBlock language="graphql">
 {`mutation LogIn($input: LogInInput!) {
   logIn(input: $input) {
@@ -1266,7 +1258,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="javascript" className="space-y-4">
+                      <TabsContent value="javascript" className="p-0 -mt-px">
                         <CodeBlock language="javascript">
 {`try {
   const user = await Parse.User.logIn("cooldude6", "p_n7!-e8");
@@ -1282,7 +1274,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="swift" className="space-y-4">
+                      <TabsContent value="swift" className="p-0 -mt-px">
                         <CodeBlock language="swift">
 {`do {
     let user = try await User.login(username: "cooldude6", password: "p_n7!-e8")
@@ -1297,7 +1289,7 @@ try {
 }`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="android" className="space-y-4">
+                      <TabsContent value="android" className="p-0 -mt-px">
                         <CodeBlock language="java">
 {`ParseUser.logInInBackground("cooldude6", "p_n7!-e8", new LogInCallback() {
     public void done(ParseUser user, ParseException e) {
@@ -1316,7 +1308,7 @@ try {
 });`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 try {
@@ -1335,8 +1327,7 @@ try {
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
               </div>
             )}
@@ -1351,18 +1342,20 @@ try {
                   <p className="text-gray-600 dark:text-gray-300">
                     Upload files to Parse and associate them with your objects.
                   </p>
-                  <Card>
-                    <CardContent className="p-6">
-                      <Tabs value={getAvailableTabForSection("files", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
-                      <TabsList className="grid w-full grid-cols-6">
-                        <TabsTrigger value="rest">REST API</TabsTrigger>
-                        <TabsTrigger value="graphql">GraphQL</TabsTrigger>
-                        <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                        <TabsTrigger value="swift">Swift</TabsTrigger>
-                        <TabsTrigger value="android">Android</TabsTrigger>
-                        <TabsTrigger value="php">PHP</TabsTrigger>
+                  <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                    <Tabs value={getAvailableTabForSection("files", activeCodeTab)} onValueChange={setActiveCodeTab} className="w-full">
+                      <TabsList className="w-full justify-start bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 rounded-none h-12">
+                        <TabsTrigger value="rest" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">REST API</TabsTrigger>
+                        <TabsTrigger value="graphql" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">GraphQL</TabsTrigger>
+                        <TabsTrigger value="javascript" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">JavaScript</TabsTrigger>
+                        <TabsTrigger value="swift" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Swift</TabsTrigger>
+                        <TabsTrigger value="android" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">Android</TabsTrigger>
+                        <TabsTrigger value="php" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">PHP</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="rest" className="space-y-4">
+                      <TabsContent value="rest" className="p-0 -mt-px">
+                        <div className="text-xs font-mono text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+                          POST https://example.com/parse/files/filename
+                        </div>
                         <CodeBlock language="bash">
 {`curl -X POST \\
   -H "X-Parse-Application-Id: YOUR_APP_ID" \\
@@ -1471,7 +1464,7 @@ ParseFile parseFile = new ParseFile(imageFile);
 parseFile.saveInBackground(callback);`}
                         </CodeBlock>
                       </TabsContent>
-                      <TabsContent value="php" className="space-y-4">
+                      <TabsContent value="php" className="p-0 -mt-px">
                         <CodeBlock language="php">
 {`<?php
 // From string data
@@ -1497,8 +1490,7 @@ $file->save();
                         </CodeBlock>
                       </TabsContent>
                     </Tabs>
-                    </CardContent>
-                  </Card>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
