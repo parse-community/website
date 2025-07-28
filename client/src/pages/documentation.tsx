@@ -6,6 +6,7 @@ import {
   Database,
   ExternalLink,
   FileText,
+  MessageSquare,
   Search,
   Server,
   ShieldCheck,
@@ -38,6 +39,49 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ language, children }) => {
     >
       {children}
     </SyntaxHighlighter>
+  );
+};
+
+// Helper component for suggesting changes to documentation sections
+interface SuggestChangeProps {
+  sectionTitle: string;
+  sectionId: string;
+}
+
+const SuggestChange: React.FC<SuggestChangeProps> = ({ sectionTitle, sectionId }) => {
+  const handleSuggestChange = () => {
+    const issueTitle = `Documentation: Suggestion for ${sectionTitle} section`;
+    const issueBody = `**Section:** ${sectionTitle} (${sectionId})
+
+**Suggested Change:**
+<!-- Please describe your suggested improvement or correction here -->
+
+**Reason:**
+<!-- Please explain why this change would be helpful -->
+
+**Additional Context:**
+<!-- Add any other context or screenshots about the suggestion here -->
+
+---
+*This issue was created using the "Suggest Change" feature in the Developer Guide.*`;
+
+    const encodedTitle = encodeURIComponent(issueTitle);
+    const encodedBody = encodeURIComponent(issueBody);
+    const githubUrl = `https://github.com/parse-community/website/issues/new?title=${encodedTitle}&body=${encodedBody}&labels=documentation,enhancement`;
+    
+    window.open(githubUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={handleSuggestChange}
+      className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 border-gray-300 dark:border-gray-600"
+    >
+      <MessageSquare className="h-4 w-4" />
+      <span>Suggest Change</span>
+    </Button>
   );
 };
 
@@ -144,10 +188,29 @@ export default function Documentation() {
         {/* Main Content */}
         <main className="ml-64 flex-1 p-8">
           <div className="max-w-4xl">
+            {/* Hero Section */}
+            <div className="mb-12">
+
+              {/* Feedback Info Box */}
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-8">
+                <div className="flex items-start space-x-3">
+                  <MessageSquare className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm text-blue-800 dark:text-blue-200">
+                      This guide is still under construction. Found something unclear or want to suggest an improvement? Use the "Suggest Change" buttons to provide your feedback.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* SDK Initialization Section */}
             {activeSection === "initialization" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">SDK Initialization</h2>
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-3xl font-bold">SDK Initialization</h2>
+                  <SuggestChange sectionTitle="SDK Initialization" sectionId="initialization" />
+                </div>
                 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Initialize Parse SDK</h3>
@@ -286,7 +349,10 @@ echo "Parse SDK initialized successfully";
             {/* Objects Section */}
             {activeSection === "objects" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">Working with Objects</h2>
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-3xl font-bold">Working with Objects</h2>
+                  <SuggestChange sectionTitle="Working with Objects" sectionId="objects" />
+                </div>
                 
                 {/* Save an Object */}
                 <div className="space-y-4">
@@ -806,7 +872,10 @@ try {
             {/* Queries Section */}
             {activeSection === "queries" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">Queries</h2>
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-3xl font-bold">Queries</h2>
+                  <SuggestChange sectionTitle="Queries" sectionId="queries" />
+                </div>
                 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Basic Queries</h3>
@@ -1182,7 +1251,10 @@ try {
             {/* Users Section */}
             {activeSection === "users" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">Users</h2>
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-3xl font-bold">Users</h2>
+                  <SuggestChange sectionTitle="Users" sectionId="users" />
+                </div>
                 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">User Registration</h3>
@@ -1452,7 +1524,10 @@ try {
             {/* Files Section */}
             {activeSection === "files" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">Files</h2>
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-3xl font-bold">Files</h2>
+                  <SuggestChange sectionTitle="Files" sectionId="files" />
+                </div>
                 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">File Upload</h3>
@@ -1997,7 +2072,10 @@ echo "Content-Length: " . $headers['Content-Length'];
             {/* Push Notifications Section */}
             {activeSection === "push" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">Push Notifications</h2>
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-3xl font-bold">Push Notifications</h2>
+                  <SuggestChange sectionTitle="Push Notifications" sectionId="push" />
+                </div>
                 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Send Push Notifications</h3>
@@ -2225,7 +2303,10 @@ ParsePush::send($data);
             {/* Cloud Functions Section */}
             {activeSection === "cloud" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">Cloud Functions</h2>
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-3xl font-bold">Cloud Functions</h2>
+                  <SuggestChange sectionTitle="Cloud Functions" sectionId="cloud" />
+                </div>
                 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Calling Cloud Functions</h3>
@@ -2375,7 +2456,10 @@ echo "Server time: " . $serverTime;
             {/* Security Section */}
             {activeSection === "security" && (
               <div className="space-y-8">
-                <h2 className="text-3xl font-bold mb-6">Security</h2>
+                <div className="flex justify-between items-start mb-6">
+                  <h2 className="text-3xl font-bold">Security</h2>
+                  <SuggestChange sectionTitle="Security" sectionId="security" />
+                </div>
                 
                 <div className="space-y-4">
                   <h3 className="text-2xl font-bold">Access Control Lists (ACLs)</h3>
