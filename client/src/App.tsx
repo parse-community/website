@@ -2,6 +2,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useAnalytics } from "@/hooks/use-analytics";
 import Donations from "@/pages/donations";
 import Extensions from "@/pages/extensions";
 import Home from "@/pages/home";
@@ -12,6 +13,9 @@ import { Route, Switch } from "wouter";
 import { queryClient } from "./lib/queryClient";
 
 function Router() {
+  // Initialize Google Analytics tracking
+  useAnalytics();
+
   return (
     <>
       <ScrollToTop />
