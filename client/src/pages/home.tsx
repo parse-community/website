@@ -108,7 +108,7 @@ export default function Home() {
       color: "text-gray-700",
       githubUrl: "https://github.com/parse-community/Parse-SDK-iOS-OSX",
       docsUrl: "https://docs.parseplatform.org/ios/guide/",
-      apiUrl: "https://parseplatform.org/Parse-SDK-iOS-OSX/api/"
+      apiUrl: "https://website.parseplatform.org/Parse-SDK-iOS-OSX/api/"
     },
     { 
       name: "Android", 
@@ -117,7 +117,7 @@ export default function Home() {
       color: "text-green-500",
       githubUrl: "https://github.com/parse-community/Parse-SDK-Android",
       docsUrl: "https://docs.parseplatform.org/android/guide/",
-      apiUrl: "https://parseplatform.org/Parse-SDK-Android/api/"
+      apiUrl: "https://website.parseplatform.org/Parse-SDK-Android/api/"
     },
     { 
       name: "JavaScript", 
@@ -126,7 +126,7 @@ export default function Home() {
       color: "text-yellow-500",
       githubUrl: "https://github.com/parse-community/Parse-SDK-JS",
       docsUrl: "https://docs.parseplatform.org/js/guide/",
-      apiUrl: "https://parseplatform.org/Parse-SDK-JS/api/"
+      apiUrl: "https://website.parseplatform.org/Parse-SDK-JS/api/"
     },
     { 
       name: "PHP", 
@@ -135,7 +135,7 @@ export default function Home() {
       color: "text-purple-500",
       githubUrl: "https://github.com/parse-community/parse-php-sdk",
       docsUrl: "https://docs.parseplatform.org/php/guide/",
-      apiUrl: "https://parseplatform.org/parse-php-sdk/api/"
+      apiUrl: "https://website.parseplatform.org/parse-php-sdk/"
     },
     { 
       name: "Flutter", 
@@ -162,7 +162,7 @@ export default function Home() {
       color: "text-indigo-500",
       githubUrl: "https://github.com/parse-community/Parse-SDK-dotNET",
       docsUrl: "https://docs.parseplatform.org/dotnet/guide/",
-      apiUrl: "https://parseplatform.org/Parse-SDK-dotNET/api/"
+      apiUrl: "https://website.parseplatform.org/Parse-SDK-dotNET/api/"
     },
     { 
       name: "Swift", 
@@ -171,7 +171,7 @@ export default function Home() {
       color: "text-orange-500",
       githubUrl: "https://github.com/parse-community/Parse-Swift",
       docsUrl: "https://docs.parseplatform.org/swift/guide/",
-      apiUrl: "https://parseplatform.org/Parse-Swift/release/documentation/parseswift/"
+      apiUrl: "https://website.parseplatform.org/Parse-Swift/release/documentation/parseswift/"
     },
     { 
       name: "Arduino", 
@@ -180,7 +180,7 @@ export default function Home() {
       color: "text-teal-500",
       githubUrl: "https://github.com/parse-community/Parse-SDK-Arduino",
       docsUrl: "https://docs.parseplatform.org/arduino/guide/",
-      apiUrl: "http://parseplatform.org/Parse-SDK-Arduino/api/"
+      apiUrl: "http://website.parseplatform.org/Parse-SDK-Arduino/api/"
     }
   ];
 
