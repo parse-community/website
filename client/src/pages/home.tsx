@@ -194,6 +194,7 @@ export default function Home() {
       docsUrl: "https://docs.parseplatform.org/parse-server/guide/",
       cloudCodeUrl: "https://docs.parseplatform.org/cloudcode/guide/",
       schemasUrl: "https://docs.parseplatform.org/defined-schema/guide/",
+      apiUrl: "http://website.parseplatform.org/parse-server/api/",
       description: "The main backend server powering all Parse Platform features."
     },
     { 
@@ -202,7 +203,6 @@ export default function Home() {
       stars: null, 
       color: "text-purple-500",
       docsUrl: "https://docs.parseplatform.org/cloudcode/guide/",
-      apiUrl: "https://docs.parseplatform.org/cloudcode/guide/",
       description: "Custom server-side JavaScript functions for advanced business logic."
     },
     { 
@@ -211,7 +211,6 @@ export default function Home() {
       stars: null, 
       color: "text-green-500",
       docsUrl: "https://docs.parseplatform.org/rest/guide/",
-      apiUrl: "https://docs.parseplatform.org/rest/guide/",
       description: "A RESTful HTTP API for interacting with all Parse Platform services."
     },
     { 
@@ -220,7 +219,6 @@ export default function Home() {
       stars: null, 
       color: "text-pink-500",
       docsUrl: "https://docs.parseplatform.org/graphql/guide/",
-      apiUrl: "https://docs.parseplatform.org/graphql/guide/",
       description: "A modern GraphQL API supporting queries, mutations, and subscriptions."
     },
     { 
@@ -461,6 +459,14 @@ export default function Home() {
                         <a href={api.schemasUrl} target="_blank" rel="noopener noreferrer">
                           <Database className="h-4 w-4 mr-2" />
                           Schema Guide
+                        </a>
+                      </Button>
+                    )}
+                    {api.apiUrl && (
+                      <Button variant="link" className="p-0 h-auto text-primary justify-start" asChild>
+                        <a href={api.apiUrl} target="_blank" rel="noopener noreferrer">
+                          <Code className="h-4 w-4 mr-2" />
+                          API Reference
                         </a>
                       </Button>
                     )}
