@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   AlertTriangle,
+  Ban,
   Clock,
   DollarSign,
   ExternalLink,
@@ -17,28 +18,28 @@ export default function Security() {
       severity: "Critical",
       cvssScore: "9.0 - 10.0",
       description: "Remote code execution, authentication bypass, privilege escalation",
-      compensation: "$200 - $500",
+      compensation: "$90 - $100",
       color: "bg-red-500/10 text-red-600 dark:text-red-400 border-red-200 dark:border-red-800"
     },
     {
       severity: "High",
       cvssScore: "7.0 - 8.9",
       description: "Data exposure, unauthorized access, significant security impact",
-      compensation: "$100 - $200",
+      compensation: "$70 - $89",
       color: "bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800"
     },
     {
       severity: "Medium",
       cvssScore: "4.0 - 6.9",
       description: "Limited data exposure, moderate security impact",
-      compensation: "$50 - $100",
+      compensation: "$40 - $69",
       color: "bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800"
     },
     {
       severity: "Low",
       cvssScore: "0.1 - 3.9",
       description: "Minor security issues, limited impact",
-      compensation: "$25 - $50",
+      compensation: "$1 - $39",
       color: "bg-green-500/10 text-green-600 dark:text-green-400 border-green-200 dark:border-green-800"
     }
   ];
@@ -166,8 +167,7 @@ export default function Security() {
                   <h3 className="text-2xl font-semibold">Compensation Guidelines</h3>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  As a community-funded open source project, we offer modest but meaningful compensation based on CVSS v3 base metrics. 
-                  Final amounts are determined by impact, exploitability, and responsible disclosure practices.
+                  As a community-funded open source project, we offer modest compensation calculated directly from the CVSS v4 base score: each score point equals $10 (e.g. a score of 10.0 = $100).
                 </p>
                 <div className="grid gap-4">
                   {bountyLevels.map((level, index) => (
@@ -202,10 +202,12 @@ export default function Security() {
                 <h3 className="text-2xl font-semibold mb-4">Eligibility Requirements</h3>
                 <ul className="space-y-2 text-gray-600 dark:text-gray-300 list-disc list-inside">
                   <li>First to report a previously unknown vulnerability</li>
-                  <li>Provide clear proof of concept</li>
+                  <li>Provide a fully end-to-end reproducible code example as proof of concept</li>
                   <li>Follow responsible disclosure guidelines</li>
                   <li>Allow sufficient time for patching before disclosure</li>
                   <li>Vulnerability must affect the latest stable version</li>
+                  <li>Report must be human-reviewed before submission</li>
+                  <li>Respond to follow-up questions within 30 days during triage</li>
                 </ul>
               </CardContent>
             </Card>
@@ -217,15 +219,36 @@ export default function Security() {
                 </div>
                 <h3 className="text-2xl font-semibold mb-4">Out of Scope</h3>
                 <ul className="space-y-2 text-gray-600 dark:text-gray-300 list-disc list-inside">
-                  <li>Social engineering attacks</li>
-                  <li>Physical attacks against Parse infrastructure</li>
-                  <li>Denial of service attacks</li>
+                  <li>Social engineering or physical attacks</li>
+                  <li>Attacks against Parse Organization infrastructure</li>
                   <li>Issues in third-party dependencies (report to respective maintainers)</li>
                   <li>Already known or publicly disclosed vulnerabilities</li>
+                  <li>AI-generated reports without manual verification</li>
+                  <li>Submissions without Parse Server-specific code paths or context</li>
+                  <li>Security hardening suggestions or configuration best practices (not vulnerabilities)</li>
                 </ul>
               </CardContent>
             </Card>
           </div>
+
+          <Card className="mt-8 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
+            <CardContent className="p-8">
+              <div className="flex items-start space-x-4">
+                <Ban className="h-6 w-6 text-red-600 dark:text-red-400 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-xl font-semibold mb-2 text-red-800 dark:text-red-200">Anti-Abuse Policy</h3>
+                  <p className="text-red-700 dark:text-red-300 mb-4">
+                    To protect our volunteer maintainers from low-quality and AI-generated spam submissions, we enforce the following rules:
+                  </p>
+                  <ul className="space-y-2 text-red-700 dark:text-red-300 list-disc list-inside">
+                    <li><strong>AI-generated reports:</strong> Generic or AI-generated descriptions without specific code paths are rejected</li>
+                    <li><strong>Strike system:</strong> 3 invalid or spam submissions result in a permanent ban from the bounty program</li>
+                    <li><strong>Severity overstatement:</strong> If the assessed CVSS score is significantly lower than claimed, compensation is voided</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           <Card className="mt-8 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
             <CardContent className="p-8 text-center">
