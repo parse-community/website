@@ -244,6 +244,7 @@ export default function Security() {
                     <li><strong>AI-generated reports:</strong> Generic or AI-generated descriptions without specific code paths are rejected</li>
                     <li><strong>Strike system:</strong> 3 invalid or spam submissions result in a permanent ban from the bounty program</li>
                     <li><strong>Severity overstatement:</strong> If the assessed CVSS score is significantly lower than claimed, compensation is voided</li>
+                    <li><strong>Report splitting:</strong> Multiple reports from the same reporter within 30 days that describe variations of the same underlying vulnerability are treated as a single finding and eligible for only one bounty</li>
                   </ul>
                 </div>
               </div>
