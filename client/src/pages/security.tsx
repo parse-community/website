@@ -245,6 +245,7 @@ export default function Security() {
                     <li><strong>Strike system:</strong> 3 invalid or spam submissions result in a permanent ban from the bounty program</li>
                     <li><strong>Severity overstatement:</strong> If the assessed CVSS score is significantly lower than claimed, compensation is voided</li>
                     <li><strong>Report splitting:</strong> Multiple reports from the same reporter within 30 days that describe variations of the same underlying vulnerability are treated as a single finding and eligible for only one bounty</li>
+                    <li><strong>Circumvention:</strong> Attempting to circumvent the anti-abuse policy, such as submitting from multiple GitHub accounts, results in permanent ineligibility from the bounty program</li>
                   </ul>
                 </div>
               </div>
